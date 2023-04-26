@@ -148,6 +148,20 @@
 %==============================================================================17
 %==============================================================================18
 % Place here anything extra that you would like in the preamble
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
 %==============================================================================19
 \ifluatex
   \usepackage{selnolig}  % disable illegal ligatures
@@ -402,11 +416,11 @@ When the separable data from above is fit using \texttt{R}'s \texttt{glm} functi
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{glm}\NormalTok{(y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{family =} \KeywordTok{binomial}\NormalTok{(}\StringTok{"logit"}\NormalTok{))}
-\CommentTok{#> Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred}
-\KeywordTok{coefficients}\NormalTok{(fit)}
-\CommentTok{#> (Intercept)           x }
-\CommentTok{#>       22.89       45.97}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x, }\AttributeTok{family =} \FunctionTok{binomial}\NormalTok{(}\StringTok{"logit"}\NormalTok{))}
+\CommentTok{\#\textgreater{} Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred}
+\FunctionTok{coefficients}\NormalTok{(fit)}
+\CommentTok{\#\textgreater{} (Intercept)           x }
+\CommentTok{\#\textgreater{}       22.89       45.97}
 \end{Highlighting}
 \end{Shaded}
 
@@ -552,10 +566,10 @@ Below is the 8 Schools data \citep{gelman2013bayesian} which is a standard textb
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{schools_dat <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}
-  \DataTypeTok{J =} \DecValTok{8}\NormalTok{,}
-  \DataTypeTok{y =} \KeywordTok{c}\NormalTok{(}\DecValTok{28}\NormalTok{,  }\DecValTok{8}\NormalTok{, }\DecValTok{-3}\NormalTok{,  }\DecValTok{7}\NormalTok{, }\DecValTok{-1}\NormalTok{,  }\DecValTok{1}\NormalTok{, }\DecValTok{18}\NormalTok{, }\DecValTok{12}\NormalTok{),}
-  \DataTypeTok{sigma =} \KeywordTok{c}\NormalTok{(}\DecValTok{15}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{16}\NormalTok{, }\DecValTok{11}\NormalTok{,  }\DecValTok{9}\NormalTok{, }\DecValTok{11}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{18}\NormalTok{)}
+\NormalTok{schools\_dat }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
+  \AttributeTok{J =} \DecValTok{8}\NormalTok{,}
+  \AttributeTok{y =} \FunctionTok{c}\NormalTok{(}\DecValTok{28}\NormalTok{,  }\DecValTok{8}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{,  }\DecValTok{7}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,  }\DecValTok{1}\NormalTok{, }\DecValTok{18}\NormalTok{, }\DecValTok{12}\NormalTok{),}
+  \AttributeTok{sigma =} \FunctionTok{c}\NormalTok{(}\DecValTok{15}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{16}\NormalTok{, }\DecValTok{11}\NormalTok{,  }\DecValTok{9}\NormalTok{, }\DecValTok{11}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{18}\NormalTok{)}
 \NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -581,8 +595,8 @@ The initial starting parameters for this model are intentionally set to vary bet
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit_cp <-}\StringTok{ }\KeywordTok{sampling}\NormalTok{(schools_cp, }\DataTypeTok{data =}\NormalTok{ schools_dat, }\DataTypeTok{refresh =} \DecValTok{0}\NormalTok{,}
-                   \DataTypeTok{iter =} \DecValTok{40}\NormalTok{, }\DataTypeTok{init_r =} \DecValTok{10}\NormalTok{, }\DataTypeTok{seed =} \DecValTok{671254821}\NormalTok{)}
+\NormalTok{fit\_cp }\OtherTok{\textless{}{-}} \FunctionTok{sampling}\NormalTok{(schools\_cp, }\AttributeTok{data =}\NormalTok{ schools\_dat, }\AttributeTok{refresh =} \DecValTok{0}\NormalTok{,}
+                   \AttributeTok{iter =} \DecValTok{40}\NormalTok{, }\AttributeTok{init\_r =} \DecValTok{10}\NormalTok{, }\AttributeTok{seed =} \DecValTok{671254821}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -659,22 +673,22 @@ Here is the calculation in \texttt{R}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{param <-}\StringTok{ "mu"}
-\NormalTok{theta <-}\StringTok{ }\NormalTok{p_cp[,,param]}
-\NormalTok{N     <-}\StringTok{ }\KeywordTok{nrow}\NormalTok{(theta)}
-\NormalTok{M     <-}\StringTok{ }\KeywordTok{ncol}\NormalTok{(theta)}
+\NormalTok{param }\OtherTok{\textless{}{-}} \StringTok{"mu"}
+\NormalTok{theta }\OtherTok{\textless{}{-}}\NormalTok{ p\_cp[,,param]}
+\NormalTok{N     }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(theta)}
+\NormalTok{M     }\OtherTok{\textless{}{-}} \FunctionTok{ncol}\NormalTok{(theta)}
 
-\NormalTok{theta_bar_m <-}\StringTok{ }\KeywordTok{colMeans}\NormalTok{(theta)}
-\NormalTok{theta_bar   <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(theta_bar_m)}
+\NormalTok{theta\_bar\_m }\OtherTok{\textless{}{-}} \FunctionTok{colMeans}\NormalTok{(theta)}
+\NormalTok{theta\_bar   }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(theta\_bar\_m)}
 
-\NormalTok{B <-}\StringTok{ }\NormalTok{N }\OperatorTok{/}\StringTok{ }\NormalTok{(M }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{) }\OperatorTok{*}\StringTok{ }\KeywordTok{sum}\NormalTok{((theta_bar_m }\OperatorTok{-}\StringTok{ }\NormalTok{theta_bar)}\OperatorTok{^}\DecValTok{2}\NormalTok{)}
-\NormalTok{s_sq_m <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(theta, }\DecValTok{2}\NormalTok{, var)}
+\NormalTok{B }\OtherTok{\textless{}{-}}\NormalTok{ N }\SpecialCharTok{/}\NormalTok{ (M }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{*} \FunctionTok{sum}\NormalTok{((theta\_bar\_m }\SpecialCharTok{{-}}\NormalTok{ theta\_bar)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{s\_sq\_m }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(theta, }\DecValTok{2}\NormalTok{, var)}
 
-\NormalTok{W <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(s_sq_m)}
-\NormalTok{var_hat <-}\StringTok{ }\NormalTok{W }\OperatorTok{*}\StringTok{ }\NormalTok{(N }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{) }\OperatorTok{/}\StringTok{ }\NormalTok{N }\OperatorTok{+}\StringTok{ }\NormalTok{B }\OperatorTok{/}\StringTok{ }\NormalTok{N}
+\NormalTok{W }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(s\_sq\_m)}
+\NormalTok{var\_hat }\OtherTok{\textless{}{-}}\NormalTok{ W }\SpecialCharTok{*}\NormalTok{ (N }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ N }\SpecialCharTok{+}\NormalTok{ B }\SpecialCharTok{/}\NormalTok{ N}
 
-\NormalTok{(mu_Rhat <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(var_hat }\OperatorTok{/}\StringTok{ }\NormalTok{W))}
-\CommentTok{#> [1] 1.409}
+\NormalTok{(mu\_Rhat }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(var\_hat }\SpecialCharTok{/}\NormalTok{ W))}
+\CommentTok{\#\textgreater{} [1] 1.409}
 \end{Highlighting}
 \end{Shaded}
 
@@ -686,23 +700,23 @@ The \(\hat{R}\) statistic is smaller than the split \(\hat{R}\) value provided b
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{param <-}\StringTok{ "mu"}
-\NormalTok{theta_tmp <-}\StringTok{ }\NormalTok{p_cp[,,param]}
-\NormalTok{theta <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(theta_tmp[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{,], theta_tmp[}\DecValTok{11}\OperatorTok{:}\DecValTok{20}\NormalTok{,])}
-\NormalTok{N     <-}\StringTok{ }\KeywordTok{nrow}\NormalTok{(theta)}
-\NormalTok{M     <-}\StringTok{ }\KeywordTok{ncol}\NormalTok{(theta)}
+\NormalTok{param }\OtherTok{\textless{}{-}} \StringTok{"mu"}
+\NormalTok{theta\_tmp }\OtherTok{\textless{}{-}}\NormalTok{ p\_cp[,,param]}
+\NormalTok{theta }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(theta\_tmp[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{,], theta\_tmp[}\DecValTok{11}\SpecialCharTok{:}\DecValTok{20}\NormalTok{,])}
+\NormalTok{N     }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(theta)}
+\NormalTok{M     }\OtherTok{\textless{}{-}} \FunctionTok{ncol}\NormalTok{(theta)}
 
-\NormalTok{theta_bar_m <-}\StringTok{ }\KeywordTok{colMeans}\NormalTok{(theta)}
-\NormalTok{theta_bar   <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(theta_bar_m)}
+\NormalTok{theta\_bar\_m }\OtherTok{\textless{}{-}} \FunctionTok{colMeans}\NormalTok{(theta)}
+\NormalTok{theta\_bar   }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(theta\_bar\_m)}
 
-\NormalTok{B <-}\StringTok{ }\NormalTok{N }\OperatorTok{/}\StringTok{ }\NormalTok{(M }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{) }\OperatorTok{*}\StringTok{ }\KeywordTok{sum}\NormalTok{((theta_bar_m }\OperatorTok{-}\StringTok{ }\NormalTok{theta_bar)}\OperatorTok{^}\DecValTok{2}\NormalTok{)}
-\NormalTok{s_sq_m <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(theta, }\DecValTok{2}\NormalTok{, var)}
+\NormalTok{B }\OtherTok{\textless{}{-}}\NormalTok{ N }\SpecialCharTok{/}\NormalTok{ (M }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{*} \FunctionTok{sum}\NormalTok{((theta\_bar\_m }\SpecialCharTok{{-}}\NormalTok{ theta\_bar)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{s\_sq\_m }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(theta, }\DecValTok{2}\NormalTok{, var)}
 
-\NormalTok{W <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(s_sq_m)}
-\NormalTok{var_hat <-}\StringTok{ }\NormalTok{W }\OperatorTok{*}\StringTok{ }\NormalTok{(N }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{) }\OperatorTok{/}\StringTok{ }\NormalTok{N }\OperatorTok{+}\StringTok{ }\NormalTok{B }\OperatorTok{/}\StringTok{ }\NormalTok{N}
+\NormalTok{W }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(s\_sq\_m)}
+\NormalTok{var\_hat }\OtherTok{\textless{}{-}}\NormalTok{ W }\SpecialCharTok{*}\NormalTok{ (N }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ N }\SpecialCharTok{+}\NormalTok{ B }\SpecialCharTok{/}\NormalTok{ N}
 
-\NormalTok{(mu_Rhat <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(var_hat }\OperatorTok{/}\StringTok{ }\NormalTok{W))}
-\CommentTok{#> [1] 1.709}
+\NormalTok{(mu\_Rhat }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(var\_hat }\SpecialCharTok{/}\NormalTok{ W))}
+\CommentTok{\#\textgreater{} [1] 1.709}
 \end{Highlighting}
 \end{Shaded}
 
@@ -888,7 +902,7 @@ Models can be compared simply using \texttt{loo::loo\_compare}. It estimates the
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{comp <-}\StringTok{ }\KeywordTok{loo_compare}\NormalTok{(linear, quadratic, cubic, quartic)}
+\NormalTok{comp }\OtherTok{\textless{}{-}} \FunctionTok{loo\_compare}\NormalTok{(linear, quadratic, cubic, quartic)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -900,10 +914,10 @@ Models can be compared simply using \texttt{loo::loo\_compare}. It estimates the
 \toprule
 Model & elpd\_diff & se\_diff & p\_loo & looic\\
 \midrule
-Cubic & 0.0000 & 0.0000 & 2.832 & 18.67\\
-Quartic & -0.2284 & 0.7248 & 3.603 & 19.12\\
-Quadratic & -2.1277 & 1.4328 & 3.200 & 22.92\\
-Linear & -3.0593 & 1.7171 & 2.747 & 24.79\\
+Cubic & 0.0000 & 0.0000 & 2.494 & 18.16\\
+Quartic & -0.4658 & 0.8420 & 3.441 & 19.09\\
+Quadratic & -1.7136 & 0.9727 & 2.672 & 21.59\\
+Linear & -3.5928 & 2.0339 & 3.104 & 25.34\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1081,12 +1095,12 @@ There are four different tasks in the experiment: audio-visual, visual-visual, v
 \centering
 \begin{tabular}[t]{rrllllrl}
 \toprule
-soa & response & sid & task & trial & age\_group & age & sex\\
+soa & response & sid & task & block & age\_group & age & sex\\
 \midrule
--350 & 0 & O-m-BC & audiovisual & pre & older\_adult & 70 & M\\
--200 & 0 & M-m-SJ & duration & post1 & middle\_age & 48 & M\\
-28 & 1 & O-f-KK & sensorimotor & pre & older\_adult & 66 & F\\
-275 & 1 & O-f-MW & visual & post1 & older\_adult & 69 & F\\
+-350 & 0 & O-m-BC & audiovisual & baseline & older & 70 & M\\
+200 & 1 & M-f-TW & visual & adapt1 & middle & 49 & F\\
+28 & 1 & O-f-KK & sensorimotor & baseline & older & 66 & F\\
+150 & 1 & Y-m-CB & duration & adapt1 & young & 22 & M\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1143,19 +1157,19 @@ For the audiovisual task, the responses can be aggregated into binomial data -- 
 \centering
 \begin{tabular}[t]{lrrrr}
 \toprule
-trial & soa & n & k & proportion\\
+block & soa & n & k & proportion\\
 \midrule
  & 200 & 5 & 4 & 0.80\\
 \cmidrule{2-5}
  & 150 & 5 & 5 & 1.00\\
 \cmidrule{2-5}
-\multirow[t]{-3}{*}{\raggedright\arraybackslash pre} & -350 & 5 & 0 & 0.00\\
+\multirow[t]{-3}{*}{\raggedright\arraybackslash baseline} & -350 & 5 & 0 & 0.00\\
 \cmidrule{1-5}
  & 350 & 3 & 3 & 1.00\\
 \cmidrule{2-5}
  & -500 & 3 & 1 & 0.33\\
 \cmidrule{2-5}
-\multirow[t]{-3}{*}{\raggedright\arraybackslash post1} & -200 & 3 & 0 & 0.00\\
+\multirow[t]{-3}{*}{\raggedright\arraybackslash adapt1} & -200 & 3 & 0 & 0.00\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1330,17 +1344,17 @@ In the above expression, \(\mathbb{Z}_0^+\) represents the set of non-negative i
 
 Then there are three categorical variables: age group, subject ID, and trial (block). The first two are treated as factor variables (also known as index variable or categorical variable). Rather than using one-hot encoding or dummy variables, the age levels are left as categories, and a coefficient is fit for each level. If dummy variables were used for all 45 subjects, there would be 44 dummy variables to work with times the number of coefficients that make estimates at the subject level. The number of parameters in the model grows rapidly as the model complexity grows.
 
-Age groups and individual subjects can be indexed in the same way that the number of trials is indexed. \(S_i\) refers to the subject in record \(i\), and similarly \(G_i\) refers to the age group of that subject. Observation \(63\) is for record ID av-post1-M-f-HG, so then \(S_{63}\) is M-f-HG and \(G_{63}\) is middle\_age. Under the hood of \texttt{R}, these factor levels are represented as integers (e.g.~middle age group level is stored internally as the number 2).
+Age groups and individual subjects can be indexed in the same way that the number of trials is indexed. \(S_i\) refers to the subject in record \(i\), and similarly \(G_i\) refers to the age group of that subject. Observation \(63\) is for record ID av-adapt1-M-f-HG, so then \(S_{63}\) is M-f-HG and \(G_{63}\) is middle. Under the hood of \texttt{R}, these factor levels are represented as integers (e.g.~middle age group level is stored internally as the number 2).
 
 \setstretch{1.0}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{(x <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\StringTok{"c"}\NormalTok{)))}
-\CommentTok{#> [1] a a b c}
-\CommentTok{#> Levels: a b c}
-\KeywordTok{storage.mode}\NormalTok{(x)}
-\CommentTok{#> [1] "integer"}
+\NormalTok{(x }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\StringTok{"c"}\NormalTok{)))}
+\CommentTok{\#\textgreater{} [1] a a b c}
+\CommentTok{\#\textgreater{} Levels: a b c}
+\FunctionTok{storage.mode}\NormalTok{(x)}
+\CommentTok{\#\textgreater{} [1] "integer"}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1398,14 +1412,14 @@ This nonlinear system can be solved using \texttt{Stan}'s algebraic solver (code
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{sampling}\NormalTok{(prior_jnd, }
-                \DataTypeTok{iter=}\DecValTok{1}\NormalTok{, }\DataTypeTok{warmup=}\DecValTok{0}\NormalTok{, }\DataTypeTok{chains=}\DecValTok{1}\NormalTok{, }\DataTypeTok{refresh=}\DecValTok{0}\NormalTok{,}
-                \DataTypeTok{seed=}\DecValTok{31}\NormalTok{, }\DataTypeTok{algorithm=}\StringTok{"Fixed_param"}\NormalTok{)}
-\NormalTok{sol <-}\StringTok{ }\KeywordTok{extract}\NormalTok{(fit)}
-\NormalTok{sol}\OperatorTok{$}\NormalTok{y}
-\CommentTok{#>           }
-\CommentTok{#> iterations   [,1]  [,2]}
-\CommentTok{#>       [1,] -7.501 3.225}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{sampling}\NormalTok{(prior\_jnd, }
+                \AttributeTok{iter=}\DecValTok{1}\NormalTok{, }\AttributeTok{warmup=}\DecValTok{0}\NormalTok{, }\AttributeTok{chains=}\DecValTok{1}\NormalTok{, }\AttributeTok{refresh=}\DecValTok{0}\NormalTok{,}
+                \AttributeTok{seed=}\DecValTok{31}\NormalTok{, }\AttributeTok{algorithm=}\StringTok{"Fixed\_param"}\NormalTok{)}
+\NormalTok{sol }\OtherTok{\textless{}{-}} \FunctionTok{extract}\NormalTok{(fit)}
+\NormalTok{sol}\SpecialCharTok{$}\NormalTok{y}
+\CommentTok{\#\textgreater{}           }
+\CommentTok{\#\textgreater{} iterations   [,1]  [,2]}
+\CommentTok{\#\textgreater{}       [1,] {-}7.501 3.225}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1417,14 +1431,14 @@ The solver has determined that \(\mathrm{Lognormal}(-7.5, 3.2^2)\) is the approp
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{sampling}\NormalTok{(prior_jnd_using_median, }
-                \DataTypeTok{iter=}\DecValTok{1}\NormalTok{, }\DataTypeTok{warmup=}\DecValTok{0}\NormalTok{, }\DataTypeTok{chains=}\DecValTok{1}\NormalTok{, }\DataTypeTok{refresh=}\DecValTok{0}\NormalTok{,}
-                \DataTypeTok{seed=}\DecValTok{31}\NormalTok{, }\DataTypeTok{algorithm=}\StringTok{"Fixed_param"}\NormalTok{)}
-\NormalTok{sol <-}\StringTok{ }\KeywordTok{extract}\NormalTok{(fit)}
-\NormalTok{sol}\OperatorTok{$}\NormalTok{y}
-\CommentTok{#>           }
-\CommentTok{#> iterations   [,1]   [,2]}
-\CommentTok{#>       [1,] -2.303 0.9898}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{sampling}\NormalTok{(prior\_jnd\_using\_median, }
+                \AttributeTok{iter=}\DecValTok{1}\NormalTok{, }\AttributeTok{warmup=}\DecValTok{0}\NormalTok{, }\AttributeTok{chains=}\DecValTok{1}\NormalTok{, }\AttributeTok{refresh=}\DecValTok{0}\NormalTok{,}
+                \AttributeTok{seed=}\DecValTok{31}\NormalTok{, }\AttributeTok{algorithm=}\StringTok{"Fixed\_param"}\NormalTok{)}
+\NormalTok{sol }\OtherTok{\textless{}{-}} \FunctionTok{extract}\NormalTok{(fit)}
+\NormalTok{sol}\SpecialCharTok{$}\NormalTok{y}
+\CommentTok{\#\textgreater{}           }
+\CommentTok{\#\textgreater{} iterations   [,1]   [,2]}
+\CommentTok{\#\textgreater{}       [1,] {-}2.303 0.9898}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1459,34 +1473,36 @@ The priors do not need to be too exact. Rounding the parameters for \(\beta\), t
 
 and in \texttt{Stan}, the model code is:
 
-\begin{verbatim}
-data {
-  int N;
-  int n[N];
-  int k[N];
-  vector[N] x;
-}
-parameters {
-  real alpha;
-  real<lower=0> beta;
-}
-model {
-  vector[N] p = beta * (x - alpha);
-  alpha ~ normal(0, 0.06);
-  beta ~ lognormal(3.0, 1.0);
-  k ~ binomial_logit(n, p);
-}
-generated quantities {
-  vector[N] log_lik;
-  vector[N] k_pred;
-  vector[N] theta = beta * (x - alpha);
-  vector[N] p = inv_logit(theta);
-  for (i in 1:N) {
-    log_lik[i] = binomial_logit_lpmf(k[i] | n[i], theta[i]);
-    k_pred[i]  = binomial_rng(n[i], p[i]);
-  }
-}
-\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{ \{}
+  \DataTypeTok{int}\NormalTok{ N;}
+  \DataTypeTok{int}\NormalTok{ n[N];}
+  \DataTypeTok{int}\NormalTok{ k[N];}
+  \DataTypeTok{vector}\NormalTok{[N] x;}
+\NormalTok{\}}
+\KeywordTok{parameters}\NormalTok{ \{}
+  \DataTypeTok{real}\NormalTok{ alpha;}
+  \DataTypeTok{real}\NormalTok{\textless{}}\KeywordTok{lower}\NormalTok{=}\DecValTok{0}\NormalTok{\textgreater{} beta;}
+\NormalTok{\}}
+\KeywordTok{model}\NormalTok{ \{}
+  \DataTypeTok{vector}\NormalTok{[N] p = beta * (x {-} alpha);}
+\NormalTok{  alpha \textasciitilde{} normal(}\DecValTok{0}\NormalTok{, }\FloatTok{0.06}\NormalTok{);}
+\NormalTok{  beta \textasciitilde{} lognormal(}\FloatTok{3.0}\NormalTok{, }\FloatTok{1.0}\NormalTok{);}
+\NormalTok{  k \textasciitilde{} binomial\_logit(n, p);}
+\NormalTok{\}}
+\KeywordTok{generated quantities}\NormalTok{ \{}
+  \DataTypeTok{vector}\NormalTok{[N] log\_lik;}
+  \DataTypeTok{vector}\NormalTok{[N] k\_pred;}
+  \DataTypeTok{vector}\NormalTok{[N] theta = beta * (x {-} alpha);}
+  \DataTypeTok{vector}\NormalTok{[N] p = inv\_logit(theta);}
+  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\NormalTok{:N) \{}
+\NormalTok{    log\_lik[i] = binomial\_logit\_lpmf(k[i] | n[i], theta[i]);}
+\NormalTok{    k\_pred[i]  = binomial\_rng(n[i], p[i]);}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
 
 \setstretch{2.0}
 
@@ -1505,7 +1521,7 @@ The function can be defined in \texttt{R} as
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{Q <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(p, a, b) }\KeywordTok{qlogis}\NormalTok{(p) }\OperatorTok{/}\StringTok{ }\NormalTok{b }\OperatorTok{+}\StringTok{ }\NormalTok{a}
+\NormalTok{Q }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(p, a, b) }\FunctionTok{qlogis}\NormalTok{(p) }\SpecialCharTok{/}\NormalTok{ b }\SpecialCharTok{+}\NormalTok{ a}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1527,18 +1543,18 @@ During this step, we simulate the Bayesian model and later feed the prior values
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{set.seed}\NormalTok{(}\DecValTok{124}\NormalTok{)}
-\NormalTok{n <-}\StringTok{ }\DecValTok{10000}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{124}\NormalTok{)}
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{10000}
 
-\NormalTok{a <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(n, }\DecValTok{0}\NormalTok{, }\FloatTok{0.06}\NormalTok{)}
-\NormalTok{b <-}\StringTok{ }\KeywordTok{rlnorm}\NormalTok{(n, }\FloatTok{3.0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{a }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n, }\DecValTok{0}\NormalTok{, }\FloatTok{0.06}\NormalTok{)}
+\NormalTok{b }\OtherTok{\textless{}{-}} \FunctionTok{rlnorm}\NormalTok{(n, }\FloatTok{3.0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
 
-\NormalTok{dat <-}\StringTok{ }\KeywordTok{with}\NormalTok{(av_dat, }\KeywordTok{list}\NormalTok{(}\DataTypeTok{N =}\NormalTok{ N, }\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{n =}\NormalTok{ n)) }
-\NormalTok{n_obs <-}\StringTok{ }\KeywordTok{length}\NormalTok{(dat}\OperatorTok{$}\NormalTok{x)}
+\NormalTok{dat }\OtherTok{\textless{}{-}} \FunctionTok{with}\NormalTok{(av\_dat, }\FunctionTok{list}\NormalTok{(}\AttributeTok{N =}\NormalTok{ N, }\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{n =}\NormalTok{ n)) }
+\NormalTok{n\_obs }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{x)}
 
-\NormalTok{idx <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\NormalTok{n, n_obs, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{)}
-\NormalTok{probs <-}\StringTok{ }\KeywordTok{logistic}\NormalTok{(b[idx] }\OperatorTok{*}\StringTok{ }\NormalTok{(dat}\OperatorTok{$}\NormalTok{x }\OperatorTok{-}\StringTok{ }\NormalTok{a[idx]))}
-\NormalTok{sim_k <-}\StringTok{ }\KeywordTok{rbinom}\NormalTok{(n_obs, dat}\OperatorTok{$}\NormalTok{n, probs)}
+\NormalTok{idx }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n, n\_obs, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{probs }\OtherTok{\textless{}{-}} \FunctionTok{logistic}\NormalTok{(b[idx] }\SpecialCharTok{*}\NormalTok{ (dat}\SpecialCharTok{$}\NormalTok{x }\SpecialCharTok{{-}}\NormalTok{ a[idx]))}
+\NormalTok{sim\_k }\OtherTok{\textless{}{-}} \FunctionTok{rbinom}\NormalTok{(n\_obs, dat}\SpecialCharTok{$}\NormalTok{n, probs)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1593,9 +1609,9 @@ We now fit the model to the simulated data.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{sim_dat <-}\StringTok{ }\KeywordTok{with}\NormalTok{(av_dat, }\KeywordTok{list}\NormalTok{(}\DataTypeTok{N =}\NormalTok{ N, }\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{n =}\NormalTok{ n, }\DataTypeTok{k =}\NormalTok{ sim_k)) }
-\NormalTok{m041 <-}\StringTok{ }\NormalTok{rstan}\OperatorTok{::}\KeywordTok{sampling}\NormalTok{(m041_stan, }\DataTypeTok{data =}\NormalTok{ sim_dat, }
-                        \DataTypeTok{chains =} \DecValTok{4}\NormalTok{, }\DataTypeTok{cores =} \DecValTok{4}\NormalTok{, }\DataTypeTok{refresh =} \DecValTok{0}\NormalTok{)}
+\NormalTok{sim\_dat }\OtherTok{\textless{}{-}} \FunctionTok{with}\NormalTok{(av\_dat, }\FunctionTok{list}\NormalTok{(}\AttributeTok{N =}\NormalTok{ N, }\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{n =}\NormalTok{ n, }\AttributeTok{k =}\NormalTok{ sim\_k)) }
+\NormalTok{m041 }\OtherTok{\textless{}{-}}\NormalTok{ rstan}\SpecialCharTok{::}\FunctionTok{sampling}\NormalTok{(m041\_stan, }\AttributeTok{data =}\NormalTok{ sim\_dat, }
+                        \AttributeTok{chains =} \DecValTok{4}\NormalTok{, }\AttributeTok{cores =} \DecValTok{4}\NormalTok{, }\AttributeTok{refresh =} \DecValTok{0}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1609,16 +1625,16 @@ To check the basic diagnostics of the model, we run the following code.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{check_hmc_diagnostics}\NormalTok{(m041)}
-\CommentTok{#> }
-\CommentTok{#> Divergences:}
-\CommentTok{#> 0 of 4000 iterations ended with a divergence.}
-\CommentTok{#> }
-\CommentTok{#> Tree depth:}
-\CommentTok{#> 0 of 4000 iterations saturated the maximum tree depth of 10.}
-\CommentTok{#> }
-\CommentTok{#> Energy:}
-\CommentTok{#> E-BFMI indicated no pathological behavior.}
+\FunctionTok{check\_hmc\_diagnostics}\NormalTok{(m041)}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Divergences:}
+\CommentTok{\#\textgreater{} 0 of 4000 iterations ended with a divergence.}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Tree depth:}
+\CommentTok{\#\textgreater{} 0 of 4000 iterations saturated the maximum tree depth of 10.}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Energy:}
+\CommentTok{\#\textgreater{} E{-}BFMI indicated no pathological behavior.}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1652,8 +1668,8 @@ All of the work up until now has been done without peaking at the observed data.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{m041 <-}\StringTok{ }\KeywordTok{sampling}\NormalTok{(m041_stan, }\DataTypeTok{data =}\NormalTok{ obs_dat, }
-                 \DataTypeTok{chains =} \DecValTok{4}\NormalTok{, }\DataTypeTok{cores =} \DecValTok{4}\NormalTok{, }\DataTypeTok{refresh =} \DecValTok{200}\NormalTok{)}
+\NormalTok{m041 }\OtherTok{\textless{}{-}} \FunctionTok{sampling}\NormalTok{(m041\_stan, }\AttributeTok{data =}\NormalTok{ obs\_dat, }
+                 \AttributeTok{chains =} \DecValTok{4}\NormalTok{, }\AttributeTok{cores =} \DecValTok{4}\NormalTok{, }\AttributeTok{refresh =} \DecValTok{200}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1667,16 +1683,16 @@ Here we repeat the diagnostic checks that were used after fitting the simulated 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{check_hmc_diagnostics}\NormalTok{(m041)}
-\CommentTok{#> }
-\CommentTok{#> Divergences:}
-\CommentTok{#> 0 of 4000 iterations ended with a divergence.}
-\CommentTok{#> }
-\CommentTok{#> Tree depth:}
-\CommentTok{#> 0 of 4000 iterations saturated the maximum tree depth of 10.}
-\CommentTok{#> }
-\CommentTok{#> Energy:}
-\CommentTok{#> E-BFMI indicated no pathological behavior.}
+\FunctionTok{check\_hmc\_diagnostics}\NormalTok{(m041)}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Divergences:}
+\CommentTok{\#\textgreater{} 0 of 4000 iterations ended with a divergence.}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Tree depth:}
+\CommentTok{\#\textgreater{} 0 of 4000 iterations saturated the maximum tree depth of 10.}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Energy:}
+\CommentTok{\#\textgreater{} E{-}BFMI indicated no pathological behavior.}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1717,8 +1733,8 @@ It is time to run the posterior samples through the summary functions and then p
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{posterior_pss <-}\StringTok{ }\KeywordTok{Q}\NormalTok{(}\FloatTok{0.5}\NormalTok{, p041}\OperatorTok{$}\NormalTok{alpha, p041}\OperatorTok{$}\NormalTok{beta)}
-\NormalTok{posterior_jnd <-}\StringTok{ }\KeywordTok{Q}\NormalTok{(}\FloatTok{0.84}\NormalTok{, p041}\OperatorTok{$}\NormalTok{alpha, p041}\OperatorTok{$}\NormalTok{beta) }\OperatorTok{-}\StringTok{ }\NormalTok{posterior_pss}
+\NormalTok{posterior\_pss }\OtherTok{\textless{}{-}} \FunctionTok{Q}\NormalTok{(}\FloatTok{0.5}\NormalTok{, p041}\SpecialCharTok{$}\NormalTok{alpha, p041}\SpecialCharTok{$}\NormalTok{beta)}
+\NormalTok{posterior\_jnd }\OtherTok{\textless{}{-}} \FunctionTok{Q}\NormalTok{(}\FloatTok{0.84}\NormalTok{, p041}\SpecialCharTok{$}\NormalTok{alpha, p041}\SpecialCharTok{$}\NormalTok{beta) }\SpecialCharTok{{-}}\NormalTok{ posterior\_pss}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1752,11 +1768,11 @@ Next we sample parameter values from the posterior distribution and use them to 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{alpha <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(p041}\OperatorTok{$}\NormalTok{alpha, n_obs, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{)}
-\NormalTok{beta  <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(p041}\OperatorTok{$}\NormalTok{beta, n_obs, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{)}
-\NormalTok{logodds <-}\StringTok{ }\NormalTok{beta }\OperatorTok{*}\StringTok{ }\NormalTok{(av_dat}\OperatorTok{$}\NormalTok{x }\OperatorTok{-}\StringTok{ }\NormalTok{alpha)}
-\NormalTok{probs <-}\StringTok{ }\KeywordTok{logistic}\NormalTok{(logodds)}
-\NormalTok{sim_k <-}\StringTok{ }\KeywordTok{rbinom}\NormalTok{(n_obs, av_dat}\OperatorTok{$}\NormalTok{n, probs)}
+\NormalTok{alpha }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(p041}\SpecialCharTok{$}\NormalTok{alpha, n\_obs, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{beta  }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(p041}\SpecialCharTok{$}\NormalTok{beta, n\_obs, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{logodds }\OtherTok{\textless{}{-}}\NormalTok{ beta }\SpecialCharTok{*}\NormalTok{ (av\_dat}\SpecialCharTok{$}\NormalTok{x }\SpecialCharTok{{-}}\NormalTok{ alpha)}
+\NormalTok{probs }\OtherTok{\textless{}{-}} \FunctionTok{logistic}\NormalTok{(logodds)}
+\NormalTok{sim\_k }\OtherTok{\textless{}{-}} \FunctionTok{rbinom}\NormalTok{(n\_obs, av\_dat}\SpecialCharTok{$}\NormalTok{n, probs)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1952,8 +1968,8 @@ We skip the prior checks and use the observed data to configure the algorithm an
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{m042 <-}\StringTok{ }\KeywordTok{sampling}\NormalTok{(m042_stan, }\DataTypeTok{data =}\NormalTok{ obs_dat, }\DataTypeTok{seed =} \DecValTok{124}\NormalTok{,}
-                 \DataTypeTok{chains =} \DecValTok{4}\NormalTok{, }\DataTypeTok{cores =} \DecValTok{4}\NormalTok{, }\DataTypeTok{refresh =} \DecValTok{100}\NormalTok{)}
+\NormalTok{m042 }\OtherTok{\textless{}{-}} \FunctionTok{sampling}\NormalTok{(m042\_stan, }\AttributeTok{data =}\NormalTok{ obs\_dat, }\AttributeTok{seed =} \DecValTok{124}\NormalTok{,}
+                 \AttributeTok{chains =} \DecValTok{4}\NormalTok{, }\AttributeTok{cores =} \DecValTok{4}\NormalTok{, }\AttributeTok{refresh =} \DecValTok{100}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1965,17 +1981,17 @@ We skip the prior checks and use the observed data to configure the algorithm an
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{check_hmc_diagnostics}\NormalTok{(m042)}
-\CommentTok{#> }
-\CommentTok{#> Divergences:}
-\CommentTok{#> 4 of 4000 iterations ended with a divergence (0.1%).}
-\CommentTok{#> Try increasing 'adapt_delta' to remove the divergences.}
-\CommentTok{#> }
-\CommentTok{#> Tree depth:}
-\CommentTok{#> 0 of 4000 iterations saturated the maximum tree depth of 10.}
-\CommentTok{#> }
-\CommentTok{#> Energy:}
-\CommentTok{#> E-BFMI indicated no pathological behavior.}
+\FunctionTok{check\_hmc\_diagnostics}\NormalTok{(m042)}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Divergences:}
+\CommentTok{\#\textgreater{} 4 of 4000 iterations ended with a divergence (0.1\%).}
+\CommentTok{\#\textgreater{} Try increasing \textquotesingle{}adapt\_delta\textquotesingle{} to remove the divergences.}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Tree depth:}
+\CommentTok{\#\textgreater{} 0 of 4000 iterations saturated the maximum tree depth of 10.}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Energy:}
+\CommentTok{\#\textgreater{} E{-}BFMI indicated no pathological behavior.}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2044,11 +2060,11 @@ As an aside, a multilevel model can be fit in \texttt{R} using \texttt{lme4::glm
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{f <-}\StringTok{ }\KeywordTok{formula}\NormalTok{(k}\OperatorTok{|}\NormalTok{n }\OperatorTok{~}\StringTok{ }\DecValTok{1} \OperatorTok{+}\StringTok{ }\NormalTok{x }\OperatorTok{+}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{+}\StringTok{ }\NormalTok{x }\OperatorTok{|}\StringTok{ }\NormalTok{G) }\OperatorTok{+}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{+}\StringTok{ }\NormalTok{x }\OperatorTok{|}\StringTok{ }\NormalTok{trt))}
+\NormalTok{f }\OtherTok{\textless{}{-}} \FunctionTok{formula}\NormalTok{(k}\SpecialCharTok{|}\NormalTok{n }\SpecialCharTok{\textasciitilde{}} \DecValTok{1} \SpecialCharTok{+}\NormalTok{ x }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{+}\NormalTok{ x }\SpecialCharTok{|}\NormalTok{ G) }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{+}\NormalTok{ x }\SpecialCharTok{|}\NormalTok{ trt))}
 
-\NormalTok{lme4}\OperatorTok{::}\KeywordTok{glmer}\NormalTok{(f, }\DataTypeTok{data =}\NormalTok{ data, }\DataTypeTok{family =} \KeywordTok{binomial}\NormalTok{(}\StringTok{"logit"}\NormalTok{))}
-\NormalTok{rstanarm}\OperatorTok{::}\KeywordTok{stan_glmer}\NormalTok{(f, }\DataTypeTok{data =}\NormalTok{ data, }\DataTypeTok{family =} \KeywordTok{binomial}\NormalTok{(}\StringTok{"logit"}\NormalTok{))}
-\NormalTok{brms}\OperatorTok{::}\KeywordTok{brm}\NormalTok{(f, }\DataTypeTok{data =}\NormalTok{ data, }\DataTypeTok{family =} \KeywordTok{binomial}\NormalTok{(}\StringTok{"logit"}\NormalTok{))}
+\NormalTok{lme4}\SpecialCharTok{::}\FunctionTok{glmer}\NormalTok{(f, }\AttributeTok{data =}\NormalTok{ data, }\AttributeTok{family =} \FunctionTok{binomial}\NormalTok{(}\StringTok{"logit"}\NormalTok{))}
+\NormalTok{rstanarm}\SpecialCharTok{::}\FunctionTok{stan\_glmer}\NormalTok{(f, }\AttributeTok{data =}\NormalTok{ data, }\AttributeTok{family =} \FunctionTok{binomial}\NormalTok{(}\StringTok{"logit"}\NormalTok{))}
+\NormalTok{brms}\SpecialCharTok{::}\FunctionTok{brm}\NormalTok{(f, }\AttributeTok{data =}\NormalTok{ data, }\AttributeTok{family =} \FunctionTok{binomial}\NormalTok{(}\StringTok{"logit"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2064,10 +2080,10 @@ This time we fit the model with the non-centered parameterization. Since this mo
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{m042nc <-}\StringTok{ }\KeywordTok{sampling}\NormalTok{(m042nc_stan, }\DataTypeTok{data =}\NormalTok{ obs_dat, }\DataTypeTok{seed =} \DecValTok{143}\NormalTok{,}
-                   \DataTypeTok{iter =} \DecValTok{4000}\NormalTok{, }\DataTypeTok{warmup =} \DecValTok{2000}\NormalTok{, }\DataTypeTok{pars =}\NormalTok{ keep_pars,}
-                   \DataTypeTok{control =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{adapt_delta =} \FloatTok{0.95}\NormalTok{), }\DataTypeTok{thin =} \DecValTok{2}\NormalTok{,}
-                   \DataTypeTok{chains =} \DecValTok{4}\NormalTok{, }\DataTypeTok{cores =} \DecValTok{4}\NormalTok{, }\DataTypeTok{refresh =} \DecValTok{100}\NormalTok{)}
+\NormalTok{m042nc }\OtherTok{\textless{}{-}} \FunctionTok{sampling}\NormalTok{(m042nc\_stan, }\AttributeTok{data =}\NormalTok{ obs\_dat, }\AttributeTok{seed =} \DecValTok{143}\NormalTok{,}
+                   \AttributeTok{iter =} \DecValTok{4000}\NormalTok{, }\AttributeTok{warmup =} \DecValTok{2000}\NormalTok{, }\AttributeTok{pars =}\NormalTok{ keep\_pars,}
+                   \AttributeTok{control =} \FunctionTok{list}\NormalTok{(}\AttributeTok{adapt\_delta =} \FloatTok{0.95}\NormalTok{), }\AttributeTok{thin =} \DecValTok{2}\NormalTok{,}
+                   \AttributeTok{chains =} \DecValTok{4}\NormalTok{, }\AttributeTok{cores =} \DecValTok{4}\NormalTok{, }\AttributeTok{refresh =} \DecValTok{100}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2079,17 +2095,17 @@ This time we fit the model with the non-centered parameterization. Since this mo
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{check_hmc_diagnostics}\NormalTok{(m042nc)}
-\CommentTok{#> }
-\CommentTok{#> Divergences:}
-\CommentTok{#> 32 of 4000 iterations ended with a divergence (0.8%).}
-\CommentTok{#> Try increasing 'adapt_delta' to remove the divergences.}
-\CommentTok{#> }
-\CommentTok{#> Tree depth:}
-\CommentTok{#> 0 of 4000 iterations saturated the maximum tree depth of 10.}
-\CommentTok{#> }
-\CommentTok{#> Energy:}
-\CommentTok{#> E-BFMI indicated no pathological behavior.}
+\FunctionTok{check\_hmc\_diagnostics}\NormalTok{(m042nc)}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Divergences:}
+\CommentTok{\#\textgreater{} 32 of 4000 iterations ended with a divergence (0.8\%).}
+\CommentTok{\#\textgreater{} Try increasing \textquotesingle{}adapt\_delta\textquotesingle{} to remove the divergences.}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Tree depth:}
+\CommentTok{\#\textgreater{} 0 of 4000 iterations saturated the maximum tree depth of 10.}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Energy:}
+\CommentTok{\#\textgreater{} E{-}BFMI indicated no pathological behavior.}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2216,10 +2232,10 @@ The posterior retrodictions for this model are going to be similar to the last i
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{vis_mle <-}\StringTok{ }\KeywordTok{glm}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(k, n}\OperatorTok{-}\NormalTok{k) }\OperatorTok{~}\StringTok{ }\DecValTok{0} \OperatorTok{+}\StringTok{ }\NormalTok{sid }\OperatorTok{+}\StringTok{ }\NormalTok{sid}\OperatorTok{:}\NormalTok{soa,}
-               \DataTypeTok{data =}\NormalTok{ visual_binomial, }
-               \DataTypeTok{family =} \KeywordTok{binomial}\NormalTok{(}\StringTok{"logit"}\NormalTok{),}
-               \DataTypeTok{subset =}\NormalTok{ trial }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"pre"}\NormalTok{, }\StringTok{"post1"}\NormalTok{))}
+\NormalTok{vis\_mle }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(k, n}\SpecialCharTok{{-}}\NormalTok{k) }\SpecialCharTok{\textasciitilde{}} \DecValTok{0} \SpecialCharTok{+}\NormalTok{ sid }\SpecialCharTok{+}\NormalTok{ sid}\SpecialCharTok{:}\NormalTok{soa,}
+               \AttributeTok{data =}\NormalTok{ visual\_binomial, }
+               \AttributeTok{family =} \FunctionTok{binomial}\NormalTok{(}\StringTok{"logit"}\NormalTok{),}
+               \AttributeTok{subset =}\NormalTok{ block }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"baseline"}\NormalTok{, }\StringTok{"adapt1"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2371,15 +2387,15 @@ When extracting the PSIS-LOO values, \texttt{loo} warns about some Pareto k diag
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{pareto_k_table}\NormalTok{(l044)}
-\CommentTok{#> Pareto k diagnostic values:}
-\CommentTok{#>                          Count Pct.    Min. n_eff}
-\CommentTok{#> (-Inf, 0.5]   (good)     2249  100.0%  1457      }
-\CommentTok{#>  (0.5, 0.7]   (ok)          1    0.0%  794       }
-\CommentTok{#>    (0.7, 1]   (bad)         0    0.0%  <NA>      }
-\CommentTok{#>    (1, Inf)   (very bad)    0    0.0%  <NA>      }
-\CommentTok{#> }
-\CommentTok{#> All Pareto k estimates are ok (k < 0.7).}
+\FunctionTok{pareto\_k\_table}\NormalTok{(l044)}
+\CommentTok{\#\textgreater{} Pareto k diagnostic values:}
+\CommentTok{\#\textgreater{}                          Count Pct.    Min. n\_eff}
+\CommentTok{\#\textgreater{} ({-}Inf, 0.5]   (good)     2249  100.0\%  1457      }
+\CommentTok{\#\textgreater{}  (0.5, 0.7]   (ok)          1    0.0\%  794       }
+\CommentTok{\#\textgreater{}    (0.7, 1]   (bad)         0    0.0\%  \textless{}NA\textgreater{}      }
+\CommentTok{\#\textgreater{}    (1, Inf)   (very bad)    0    0.0\%  \textless{}NA\textgreater{}      }
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} All Pareto k estimates are ok (k \textless{} 0.7).}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2470,9 +2486,9 @@ In lieu of posterior retrodictions (which would appear similar to those of the l
 \begin{verbatim}
 #> Pareto k diagnostic values:
 #>                          Count Pct.    Min. n_eff
-#> (-Inf, 0.5]   (good)     2174  96.6%   285       
-#>  (0.5, 0.7]   (ok)         63   2.8%   170       
-#>    (0.7, 1]   (bad)        13   0.6%   98        
+#> (-Inf, 0.5]   (good)     2182  97.0%   320       
+#>  (0.5, 0.7]   (ok)         52   2.3%   166       
+#>    (0.7, 1]   (bad)        16   0.7%   46        
 #>    (1, Inf)   (very bad)    0   0.0%   <NA>
 \end{verbatim}
 
@@ -2486,8 +2502,8 @@ In lieu of posterior retrodictions (which would appear similar to those of the l
 \toprule
 Model & elpd\_diff & se\_diff & elpd\_loo & p\_loo & se\_p\_loo\\
 \midrule
-With Subjects & 0.00 & 0.00 & -925.1 & 75.57 & 5.432\\
-Without Subjects & -75.96 & 19.13 & -1001.1 & 19.22 & 1.902\\
+With Subjects & 0.00 & 0.00 & -924.4 & 75.04 & 5.402\\
+Without Subjects & -76.75 & 19.29 & -1001.1 & 19.22 & 1.902\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -2530,7 +2546,7 @@ Across all age groups, temporal recalibration results in a negative shift toward
 \caption{Posterior distribution of PSS values for the audiovisual task. Left: Marginal over age group. Right: Marginal over block.}\label{fig:ch050-Beta-Lonesome}
 \end{figure}
 
-Now with the marginal of age group, the distribution of differences between pre- and post-adaptation blocks can be calculated. We could report a simple credible interval, but it almost seems disingenuous given that the entire distribution is available. We could report that the \(90\%\) highest posterior density interval (HPDI) of the difference is \((-0.036, 0.003)\), but consider the following figure instead (figure \ref{fig:ch050-Omega-Permanent}).
+Now with the marginal of age group, the distribution of differences between pre- and post-adaptation blocks can be calculated. We could report a simple credible interval, but it almost seems disingenuous given that the entire distribution is available. We could report that the \(90\%\) highest posterior density interval (HPDI) of the difference is \((-0.037, 0.002)\), but consider the following figure instead (figure \ref{fig:ch050-Omega-Permanent}).
 
 \begin{figure}
 
@@ -2730,20 +2746,20 @@ Again, this ranking is based on the mean (lower intrinsically meaning easier) an
 \toprule
 Task & Age Group & Pseudo Difficulty\\
 \midrule
-visual & Middle Age & 0.03\\
-visual & Young Adult & 0.03\\
-visual & Older Adult & 0.06\\
-audiovisual & Young Adult & 0.12\\
-audiovisual & Middle Age & 0.12\\
+visual & Middle & 0.03\\
+visual & Young & 0.03\\
+visual & Older & 0.06\\
+audiovisual & Young & 0.12\\
+audiovisual & Middle & 0.12\\
 \addlinespace
-duration & Middle Age & 0.14\\
-duration & Young Adult & 0.16\\
-duration & Older Adult & 0.17\\
-audiovisual & Older Adult & 0.17\\
-sensorimotor & Young Adult & 0.22\\
+duration & Middle & 0.14\\
+duration & Young & 0.16\\
+duration & Older & 0.17\\
+audiovisual & Older & 0.17\\
+sensorimotor & Young & 0.22\\
 \addlinespace
-sensorimotor & Middle Age & 0.24\\
-sensorimotor & Older Adult & 0.29\\
+sensorimotor & Middle & 0.24\\
+sensorimotor & Older & 0.29\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -2976,17 +2992,17 @@ We moved on to using \texttt{arm::bayesglm} to remove convergence issues, but we
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{rethinking}\OperatorTok{::}\KeywordTok{ulam}\NormalTok{(}\KeywordTok{alist}\NormalTok{(}
-\NormalTok{  k }\OperatorTok{~}\StringTok{ }\KeywordTok{binomial_logit}\NormalTok{(n, p),}
-  \DataTypeTok{p =} \KeywordTok{exp}\NormalTok{(b }\OperatorTok{+}\StringTok{ }\NormalTok{bG[G] }\OperatorTok{+}\StringTok{ }\NormalTok{bT[trt]) }\OperatorTok{*}\StringTok{ }\NormalTok{(x }\OperatorTok{-}\StringTok{ }\NormalTok{(a }\OperatorTok{+}\StringTok{ }\NormalTok{aG[G] }\OperatorTok{+}\StringTok{ }\NormalTok{aT[trt])),}
-\NormalTok{  a }\OperatorTok{~}\StringTok{ }\KeywordTok{normal}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.06}\NormalTok{),}
-\NormalTok{  aG[G] }\OperatorTok{~}\StringTok{ }\KeywordTok{normal}\NormalTok{(}\DecValTok{0}\NormalTok{, sd_aG),}
-\NormalTok{  aT[trt] }\OperatorTok{~}\StringTok{ }\KeywordTok{normal}\NormalTok{(}\DecValTok{0}\NormalTok{, sd_aT),}
-\NormalTok{  b }\OperatorTok{~}\StringTok{ }\KeywordTok{normal}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{),}
-\NormalTok{  bG[G] }\OperatorTok{~}\StringTok{ }\KeywordTok{normal}\NormalTok{(}\DecValTok{0}\NormalTok{, sd_bG),}
-\NormalTok{  bT[trt] }\OperatorTok{~}\StringTok{ }\KeywordTok{normal}\NormalTok{(}\DecValTok{0}\NormalTok{, sd_bT),}
-  \KeywordTok{c}\NormalTok{(sd_aG, sd_aT, sd_bG, sd_bT) }\OperatorTok{~}\StringTok{ }\KeywordTok{half_cauchy}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{)}
-\NormalTok{), }\DataTypeTok{data =}\NormalTok{ df, }\DataTypeTok{chains =} \DecValTok{4}\NormalTok{, }\DataTypeTok{cores =} \DecValTok{4}\NormalTok{, }\DataTypeTok{log_lik =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{rethinking}\SpecialCharTok{::}\FunctionTok{ulam}\NormalTok{(}\FunctionTok{alist}\NormalTok{(}
+\NormalTok{  k }\SpecialCharTok{\textasciitilde{}} \FunctionTok{binomial\_logit}\NormalTok{(n, p),}
+  \AttributeTok{p =} \FunctionTok{exp}\NormalTok{(b }\SpecialCharTok{+}\NormalTok{ bG[G] }\SpecialCharTok{+}\NormalTok{ bT[trt]) }\SpecialCharTok{*}\NormalTok{ (x }\SpecialCharTok{{-}}\NormalTok{ (a }\SpecialCharTok{+}\NormalTok{ aG[G] }\SpecialCharTok{+}\NormalTok{ aT[trt])),}
+\NormalTok{  a }\SpecialCharTok{\textasciitilde{}} \FunctionTok{normal}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.06}\NormalTok{),}
+\NormalTok{  aG[G] }\SpecialCharTok{\textasciitilde{}} \FunctionTok{normal}\NormalTok{(}\DecValTok{0}\NormalTok{, sd\_aG),}
+\NormalTok{  aT[trt] }\SpecialCharTok{\textasciitilde{}} \FunctionTok{normal}\NormalTok{(}\DecValTok{0}\NormalTok{, sd\_aT),}
+\NormalTok{  b }\SpecialCharTok{\textasciitilde{}} \FunctionTok{normal}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{),}
+\NormalTok{  bG[G] }\SpecialCharTok{\textasciitilde{}} \FunctionTok{normal}\NormalTok{(}\DecValTok{0}\NormalTok{, sd\_bG),}
+\NormalTok{  bT[trt] }\SpecialCharTok{\textasciitilde{}} \FunctionTok{normal}\NormalTok{(}\DecValTok{0}\NormalTok{, sd\_bT),}
+  \FunctionTok{c}\NormalTok{(sd\_aG, sd\_aT, sd\_bG, sd\_bT) }\SpecialCharTok{\textasciitilde{}} \FunctionTok{half\_cauchy}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\NormalTok{), }\AttributeTok{data =}\NormalTok{ df, }\AttributeTok{chains =} \DecValTok{4}\NormalTok{, }\AttributeTok{cores =} \DecValTok{4}\NormalTok{, }\AttributeTok{log\_lik =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3087,17 +3103,17 @@ Since there is only a handful of irregular block names, they can be dealt with b
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{glimpse}\NormalTok{(features, }\DataTypeTok{width =} \DecValTok{60}\NormalTok{)}
-\CommentTok{#> Rows: 580}
-\CommentTok{#> Columns: 8}
-\CommentTok{#> $ rid       <fct> av-post1-M-f-CC, av-post1-M-f-DB, av-...}
-\CommentTok{#> $ sid       <fct> M-f-CC, M-f-DB, M-f-HG, M-f-JM, M-f-M...}
-\CommentTok{#> $ path      <chr> "Audiovisual/MiddleAge/CC/CCadapt1__M...}
-\CommentTok{#> $ task      <chr> "audiovisual", "audiovisual", "audiov...}
-\CommentTok{#> $ trial     <fct> post1, post1, post1, post1, post1, po...}
-\CommentTok{#> $ age_group <fct> middle_age, middle_age, middle_age, m...}
-\CommentTok{#> $ age       <dbl> 39, 44, 41, 48, 49, 43, 47, 49, 49, 4...}
-\CommentTok{#> $ sex       <fct> F, F, F, F, F, F, F, F, F, M, M, M, M...}
+\FunctionTok{glimpse}\NormalTok{(features, }\AttributeTok{width =} \DecValTok{60}\NormalTok{)}
+\CommentTok{\#\textgreater{} Rows: 580}
+\CommentTok{\#\textgreater{} Columns: 8}
+\CommentTok{\#\textgreater{} $ rid       \textless{}fct\textgreater{} av{-}post1{-}M{-}f{-}CC, av{-}post1{-}M{-}f{-}DB, av{-}pos\textasciitilde{}}
+\CommentTok{\#\textgreater{} $ sid       \textless{}fct\textgreater{} M{-}f{-}CC, M{-}f{-}DB, M{-}f{-}HG, M{-}f{-}JM, M{-}f{-}MS, \textasciitilde{}}
+\CommentTok{\#\textgreater{} $ path      \textless{}chr\textgreater{} "Audiovisual/MiddleAge/CC/CCadapt1\_\_MAT.\textasciitilde{}}
+\CommentTok{\#\textgreater{} $ task      \textless{}chr\textgreater{} "audiovisual", "audiovisual", "audiovisu\textasciitilde{}}
+\CommentTok{\#\textgreater{} $ trial     \textless{}fct\textgreater{} post1, post1, post1, post1, post1, post1\textasciitilde{}}
+\CommentTok{\#\textgreater{} $ age\_group \textless{}fct\textgreater{} middle\_age, middle\_age, middle\_age, midd\textasciitilde{}}
+\CommentTok{\#\textgreater{} $ age       \textless{}dbl\textgreater{} 39, 44, 41, 48, 49, 43, 47, 49, 49, 44, \textasciitilde{}}
+\CommentTok{\#\textgreater{} $ sex       \textless{}fct\textgreater{} F, F, F, F, F, F, F, F, F, M, M, M, M, M\textasciitilde{}}
 \end{Highlighting}
 \end{Shaded}
 

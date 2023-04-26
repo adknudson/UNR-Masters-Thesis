@@ -693,10 +693,10 @@ comp <- loo_compare(linear, quadratic, cubic, quartic)
 \toprule
 Model & elpd\_diff & se\_diff & p\_loo & looic\\
 \midrule
-Cubic & 0.0000 & 0.0000 & 2.832 & 18.67\\
-Quartic & -0.2284 & 0.7248 & 3.603 & 19.12\\
-Quadratic & -2.1277 & 1.4328 & 3.200 & 22.92\\
-Linear & -3.0593 & 1.7171 & 2.747 & 24.79\\
+Cubic & 0.0000 & 0.0000 & 2.494 & 18.16\\
+Quartic & -0.4658 & 0.8420 & 3.441 & 19.09\\
+Quadratic & -1.7136 & 0.9727 & 2.672 & 21.59\\
+Linear & -3.5928 & 2.0339 & 3.104 & 25.34\\
 \bottomrule
 \end{tabular}
 \end{table}

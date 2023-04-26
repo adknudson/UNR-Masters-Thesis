@@ -105,12 +105,12 @@ There are four different tasks in the experiment: audio-visual, visual-visual, v
 \centering
 \begin{tabular}[t]{rrllllrl}
 \toprule
-soa & response & sid & task & trial & age\_group & age & sex\\
+soa & response & sid & task & block & age\_group & age & sex\\
 \midrule
--350 & 0 & O-m-BC & audiovisual & pre & older\_adult & 70 & M\\
--200 & 0 & M-m-SJ & duration & post1 & middle\_age & 48 & M\\
-28 & 1 & O-f-KK & sensorimotor & pre & older\_adult & 66 & F\\
-275 & 1 & O-f-MW & visual & post1 & older\_adult & 69 & F\\
+-350 & 0 & O-m-BC & audiovisual & baseline & older & 70 & M\\
+200 & 1 & M-f-TW & visual & adapt1 & middle & 49 & F\\
+28 & 1 & O-f-KK & sensorimotor & baseline & older & 66 & F\\
+150 & 1 & Y-m-CB & duration & adapt1 & young & 22 & M\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -178,19 +178,19 @@ For the audiovisual task, the responses can be aggregated into binomial data -- 
 \centering
 \begin{tabular}[t]{lrrrr}
 \toprule
-trial & soa & n & k & proportion\\
+block & soa & n & k & proportion\\
 \midrule
  & 200 & 5 & 4 & 0.80\\
 \cmidrule{2-5}
  & 150 & 5 & 5 & 1.00\\
 \cmidrule{2-5}
-\multirow[t]{-3}{*}{\raggedright\arraybackslash pre} & -350 & 5 & 0 & 0.00\\
+\multirow[t]{-3}{*}{\raggedright\arraybackslash baseline} & -350 & 5 & 0 & 0.00\\
 \cmidrule{1-5}
  & 350 & 3 & 3 & 1.00\\
 \cmidrule{2-5}
  & -500 & 3 & 1 & 0.33\\
 \cmidrule{2-5}
-\multirow[t]{-3}{*}{\raggedright\arraybackslash post1} & -200 & 3 & 0 & 0.00\\
+\multirow[t]{-3}{*}{\raggedright\arraybackslash adapt1} & -200 & 3 & 0 & 0.00\\
 \bottomrule
 \end{tabular}
 \end{table}

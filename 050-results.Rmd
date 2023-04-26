@@ -458,7 +458,7 @@ multitask %>%
          is_neg = soa < 0,
          resp_pos = response == 1,
          resp_neg = response == 0) %>%
-  filter(is_pos | is_neg, trial %in% c("pre", "post1")) %>%
+  filter(is_pos | is_neg, block %in% c("baseline", "adapt1")) %>%
   mutate(correct = (is_pos & resp_pos) | (is_neg & resp_neg)) %>%
   group_by(task, age_group) %>%
   summarise(`Pseudo Difficulty` = 1 - mean(correct)) %>%
@@ -476,7 +476,7 @@ multitask %>%
 ```{r ch050-Shiny Creek}
 p044s_vis <- readRDS("models/p044s_vis.rds")
 age_sid <- visual_binomial %>%
-  filter(trial %in% c("pre", "post1")) %>%
+  filter(block %in% c("baseline", "adapt1")) %>%
   select(age_group, sid) %>%
   distinct()
 
@@ -538,8 +538,8 @@ plot_vis_sub <- function(n, i) {
 
 p044s_av <- readRDS("models/p044s_av.rds")
 age_sid2 <- audiovisual_binomial %>%
-  filter(trial %in% c("pre", "post1"),
-         rid != "av-post1-O-f-CE") %>%
+  filter(block %in% c("baseline", "adapt1"),
+         rid != "av-adapt1-O-f-CE") %>%
   select(age_group, sid) %>%
   distinct()
 

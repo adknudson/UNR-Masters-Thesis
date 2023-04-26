@@ -193,7 +193,7 @@ In the above expression, $\mathbb{Z}_0^+$ represents the set of non-negative int
 Then there are three categorical variables: age group, subject ID, and trial (block). The first two are treated as factor variables (also known as index variable or categorical variable). Rather than using one-hot encoding or dummy variables, the age levels are left as categories, and a coefficient is fit for each level. If dummy variables were used for all 45 subjects, there would be 44 dummy variables to work with times the number of coefficients that make estimates at the subject level. The number of parameters in the model grows rapidly as the model complexity grows.
 
 
-Age groups and individual subjects can be indexed in the same way that the number of trials is indexed. $S_i$ refers to the subject in record $i$, and similarly $G_i$ refers to the age group of that subject. Observation $63$ is for record ID av-post1-M-f-HG, so then $S_{63}$ is M-f-HG and $G_{63}$ is middle_age. Under the hood of `R`, these factor levels are represented as integers (e.g. middle age group level is stored internally as the number 2).
+Age groups and individual subjects can be indexed in the same way that the number of trials is indexed. $S_i$ refers to the subject in record $i$, and similarly $G_i$ refers to the age group of that subject. Observation $63$ is for record ID av-adapt1-M-f-HG, so then $S_{63}$ is M-f-HG and $G_{63}$ is middle. Under the hood of `R`, these factor levels are represented as integers (e.g. middle age group level is stored internally as the number 2).
 
 
 \setstretch{1.0}
@@ -1214,7 +1214,7 @@ The posterior retrodictions for this model are going to be similar to the last i
 vis_mle <- glm(cbind(k, n-k) ~ 0 + sid + sid:soa,
                data = visual_binomial, 
                family = binomial("logit"),
-               subset = trial %in% c("pre", "post1"))
+               subset = block %in% c("baseline", "adapt1"))
 ```
 \setstretch{2.0}
 
@@ -1527,9 +1527,9 @@ In lieu of posterior retrodictions (which would appear similar to those of the l
 ```
 #> Pareto k diagnostic values:
 #>                          Count Pct.    Min. n_eff
-#> (-Inf, 0.5]   (good)     2174  96.6%   285       
-#>  (0.5, 0.7]   (ok)         63   2.8%   170       
-#>    (0.7, 1]   (bad)        13   0.6%   98        
+#> (-Inf, 0.5]   (good)     2182  97.0%   320       
+#>  (0.5, 0.7]   (ok)         52   2.3%   166       
+#>    (0.7, 1]   (bad)        16   0.7%   46        
 #>    (1, Inf)   (very bad)    0   0.0%   <NA>
 ```
 \setstretch{2.0}
@@ -1543,8 +1543,8 @@ In lieu of posterior retrodictions (which would appear similar to those of the l
 \toprule
 Model & elpd\_diff & se\_diff & elpd\_loo & p\_loo & se\_p\_loo\\
 \midrule
-With Subjects & 0.00 & 0.00 & -925.1 & 75.57 & 5.432\\
-Without Subjects & -75.96 & 19.13 & -1001.1 & 19.22 & 1.902\\
+With Subjects & 0.00 & 0.00 & -924.4 & 75.04 & 5.402\\
+Without Subjects & -76.75 & 19.29 & -1001.1 & 19.22 & 1.902\\
 \bottomrule
 \end{tabular}
 \end{table}

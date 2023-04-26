@@ -48,7 +48,7 @@ Across all age groups, temporal recalibration results in a negative shift toward
 
 
 
-Now with the marginal of age group, the distribution of differences between pre- and post-adaptation blocks can be calculated. We could report a simple credible interval, but it almost seems disingenuous given that the entire distribution is available. We could report that the $90\%$ highest posterior density interval (HPDI) of the difference is  $(-0.036, 0.003)$, but consider the following figure instead (figure \@ref(fig:ch050-Omega-Permanent)).
+Now with the marginal of age group, the distribution of differences between pre- and post-adaptation blocks can be calculated. We could report a simple credible interval, but it almost seems disingenuous given that the entire distribution is available. We could report that the $90\%$ highest posterior density interval (HPDI) of the difference is  $(-0.037, 0.002)$, but consider the following figure instead (figure \@ref(fig:ch050-Omega-Permanent)).
 
 
 \begin{figure}
@@ -282,20 +282,20 @@ Again, this ranking is based on the mean (lower intrinsically meaning easier) an
 \toprule
 Task & Age Group & Pseudo Difficulty\\
 \midrule
-visual & Middle Age & 0.03\\
-visual & Young Adult & 0.03\\
-visual & Older Adult & 0.06\\
-audiovisual & Young Adult & 0.12\\
-audiovisual & Middle Age & 0.12\\
+visual & Middle & 0.03\\
+visual & Young & 0.03\\
+visual & Older & 0.06\\
+audiovisual & Young & 0.12\\
+audiovisual & Middle & 0.12\\
 \addlinespace
-duration & Middle Age & 0.14\\
-duration & Young Adult & 0.16\\
-duration & Older Adult & 0.17\\
-audiovisual & Older Adult & 0.17\\
-sensorimotor & Young Adult & 0.22\\
+duration & Middle & 0.14\\
+duration & Young & 0.16\\
+duration & Older & 0.17\\
+audiovisual & Older & 0.17\\
+sensorimotor & Young & 0.22\\
 \addlinespace
-sensorimotor & Middle Age & 0.24\\
-sensorimotor & Older Adult & 0.29\\
+sensorimotor & Middle & 0.24\\
+sensorimotor & Older & 0.29\\
 \bottomrule
 \end{tabular}
 \end{table}

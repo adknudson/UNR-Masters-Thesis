@@ -18,17 +18,17 @@ keep_pars <- c(
 
 obs_dat <- function(data) {
   dat <- data %>%
-    filter(trial %in% c("pre", "post1")) %>%
-    filter(rid != "av-post1-O-f-CE") %>%
+    filter(block %in% c("baseline", "adapt1")) %>%
+    filter(rid != "av-adapt1-O-f-CE") %>%
     mutate(x = soa / 1000,
            rid = factor(rid),
            sid = factor(sid),
-           trial = factor(trial)) %>%
+           block = factor(block)) %>%
     as.list()
   dat$N <- length(dat$x)
   dat$N_G <- length(levels(dat$age_group))
   dat$N_S <- length(levels(dat$sid))
-  dat$N_T <- length(levels(dat$trial))
+  dat$N_T <- length(levels(dat$block))
   dat
 }
 
@@ -43,7 +43,7 @@ stan_dat <- with(dat, list(
   n = n,
   # k = response,
   # n = rep(1, length(response)),
-  trt = as.integer(trial),
+  trt = as.integer(block),
   S = as.integer(sid)
 ))
 
@@ -89,7 +89,7 @@ stan_dat <- with(dat, list(
   n = n,
   # k = response,
   # n = rep(1, length(response)),
-  trt = as.integer(trial),
+  trt = as.integer(block),
   S = as.integer(sid)
 ))
 
@@ -135,7 +135,7 @@ stan_dat <- with(dat, list(
   n = n,
   # k = response,
   # n = rep(1, length(response)),
-  trt = as.integer(trial),
+  trt = as.integer(block),
   S = as.integer(sid)
 ))
 
@@ -182,7 +182,7 @@ stan_dat <- with(dat, list(
   # n = n,
   k = response,
   n = rep(1, length(response)),
-  trt = as.integer(trial),
+  trt = as.integer(block),
   S = as.integer(sid)
 ))
 
