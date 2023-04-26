@@ -84,33 +84,20 @@ Figure \@ref(fig:ch020-plot-ref-pf) highlights the features through which we stu
 ggplot(tibble(x = c(-4, 4), y = c(0, 1)), aes(x, y)) +
   geom_hline(yintercept = 0, lwd = 0.5) +
   geom_vline(xintercept = 0, lwd = 0.5) +
-  stat_function(fun = plogis, args = list(location = 1), size = 1.5, 
-                color = "steelblue") +
-  geom_segment(aes(x = 0, xend = qlogis(0.5, 1), y = 0.5, yend = 0.5),
-               lty = "dotted") +
-  geom_segment(aes(x = qlogis(0.5, 1), xend = qlogis(0.5, 1), y = 0, yend = 0.5),
-               lty = "dotted") +
-  geom_segment(aes(x = 0, xend = qlogis(0.84, 1), y = 0.84, yend = 0.84),
-               lty = "dotted") +
-  geom_segment(aes(x = qlogis(0.84, 1), xend = qlogis(0.84, 1), y = 0, yend = 0.84),
-               lty = "dotted") +
-  annotate("segment", x = qlogis(0.5, 1), xend = qlogis(0.84, 1), 
-           y = 0.25, yend = 0.25, size = 0.5, color = "gray32",
-           arrow = arrow(ends = "both", type = "closed")) +
+  stat_function(fun = plogis, args = list(location = 1), size = 1.5, color = "steelblue") +
+  geom_segment(aes(x = 0, xend = qlogis(0.5, 1), y = 0.5, yend = 0.5), lty = "dotted") +
+  geom_segment(aes(x = qlogis(0.5, 1), xend = qlogis(0.5, 1), y = 0, yend = 0.5), lty = "dotted") +
+  geom_segment(aes(x = 0, xend = qlogis(0.84, 1), y = 0.84, yend = 0.84), lty = "dotted") +
+  geom_segment(aes(x = qlogis(0.84, 1), xend = qlogis(0.84, 1), y = 0, yend = 0.84), lty = "dotted") +
+  annotate("segment", x = qlogis(0.5, 1), xend = qlogis(0.84, 1), y = 0.25, yend = 0.25, linewidth = 0.5, color = "gray32", arrow = arrow(ends = "both", type = "closed")) +
   annotate("label", x = mean(qlogis(c(0.5, 0.84), 1)), y = 0.25, label = "JND") +
-  annotate("segment", 
-           x = -1, xend = qlogis(0.5, 1),
-           y = 0.84, yend = 0.5, color = "gray32",
-           arrow = arrow(type = "closed")) +
+  annotate("segment", x = -1, xend = qlogis(0.5, 1), y = 0.84, yend = 0.5, color = "gray32", arrow = arrow(type = "closed")) +
   annotate("label", x = -1, y = 0.84, label = "PSS", hjust = 1, vjust = 0) +
-  annotate("segment", x = -2, xend = -1.5, 
-           y = 0.25, yend = plogis(-1.5, 1), color = "gray32",
-           arrow = arrow(type = "closed")) +
+  annotate("segment", x = -2, xend = -1.5, y = 0.25, yend = plogis(-1.5, 1), color = "gray32", arrow = arrow(type = "closed")) +
   annotate("label", x = -2, y = 0.25, label = "F(x)", vjust = 0, hjust = 1) +
   scale_y_continuous(breaks = c(0, 0.5, 0.84, 1.0)) +
   theme(axis.ticks.x = element_blank(), axis.text.x = element_blank()) +
-  labs(x = "Stimulus Intensity", y = "Response Probability",
-       title = "Components of the Psychometric Function, F") +
+  labs(x = "Stimulus Intensity", y = "Response Probability", title = "Components of the Psychometric Function, F") +
   theme_minimal()
 ```
 
@@ -127,7 +114,7 @@ There are four different tasks in the experiment: audio-visual, visual-visual, v
 ```{r ch020-multitask-data}
 set.seed(4)
 multitask %>%
-  filter(trial %in% c("pre", "post1")) %>%
+  filter(block %in% c("baseline", "adapt1")) %>%
   select(-rid) %>%
   group_by(task) %>%
   slice_sample(n = 1) %>%
@@ -179,7 +166,7 @@ The dependent variable in these TOJ experiments is the subject's perceived respo
 
 ```{r ch020-simple-response-soa-plot, fig.cap="Left: Simple plot of response vs. soa value. Center: A plot of response vs. soa with transparency. Right: A plot of proportions vs. soa with transparency."}
 p1 <- visual %>%
-  filter(trial == "pre") %>%
+  filter(block == "baseline") %>%
   ggplot(aes(soa, response)) +
   geom_point(size = 2) +
   theme(axis.title.y = element_blank(),
@@ -187,7 +174,7 @@ p1 <- visual %>%
   theme_minimal()
 
 p2 <- visual %>%
-  filter(trial == "pre") %>%
+  filter(block == "baseline") %>%
   ggplot(aes(soa, response)) +
   geom_point(size = 2, alpha = 0.05) +
   theme(axis.title.y = element_blank(),
@@ -195,7 +182,7 @@ p2 <- visual %>%
   theme_minimal()
 
 p3 <- visual_binomial %>%
-  filter(trial == "pre") %>%
+  filter(block == "baseline") %>%
   mutate(p = k / n) %>%
   ggplot(aes(soa, p)) +
   geom_point(size = 2, alpha = 0.05) +
@@ -219,11 +206,11 @@ For the audiovisual task, the responses can be aggregated into binomial data -- 
 set.seed(5)
 audiovisual_binomial %>%
   select(-rid) %>%
-  filter(trial %in% c("pre", "post1")) %>%
-  group_by(trial) %>%
+  filter(block %in% c("baseline", "adapt1")) %>%
+  group_by(block) %>%
   slice_sample(n = 3) %>%
   ungroup() %>%
-  select(trial, soa, n, k) %>%
+  select(block, soa, n, k) %>%
   mutate(proportion = k / n) %>%
   kable(digits = 2, booktabs = TRUE,
         caption = "Audiovisual task with aggregated responses.") %>%
@@ -237,7 +224,7 @@ There is one younger subject that did not complete the audiovisual task, and one
 
 ```{r ch020-av-post1-O-f-CE-plot, fig.cap="Post-adaptation response data for O-f-CE"}
 audiovisual_binomial %>%
-  filter(rid == "av-post1-O-f-CE") %>%
+  filter(rid == "av-adapt1-O-f-CE") %>%
   mutate(p = k / n) %>%
   ggplot(aes(soa, p)) +
   geom_point(size = 2, alpha = 0.9) + 
@@ -254,7 +241,7 @@ Of all the negative SOAs, there were only two "correct" responses (the perceived
 
 ```{r ch020-av-post-neg-trials, fig.asp=1, fig.cap="Proportion of correct responses for negative SOA values during the post-adaptation audiovisual experiment."}
 audiovisual %>%
-  filter(trial == "post1", soa < 0) %>%
+  filter(block == "adapt1", soa < 0) %>%
   mutate(is_neg = soa < 0,
          neg_resp = !as.logical(response),
          correct = is_neg & neg_resp,
