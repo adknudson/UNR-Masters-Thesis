@@ -7,7 +7,7 @@ site: bookdown::bookdown_site
 bibliography: [bibliography.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-github-repo: adkudson/thesis
+github-repo: adkudson/UNR-Masters-Thesis
 ---
 
 ```{r ch010-setup, include=FALSE}
@@ -18,7 +18,7 @@ knitr::write_bib(c(
   'loo',
   'patchwork',
   'rstan', 
-  'rstanarm', 
+  'rstanarm',
   'rethinking', 
   'stats' 
 ), 'packages.bib', width = 80)
