@@ -1,3 +1,11 @@
+```{r ch200-Setup, include=FALSE}
+# load these libraries so that renv snapshots them 
+# and so they can be used in the bibliography
+library(rstanarm)
+library(arm)
+```
+
+
 # (APPENDIX) Appendix {-}
 
 
