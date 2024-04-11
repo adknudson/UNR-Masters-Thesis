@@ -1,0 +1,75 @@
+---
+title: "A Bayesian Multilevel Model for the Psychometric Function using R and Stan"
+author: "Alexander D. Knudson"
+advisor: "A. Grant Schissler"
+date: "December, 2020"
+site: bookdown::bookdown_site
+bibliography: [bibliography.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: adkudson/UNR-Masters-Thesis
+---
+
+
+
+
+# Introduction {#intro}
+
+
+With the advances in computational power and the wide palette of statistical tools, statistical methods have evolved to be more flexible and expressive. Conventional modeling tools, such as p-values from classical regression coefficient testings for step-wise variable selection, are being replaced by recently available modeling strategies founded on principles, and informed decisions allow for creating bespoke models and domain-driven analyses.
+
+
+Advances in computational power have lead to a resurrection in statistics where Bayesian modeling has gained an incredible following due, in part, to fully Bayesian statistical inference modeling tools like `Stan`. The steady adoption of computer aided statistical workflows also brings the need for multidisciplinary techniques from numerical analysis, probability theory, statistics, computer science, and visualizations. There has also been a recent push towards reproducible research which ties in concepts of modular design, principled workflows, version control, and literate programming.
+
+
+A common neuroscience topic is to detect the temporal order of two stimuli, and is often studied via a logistic model called a psychometric function. These studies are often interested in making inferences at the group level (age, gender, etc.) and at an individual level. Conventional practice is to use simple models that are easy to fit, but inflexible and vulnerable to fitting issues in the situation of complete separation. Bayesian multilevel models are flexible and easy to interpret, yet are not broadly adopted among practitioners. We describe a model selection process in a principled workflow, including specifying priors and implementing adaptive pooling. Then we propose and develop specialized quantities of interest and study their operating characteristics. In the development of the model we conduct prior predictive simulations studies into these proposed quantities of interest that provide insights into experimental design considerations. We discuss in detail a case study of real and previously unpublished data from a small-scale preliminary study.
+
+
+## Conventional (classical) statistics
+
+
+Regression techniques commonly rely on maximum likelihood estimation (MLE) of parameters, and there are numerous resources on the subject of linear regression and MLE [@johnson2002applied; @larsen2005introduction; @sheather2009modern; @navidi2015statistics]. Most introductory courses on statistics and regression describe frequentist-centered methods and estimation such as MLE, data transformations, hypothesis testing, residual analysis/goodness-of-fit tests, and model variable selection through coefficient testing. While these methods are well studied and broadly applied (largely due to software availability and domain traditions), the injudicious use of classical hypothesis testing and associated p-values has lead to sub-optimal model selection/comparison -- such as omission of truly influential variables or the inclusion of confounding variables. Variable selection through step-wise algorithms or penalized maximum likelihood estimation [@hoerl1970ridge; @tibshirani1996regression] may be appropriate in an exploratory data analysis, but fail to produce quality predictions or determine the most statistically important associations with an outcome variable.
+
+
+Bayesian statistics (or inverse probability as it was once called) has a long history, with origins prior to now "classical" statistical methods of R.A. Fisher and Karl Pearson developed during the 1930s [@fisher1934statistical]. These researchers thought Bayesian statistics was founded on a logical error and should be "wholly rejected". Later, the foundational work of Dennis Lindley [@lindley2000philosophy] refuted these ideas. However, the widespread acceptance of classical methods was already underway as Fisher developed a robust theory of MLE, made possible through normal approximations, that dominates statistical inference to this day. This was in part due to philosophical reasons, but also due to a limited class of Bayesian models that could actually be conducted in a real data analysis.
+
+
+## Bayesian statistics
+
+
+In contrast to frequentist methods that use the fanciful idea of an infinite sampling process, Bayes' Theorem (Equation \@ref(eq:bayesthm)) offers a philosophically coherent procedure to learn from data. It is a simple restatement of conditional probability with deep and powerful consequences. From a Bayesian standpoint, we model all quantities as having a (joint) probability distribution, since we are uncertain of their values. The goal is to update our current state of information (the prior) with the incoming data (given its likelihood) to receive an entire probability distribution reflecting our new beliefs (the posterior), with all modeling assumptions made explicit.
+
+
+\begin{equation}
+  \pi(\theta | data) = \frac{\pi(data | \theta) \pi(\theta)}{\int_\Omega \pi(data | \theta) \pi(\theta) d\theta}
+  (\#eq:bayesthm)
+\end{equation}
+
+
+Prior knowledge must be stated explicitly in a given model and the entire posterior distribution is available to summarize, visualize, and draw inferences from.  The prior $\pi(\theta)$ is some distribution over the parameter space and the likelihood $\pi(data | \theta)$ is the probability of an outcome in the sample space given a value in the parameter space.
+
+
+Since the posterior is probability distribution, the sum or integral over the parameter space must evaluate to one. Because of this constraint, the denominator in \@ref(eq:bayesthm) acts as a scale factor to ensure that the posterior is valid. Computing this integral for multiple parameters was the major roadblock to the practical application of Bayesian statistics, but as we describe below, using computers to execute cleverly designed algorithms, the denominator need not be evaluated. Further, since it evaluates to a constant, it is generally omitted. And so Bayes' Theorem can be informally restated as "the posterior is proportional to the prior times the likelihood":
+
+
+$$\pi(\theta \vert data) \propto \pi(\theta) \times \pi(data \vert \theta)$$.
+
+
+## Markov Chain Monte Carlo enables modern Bayesian models
+
+
+For simple models, the posterior distribution can sometimes be evaluated analytically, but often it happens that the integral in the denominator is complex or of a high dimension. In the former situation, the integral may not be possible to evaluate, and in the latter there may not be enough computational resources in the world to perform a simple numerical approximation.
+
+
+A solution is to use Markov Chain Monte Carlo (MCMC) simulations to draw samples from the posterior distribution in a way that samples proportional to the density. This sampling is a form of an approximation to the integral in the denominator of \@ref(eq:bayesthm). Rejection sampling [@gilks1992adaptive] and slice sampling [@neal2003slice] are basic methods for sampling from a target distribution, however they can often be inefficient -- large proportion of rejected samples. Gibbs sampling and the Metropolis-Hastings algorithm are more efficient [@chib1995understanding], but do not scale well for models with hundreds or thousands of parameters.
+
+
+Hamiltonian Monte Carlo (HMC) simulation is the current state-of-the-art as a general-purpose Bayesian inference algorithm, motivated by a particle simulation, to sample the posterior. In particular, HMC and its variants sample high-dimensional probability spaces with high efficiency, and also comes with informative diagnostic tools that indicate when the sampler is having trouble efficiently exploring the posterior. `Stan` is a probabilistic programming language (PPL) with an `R` interface that uses Hamiltonian dynamics to conduct Bayesian statistical inference [@R-rstan].
+
+
+In the chapters to come, we produce a novel statistical model for temporal order judgment data by following a principled workflow to fit a series of Bayesian models efficiently using Hamiltonian Monte Carlo.
+
+
+## Organization
+
+This paper is organized as follows: [Chapter 2](#methods) goes over the modeling background, including model fitting, checking, and evaluating predictive performance. [Chapter 3](#data) introduces the background for psychometric experiments, the motivating temporal order judgment data, and quirks about visualizing the data. In [chapter 4](#application) we apply the Bayesian modeling workflow adopted by members of the Stan community, and provide rationale for model parameterization and selection of priors. In [chapter 5](#results) we present the results of the model and the inferences we can draw. In chapter [chapter 6](#conclusion) we discuss experimental design considerations, future work, and finish with concluding remarks.

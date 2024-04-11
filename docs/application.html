@@ -1,0 +1,2068 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Bayesian Multilevel Modeling of the Psychometric Function | A Bayesian Multilevel Model for the Psychometric Function using R and Stan</title>
+  <meta name="description" content="4 Bayesian Multilevel Modeling of the Psychometric Function | A Bayesian Multilevel Model for the Psychometric Function using R and Stan" />
+  <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Bayesian Multilevel Modeling of the Psychometric Function | A Bayesian Multilevel Model for the Psychometric Function using R and Stan" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta name="github-repo" content="adkudson/UNR-Masters-Thesis" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Bayesian Multilevel Modeling of the Psychometric Function | A Bayesian Multilevel Model for the Psychometric Function using R and Stan" />
+  
+  
+  
+
+<meta name="author" content="Alexander D. Knudson" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="data.html"/>
+<link rel="next" href="results.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#conventional-classical-statistics"><i class="fa fa-check"></i><b>1.1</b> Conventional (classical) statistics</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#bayesian-statistics"><i class="fa fa-check"></i><b>1.2</b> Bayesian statistics</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#markov-chain-monte-carlo-enables-modern-bayesian-models"><i class="fa fa-check"></i><b>1.3</b> Markov Chain Monte Carlo enables modern Bayesian models</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#organization"><i class="fa fa-check"></i><b>1.4</b> Organization</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>2</b> Background</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="methods.html"><a href="methods.html#glms"><i class="fa fa-check"></i><b>2.1</b> Fitting the psychometric function using GLMs</a></li>
+<li class="chapter" data-level="2.2" data-path="methods.html"><a href="methods.html#multilevel-modeling"><i class="fa fa-check"></i><b>2.2</b> Multilevel modeling</a></li>
+<li class="chapter" data-level="2.3" data-path="methods.html"><a href="methods.html#hamiltonian-monte-carlo-and-nuts"><i class="fa fa-check"></i><b>2.3</b> Hamiltonian Monte Carlo and NUTS</a></li>
+<li class="chapter" data-level="2.4" data-path="methods.html"><a href="methods.html#non-centered-parameterization"><i class="fa fa-check"></i><b>2.4</b> Non-centered parameterization</a></li>
+<li class="chapter" data-level="2.5" data-path="methods.html"><a href="methods.html#model-checking"><i class="fa fa-check"></i><b>2.5</b> Methods for model checking</a></li>
+<li class="chapter" data-level="2.6" data-path="methods.html"><a href="methods.html#estimating-predictive-performance"><i class="fa fa-check"></i><b>2.6</b> Estimating predictive performance</a></li>
+<li class="chapter" data-level="2.7" data-path="methods.html"><a href="methods.html#a-modern-principled-bayesian-modeling-workflow"><i class="fa fa-check"></i><b>2.7</b> A modern principled bayesian modeling workflow</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>3</b> Motivating data</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#psycho-experiments"><i class="fa fa-check"></i><b>3.1</b> Psychometric experiments</a></li>
+<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#toj-task"><i class="fa fa-check"></i><b>3.2</b> Temporal order judgment tasks</a></li>
+<li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#data-visualization-and-quirks"><i class="fa fa-check"></i><b>3.3</b> Data visualization and quirks</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="application.html"><a href="application.html"><i class="fa fa-check"></i><b>4</b> Bayesian Multilevel Modeling of the Psychometric Function</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="application.html"><a href="application.html#psych-quant"><i class="fa fa-check"></i><b>4.1</b> Modeling psychometric quantities</a></li>
+<li class="chapter" data-level="4.2" data-path="application.html"><a href="application.html#iter1"><i class="fa fa-check"></i><b>4.2</b> Iteration 1: base model</a></li>
+<li class="chapter" data-level="4.3" data-path="application.html"><a href="application.html#iter2"><i class="fa fa-check"></i><b>4.3</b> Iteration 2: adding age and block</a></li>
+<li class="chapter" data-level="4.4" data-path="application.html"><a href="application.html#iter3"><i class="fa fa-check"></i><b>4.4</b> Iteration 3: adding age-block interaction</a></li>
+<li class="chapter" data-level="4.5" data-path="application.html"><a href="application.html#iter4"><i class="fa fa-check"></i><b>4.5</b> Iteration 4: adding a lapse rate</a></li>
+<li class="chapter" data-level="4.6" data-path="application.html"><a href="application.html#iter5"><i class="fa fa-check"></i><b>4.6</b> Iteration 5: adding subjects</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Psychometric Results</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#on-perceptual-synchrony"><i class="fa fa-check"></i><b>5.1</b> On Perceptual Synchrony</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#on-temporal-sensitivity"><i class="fa fa-check"></i><b>5.2</b> On Temporal Sensitivity</a></li>
+<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#lapse-rate-across-age-groups"><i class="fa fa-check"></i><b>5.3</b> Lapse Rate across Age Groups</a></li>
+<li class="chapter" data-level="5.4" data-path="results.html"><a href="results.html#subject-specific-inferences"><i class="fa fa-check"></i><b>5.4</b> Subject specific inferences</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Discussion and Conclusion</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="code.html"><a href="code.html"><i class="fa fa-check"></i><b>A</b> Supplementary Code</a></li>
+<li class="chapter" data-level="B" data-path="model-dev.html"><a href="model-dev.html"><i class="fa fa-check"></i><b>B</b> Developing a Model</a></li>
+<li class="chapter" data-level="C" data-path="reproduce.html"><a href="reproduce.html"><i class="fa fa-check"></i><b>C</b> Reproducible Results</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Bayesian Multilevel Model for the Psychometric Function using R and Stan</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="application" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> Bayesian Multilevel Modeling of the Psychometric Function<a href="application.html#application" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Now we apply the workflow to our data set, seeking to build a model that satisfies the four criteria in <a href="methods.html#methods">chapter 2</a>. During model refinement, we’ll pick up on the regular features while assessing the statistical significance of covariates through predictive comparison. In our final model, we’ll model well-known data quality issues (from participant lapses in judgment) and show that this improves model prediction.</p>
+<p>As we iterate through our model development workflow, we have a preference for multilevel models (for the reasons discussed in <a href="methods.html#methods">chapter 2</a>). Hierarchical models are a specific kind of multilevel model where one or more groups are nested within a larger one. In the case of the psychometric data, there are three age groups, and within each age group are individual subjects.</p>
+<div id="psych-quant" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Modeling psychometric quantities<a href="application.html#psych-quant" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Before formally conducting the workflow, we motivate our choice of using the logistic function to model the psychometric function as well as our choice for the parameterization of the linear predictor. Three common sigmoid functions are displayed in figure <a href="application.html#fig:ch040-pf-assortment">4.1</a>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch040-pf-assortment"></span>
+<img src="040-application_files/figure-html/ch040-pf-assortment-1.png" alt="Assortment of psychometric functions." width="85%" />
+<p class="caption">
+Figure 4.1: Assortment of psychometric functions.
+</p>
+</div>
+<p>The Weibull psychometric function is more common when it comes to 2-alternative forced choice (2-AFC) psychometric experiments where the independent variable is a stimulus intensity (non-negative) and the goal is signal detection. The data in this paper includes both positive and negative SOA values, so the Weibull is not a natural choice. Our first choice is the logistic function as it is the canonical choice for Binomial count data. The data in this study are exchangeable, meaning that the label of a positive response can be swapped with the label of a negative response and the inferences would remain the same. Since there is no natural ordering, it makes more sense for the psychometric function to be symmetric, e.g. the logistic function and Gaussian CDF. We use symmetric loosely to mean that the probability density function (PDF) has zero skewness. In practice, there is little difference in inferences between the logit and probit links, but computationally the logit link is more efficient.</p>
+<p>It is appropriate to provide additional background to GLMs and their role in working with psychometric functions. A GLM allows the linear model to be related to the outcome variable via a link function. An example of this is the logit link – the inverse of the logistic function. The logistic function, <span class="math inline">\(F\)</span>, takes <span class="math inline">\(x \in \mathbb{R}\)</span> and constrains the output to be in <span class="math inline">\((0, 1)\)</span>.</p>
+<p><span class="math display" id="eq:logistic">\[\begin{equation}
+  F(\theta) = \frac{1}{1 + \exp\left(-\theta\right)}
+  \tag{4.1}
+\end{equation}\]</span></p>
+<p>Since <span class="math inline">\(F\)</span> is a strictly increasing and continuous function, it has an inverse, and the link for <a href="application.html#eq:logistic">(4.1)</a> is the log-odds or logit function.</p>
+<p><span class="math display" id="eq:logit">\[\begin{equation}
+  F^{-1}(\pi) = \mathrm{logit}(\pi) = \ln\left(\frac{\pi}{1 - \pi}\right)
+  \tag{4.2}
+\end{equation}\]</span></p>
+<p>By taking <span class="math inline">\((F^{-1} \circ F)(\theta)\)</span> we can arrive at a relationship that is linear in <span class="math inline">\(\theta\)</span>.</p>
+<p><span class="math display">\[\begin{align*}
+  \pi = F(\theta) \Longleftrightarrow F^{-1}(\pi) &amp;= F^{-1}(F(\theta)) \\
+  &amp; = \ln\left(\frac{F(\theta)}{1 - F(\theta)}\right) \\
+  &amp;= \ln(F(\theta)) - \ln(1 - F(\theta)) \\
+  &amp;= \ln\left(\frac{1}{1 + \exp(-\theta)}\right) - \ln\left(\frac{\exp(-\theta)}{1 + \exp(-\theta)}\right) \\
+  &amp;= - \ln(1 + \exp(-\theta)) - \ln(\exp(-\theta)) + \ln(1 + \exp(-\theta)) \\
+  &amp;= - \ln(\exp(-\theta)) \\
+  &amp;= \theta
+\end{align*}\]</span>
+</p>
+<p>The motivation for this background is to show that a model for the psychometric function can be specified using a linear predictor, <span class="math inline">\(\theta\)</span>. Given a simple slope-intercept model, the linear predictor would typically be written as:</p>
+<p><span class="math display" id="eq:linearform1">\[\begin{equation}
+  \theta = \alpha + \beta x
+  \tag{4.3}
+\end{equation}\]</span></p>
+<p>This isn’t the only possible form; it could be written in the slope-location parameterization:</p>
+<p><span class="math display" id="eq:linearform2">\[\begin{equation}
+  \theta = \beta(x - a)
+  \tag{4.4}
+\end{equation}\]</span></p>
+<p>Both parameterizations will describe the same geometry, so why should it matter which form is chosen? The interpretation of the parameters change between the two models, but the reason becomes clear when we consider how the linear model relates back to the physical properties that the psychometric model describes. Take equation <a href="application.html#eq:linearform1">(4.3)</a>, substitute it in to <a href="application.html#eq:logistic">(4.1)</a>, and then take the logit of both sides:</p>
+<p><span class="math display" id="eq:pfform1">\[\begin{equation}
+  \mathrm{logit}(\pi) = \alpha+\beta x
+  \tag{4.5}
+\end{equation}\]</span></p>
+<p>Now recall that the PSS is defined as the SOA value such that the response probability, <span class="math inline">\(\pi\)</span>, is <span class="math inline">\(0.5\)</span>. Substituting <span class="math inline">\(\pi = 0.5\)</span> into <a href="application.html#eq:pfform1">(4.5)</a> and solving for <span class="math inline">\(x\)</span> yields:</p>
+<p><span class="math display">\[pss = -\frac{\alpha}{\beta}\]</span></p>
+<p>Similarly, the JND is defined as the difference between the SOA value at the 84% level and the PSS. Substituting <span class="math inline">\(\pi = 0.84\)</span> into <a href="application.html#eq:pfform1">(4.5)</a>, solving for <span class="math inline">\(x\)</span>, and subtracting off the pss yields:</p>
+<p><span class="math display" id="eq:jnd1">\[\begin{equation}
+  jnd = \frac{\mathrm{logit}(0.84)}{\beta}
+  \tag{4.6}
+\end{equation}\]</span></p>
+<p>From the conceptual analysis, it is easy to define priors for the PSS and JND, but then how does one set the priors for <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>? Let’s say the prior for the just noticeable difference is <span class="math inline">\(jnd \sim \pi_j\)</span>. Then the prior for <span class="math inline">\(\beta\)</span> would be:</p>
+<p><span class="math display">\[\beta \sim \frac{\mathrm{logit}(0.84)}{\pi_j}\]</span></p>
+<p>The log-normal distribution has a nice property where its multiplicative inverse is still a log-normal distribution. If we let <span class="math inline">\(\pi_j = \mathrm{Lognormal}(\mu, \sigma^2)\)</span>, then <span class="math inline">\(\beta\)</span> would be distributed as:</p>
+<p><span class="math display">\[
+\beta \sim \mathrm{Lognormal}(-\mu + \ln(\mathrm{logit}(0.84)), \sigma^2)
+\]</span></p>
+<p>This is acceptable as the slope must always be positive for this psychometric data, and a log-normal distribution constrains the support to positive real numbers. Next suppose that the prior distribution for the PSS is <span class="math inline">\(pss \sim \pi_p\)</span>. Then the prior for <span class="math inline">\(\alpha\)</span> is:</p>
+<p><span class="math display">\[\alpha \sim -\pi_p \cdot \beta\]</span></p>
+<p>If <span class="math inline">\(\pi_p\)</span> is set to a log-normal distribution as well, then <span class="math inline">\(\pi_p \cdot \beta\)</span> would also be log-normal, but there is still the problem of the negative sign. If <span class="math inline">\(\alpha\)</span> is always negative, then the PSS will also always be negative, which is certainly not always true. Furthermore, we don’t want to <em>a priori</em> put more weight on positive PSS values compared to negative ones.</p>
+<p>Let’s now consider using equation <a href="application.html#eq:linearform2">(4.4)</a> and repeat the above process.</p>
+<p><span class="math display" id="eq:pfform2">\[\begin{equation}
+  \mathrm{logit}(\pi) = \beta(x - a)
+  \tag{4.7}
+\end{equation}\]</span></p>
+<p>The just noticeable difference is still given by <a href="application.html#eq:jnd1">(4.6)</a>, and so the same method for choosing a prior can be used. However, the PSS is now given by:</p>
+<p><span class="math display">\[pss = \alpha\]</span></p>
+<p>This is a fortunate consequence of using <a href="application.html#eq:linearform2">(4.4)</a> because now the JND only depends on <span class="math inline">\(\beta\)</span> and the PSS only depends on <span class="math inline">\(\alpha\)</span>. Additionally <span class="math inline">\(\alpha\)</span> can be interpreted as the PSS of the estimated psychometric function. Also thrown in is the ability to set a prior for <span class="math inline">\(\alpha\)</span> that is symmetric around <span class="math inline">\(0\)</span> such as a Gaussian distribution.</p>
+<p>This also highlights the benefit of using a modeling language like <code>Stan</code> over others. For fitting GLMs in <code>R</code>, one can use <code>stats::glm</code> which utilizes MLE, or others such as <code>rstanarm::stan_glm</code> and <code>arm::bayesglm</code> that use Bayesian methods <span class="citation">(<a href="#ref-R-rstanarm">Gabry and Goodrich 2024</a>; <a href="#ref-R-arm">Gelman and Su 2024</a>)</span>. Each of these functions requires the linear predictor to be in the form of <a href="application.html#eq:linearform1">(4.3)</a>. The <code>stan_glm</code> function uses Stan in the back-end to fit a model, but is limited to priors from the Student-t family of distributions. By writing the model directly in <code>Stan</code>, the linear model can be parameterized in any way and with any prior distribution, and so allows for much more expressive modeling.</p>
+<p>With the consideration for the choice of sigmoid function and linear parameterization complete, we begin to develop a multilevel model for the psychometric function.</p>
+</div>
+<div id="iter1" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Iteration 1: base model<a href="application.html#iter1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Pre-Model, Pre-Data</strong></p>
+<p><em>Conceptual Analysis</em></p>
+<p>In section <a href="data.html#toj-task">3.2</a> we discussed the experimental setup and data collection. Subjects are presented with two stimuli separated by some temporal delay, and they are asked to respond as to their perception of the temporal order. There are 45 subjects with 15 each in the young, middle, and older age groups. As the SOA becomes larger in the positive direction, subjects are expected to give more “positive” responses, and as the SOA becomes larger in the negative direction, more “negative” responses are expected. By the way the experiment and responses are constructed, there is no expectation to see a reversal of this trend unless there was an issue with the subject’s understanding of the directions given to them or an error in the recording process.</p>
+<p>After the first experimental block the subjects go through a temporal recalibration period, and repeat the experiment. The interest is in seeing if the recalibration has an effect on temporal sensitivity and perceptual synchrony, and if the effect is different for each age group.</p>
+<p><em>Define Observational Space</em></p>
+<p>The response that subjects give during a TOJ task is recorded as a zero or a one, and their relative performance is determined by the SOA value. Let <span class="math inline">\(y\)</span> represent the binary outcome of a trial and let <span class="math inline">\(x\)</span> be the SOA value.</p>
+<p><span class="math display">\[\begin{align*}
+y_i &amp;\in \lbrace 0, 1\rbrace \\
+x_i &amp;\in \mathbb{R}
+\end{align*}\]</span>
+</p>
+<p>If the SOA values are fixed as in the audiovisual task, then the responses can be aggregated into Binomial counts, <span class="math inline">\(k\)</span>.</p>
+<p><span class="math display">\[k_i, n_i \in \mathbb{Z}_0^+, k_i \le n_i\]</span></p>
+<p>In the above expression, <span class="math inline">\(\mathbb{Z}_0^+\)</span> represents the set of non-negative integers. Notice that the number of trials <span class="math inline">\(n\)</span> has an index variable <span class="math inline">\(i\)</span>. This is because the number of trials per SOA is not fixed between blocks. In the pre-adaptation block, there are five trials per SOA compared to three in the post-adaptation block. So if observation <span class="math inline">\(32\)</span> is recorded during a “pre” block, <span class="math inline">\(n_{32} = 5\)</span>, and if observation <span class="math inline">\(1156\)</span> is during a “post” block, <span class="math inline">\(n_{1156} = 3\)</span>.</p>
+<p>Then there are three categorical variables: age group, subject ID, and trial (block). The first two are treated as factor variables (also known as index variable or categorical variable). Rather than using one-hot encoding or dummy variables, the age levels are left as categories, and a coefficient is fit for each level. If dummy variables were used for all 45 subjects, there would be 44 dummy variables to work with times the number of coefficients that make estimates at the subject level. The number of parameters in the model grows rapidly as the model complexity grows.</p>
+<p>Age groups and individual subjects can be indexed in the same way that the number of trials is indexed. <span class="math inline">\(S_i\)</span> refers to the subject in record <span class="math inline">\(i\)</span>, and similarly <span class="math inline">\(G_i\)</span> refers to the age group of that subject. Observation <span class="math inline">\(63\)</span> is for record ID av-adapt1-M-f-HG, so then <span class="math inline">\(S_{63}\)</span> is M-f-HG and <span class="math inline">\(G_{63}\)</span> is middle. Under the hood of <code>R</code>, these factor levels are represented as integers (e.g. middle age group level is stored internally as the number 2).</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="application.html#cb8-1" tabindex="-1"></a>(x <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>)))</span>
+<span id="cb8-2"><a href="application.html#cb8-2" tabindex="-1"></a><span class="co">#&gt; [1] a a b c</span></span>
+<span id="cb8-3"><a href="application.html#cb8-3" tabindex="-1"></a><span class="co">#&gt; Levels: a b c</span></span>
+<span id="cb8-4"><a href="application.html#cb8-4" tabindex="-1"></a><span class="fu">storage.mode</span>(x)</span>
+<span id="cb8-5"><a href="application.html#cb8-5" tabindex="-1"></a><span class="co">#&gt; [1] &quot;integer&quot;</span></span></code></pre></div>
+<p>This data storage representation can later be exploited for the <code>Stan</code> model.</p>
+<p>The pre- and post-adaptation categories are treated as a binary indicator referred to as <span class="math inline">\(trt\)</span> (short for treatment) since there are only two levels in the category. In this setup, a value of <span class="math inline">\(1\)</span> indicates a post-adaptation block. This encoding is chosen over the reverse because the pre-adaptation block is like the baseline performance, and it is more appropriate to interpret the post-adaptation block as turning on some effect. Using a binary indicator in a regression setting may not be the best practice as we discuss in section <a href="application.html#iter2">4.3</a>.</p>
+<p><em>Construct Summary Statistics</em></p>
+<p>A set of summary statistics are constructed that help answer the questions of domain expertise consistency and model adequacy. We are studying the affects of age and temporal recalibration through the PSS and JND (see section <a href="data.html#psycho-experiments">3.1</a>), so it is natural to define summary statistics around these quantities to verify model consistency.</p>
+<p>It is impossible that a properly conducted block would result in a JND less than 0 (the psychometric function is always non-decreasing), so that can be a lower limit for its threshold. It is also unlikely that the just noticeable difference would be more than a second. Some studies show that we cannot perceive time differences below 30 ms, and others show that an input lag as small as 100ms can impair a person’s typing ability. A time delay of 100ms is enough to notice, and so a just noticeable difference should be much less than one second – much closer to 100ms. We will continue to use one second as an extreme estimate indicator, but will incorporate this knowledge when it comes to selecting priors.</p>
+<p>The point of subjective simultaneity can be either positive or negative, with the belief that larger values are less likely. Some studies suggest that for audio-visual temporal order judgment tasks, the separation between stimuli need to be as little as 20ms for subjects to be able to determine which modality came first <span class="citation">(<a href="#ref-vatakis2007influence">Vatakis et al. 2007</a>)</span>. Other studies suggest that our brains can detect temporal differences as small as 30ms. If these values are to be believed then we should be skeptical of PSS estimates larger than say 150ms in absolute value, just to be safe.</p>
+<p>A histogram of computed PSS and JND values will suffice for summary statistics. We can estimate the proportion of values that fall outside of our limits defined above, and use them as indications of problems with the model fitting or conceptual understanding.</p>
+<p><strong>Post-Model, Pre-Data</strong></p>
+<p><em>Develop Model</em></p>
+<p>We begin with the simplest model that captures the structure of the data without including information about age group, treatment, or subject. Here is a simple model that draws information from the conceptual analysis:</p>
+<p><span class="math display">\[\begin{align*}
+  k_i &amp;\sim \mathrm{Binomial}(n_i, p_i) \\
+  \mathrm{logit}(p_i) &amp;= \beta ( x_i - \alpha )
+\end{align*}\]</span>
+</p>
+<p>Recall that we are using the linear model from <a href="application.html#eq:linearform2">(4.4)</a>. The PSS can be positive or negative without any expected bias towards either, so a symmetric distribution such as the Gaussian is a reasonable choice for <span class="math inline">\(\alpha\)</span>. We determined earlier that a PSS value more than 150ms in absolute value is unlikely, so we can define a Gaussian prior such that <span class="math inline">\(P(|pss| &gt; 0.150) \approx 0.01\)</span>. Since the prior does not need to be exact, the following mean and variance suffice:</p>
+<p><span class="math display">\[
+pss \sim \mathcal{N}(0, 0.06^2) \Longleftrightarrow \alpha \sim \mathcal{N}(0, 0.06^2)
+\]</span></p>
+<p>For the just noticeable difference, we continue to use the log-normal distribution because it is constrained to positive values and has the reciprocal property. The JND is expected to be close to 100ms and unlikely to exceed <span class="math inline">\(1\)</span> second. This implies a prior such that the mean is around 100ms and the bulk of the distribution is below 1 second. I.e. <span class="math inline">\(E[X] \approx 0.100\)</span> and <span class="math inline">\(P(X &lt; 1) \approx 0.99\)</span>. This requires solving a system of nonlinear equations in two variables:</p>
+<p><span class="math display">\[
+\begin{cases}
+0.100 &amp;= \exp\left(\mu + \sigma^2 / 2\right) \\
+0.99 &amp;= 0.5 + 0.5 \cdot \mathrm{erf}\left[\frac{\ln (1) - \mu}{\sqrt{2} \cdot \sigma}\right]
+\end{cases}
+\]</span>
+</p>
+<p>This nonlinear system can be solved using <code>Stan</code>’s algebraic solver (code provided in the <a href="code.html#code">appendix</a>).</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="application.html#cb9-1" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">sampling</span>(prior_jnd, </span>
+<span id="cb9-2"><a href="application.html#cb9-2" tabindex="-1"></a>                <span class="at">iter=</span><span class="dv">1</span>, <span class="at">warmup=</span><span class="dv">0</span>, <span class="at">chains=</span><span class="dv">1</span>, <span class="at">refresh=</span><span class="dv">0</span>,</span>
+<span id="cb9-3"><a href="application.html#cb9-3" tabindex="-1"></a>                <span class="at">seed=</span><span class="dv">31</span>, <span class="at">algorithm=</span><span class="st">&quot;Fixed_param&quot;</span>)</span>
+<span id="cb9-4"><a href="application.html#cb9-4" tabindex="-1"></a>sol <span class="ot">&lt;-</span> <span class="fu">extract</span>(fit)</span>
+<span id="cb9-5"><a href="application.html#cb9-5" tabindex="-1"></a>sol<span class="sc">$</span>y</span>
+<span id="cb9-6"><a href="application.html#cb9-6" tabindex="-1"></a><span class="co">#&gt;           </span></span>
+<span id="cb9-7"><a href="application.html#cb9-7" tabindex="-1"></a><span class="co">#&gt; iterations   [,1]  [,2]</span></span>
+<span id="cb9-8"><a href="application.html#cb9-8" tabindex="-1"></a><span class="co">#&gt;       [1,] -7.501 3.225</span></span></code></pre></div>
+<p>The solver has determined that <span class="math inline">\(\mathrm{Lognormal}(-7.5, 3.2^2)\)</span> is the appropriate prior. However, simulating some values from this distribution produces a lot of extremely small values (<span class="math inline">\(&lt;10^{-5}\)</span>) and a few extremely large values (<span class="math inline">\(\approx 10^2\)</span>). This is because the expected value of a log-normal random variable depends on both the mean and standard deviation. If the median is used in place for the mean, then a more acceptable prior may be determined.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="application.html#cb10-1" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">sampling</span>(prior_jnd_using_median, </span>
+<span id="cb10-2"><a href="application.html#cb10-2" tabindex="-1"></a>                <span class="at">iter=</span><span class="dv">1</span>, <span class="at">warmup=</span><span class="dv">0</span>, <span class="at">chains=</span><span class="dv">1</span>, <span class="at">refresh=</span><span class="dv">0</span>,</span>
+<span id="cb10-3"><a href="application.html#cb10-3" tabindex="-1"></a>                <span class="at">seed=</span><span class="dv">31</span>, <span class="at">algorithm=</span><span class="st">&quot;Fixed_param&quot;</span>)</span>
+<span id="cb10-4"><a href="application.html#cb10-4" tabindex="-1"></a>sol <span class="ot">&lt;-</span> <span class="fu">extract</span>(fit)</span>
+<span id="cb10-5"><a href="application.html#cb10-5" tabindex="-1"></a>sol<span class="sc">$</span>y</span>
+<span id="cb10-6"><a href="application.html#cb10-6" tabindex="-1"></a><span class="co">#&gt;           </span></span>
+<span id="cb10-7"><a href="application.html#cb10-7" tabindex="-1"></a><span class="co">#&gt; iterations   [,1]   [,2]</span></span>
+<span id="cb10-8"><a href="application.html#cb10-8" tabindex="-1"></a><span class="co">#&gt;       [1,] -2.303 0.9898</span></span></code></pre></div>
+<p>Sampling from a log-normal distribution with these parameters and plotting the histogram shows no inconsistency with the domain expertise.</p>
+<p><img src="040-application_files/figure-html/ch041-Risky-Lion-1.png" width="85%" style="display: block; margin: auto;" /></p>
+<p>With a prior for the JND, the prior for <span class="math inline">\(\beta\)</span> can be determined:</p>
+<p><span class="math display">\[
+jnd \sim \mathrm{Lognormal}(-2.3, 0.99^2) \Longleftrightarrow \frac{1}{jnd} \sim \mathrm{Lognormal}(2.3, 0.99^2)
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\beta = \frac{\mathrm{logit}(0.84)}{jnd} \sim \mathrm{Lognormal}(2.8, 0.99^2)
+\]</span></p>
+<p>The priors do not need to be too exact. Rounding the parameters for <span class="math inline">\(\beta\)</span>, the simple model is:</p>
+<p><span class="math display">\[\begin{align*}
+  k_i &amp;\sim \mathrm{Binomial}(n_i, p_i) \\
+  \mathrm{logit}(p_i) &amp;= \beta ( x_i - \alpha ) \\
+  \alpha &amp;\sim \mathcal{N}(0, 0.06^2) \\
+  \beta &amp;\sim \mathrm{Lognormal}(3, 1^2)
+\end{align*}\]</span></p>
+<p>and in <code>Stan</code>, the model code is:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode stan"><code class="sourceCode stan"><span id="cb11-1"><a href="application.html#cb11-1" tabindex="-1"></a><span class="kw">data</span> {</span>
+<span id="cb11-2"><a href="application.html#cb11-2" tabindex="-1"></a>  <span class="dt">int</span> N;</span>
+<span id="cb11-3"><a href="application.html#cb11-3" tabindex="-1"></a>  <span class="dt">int</span> n[N];</span>
+<span id="cb11-4"><a href="application.html#cb11-4" tabindex="-1"></a>  <span class="dt">int</span> k[N];</span>
+<span id="cb11-5"><a href="application.html#cb11-5" tabindex="-1"></a>  <span class="dt">vector</span>[N] x;</span>
+<span id="cb11-6"><a href="application.html#cb11-6" tabindex="-1"></a>}</span>
+<span id="cb11-7"><a href="application.html#cb11-7" tabindex="-1"></a><span class="kw">parameters</span> {</span>
+<span id="cb11-8"><a href="application.html#cb11-8" tabindex="-1"></a>  <span class="dt">real</span> alpha;</span>
+<span id="cb11-9"><a href="application.html#cb11-9" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; beta;</span>
+<span id="cb11-10"><a href="application.html#cb11-10" tabindex="-1"></a>}</span>
+<span id="cb11-11"><a href="application.html#cb11-11" tabindex="-1"></a><span class="kw">model</span> {</span>
+<span id="cb11-12"><a href="application.html#cb11-12" tabindex="-1"></a>  <span class="dt">vector</span>[N] p = beta * (x - alpha);</span>
+<span id="cb11-13"><a href="application.html#cb11-13" tabindex="-1"></a>  alpha ~ normal(<span class="dv">0</span>, <span class="fl">0.06</span>);</span>
+<span id="cb11-14"><a href="application.html#cb11-14" tabindex="-1"></a>  beta ~ lognormal(<span class="fl">3.0</span>, <span class="fl">1.0</span>);</span>
+<span id="cb11-15"><a href="application.html#cb11-15" tabindex="-1"></a>  k ~ binomial_logit(n, p);</span>
+<span id="cb11-16"><a href="application.html#cb11-16" tabindex="-1"></a>}</span>
+<span id="cb11-17"><a href="application.html#cb11-17" tabindex="-1"></a><span class="kw">generated quantities</span> {</span>
+<span id="cb11-18"><a href="application.html#cb11-18" tabindex="-1"></a>  <span class="dt">vector</span>[N] log_lik;</span>
+<span id="cb11-19"><a href="application.html#cb11-19" tabindex="-1"></a>  <span class="dt">vector</span>[N] k_pred;</span>
+<span id="cb11-20"><a href="application.html#cb11-20" tabindex="-1"></a>  <span class="dt">vector</span>[N] theta = beta * (x - alpha);</span>
+<span id="cb11-21"><a href="application.html#cb11-21" tabindex="-1"></a>  <span class="dt">vector</span>[N] p = inv_logit(theta);</span>
+<span id="cb11-22"><a href="application.html#cb11-22" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span>:N) {</span>
+<span id="cb11-23"><a href="application.html#cb11-23" tabindex="-1"></a>    log_lik[i] = binomial_logit_lpmf(k[i] | n[i], theta[i]);</span>
+<span id="cb11-24"><a href="application.html#cb11-24" tabindex="-1"></a>    k_pred[i]  = binomial_rng(n[i], p[i]);</span>
+<span id="cb11-25"><a href="application.html#cb11-25" tabindex="-1"></a>  }</span>
+<span id="cb11-26"><a href="application.html#cb11-26" tabindex="-1"></a>}</span></code></pre></div>
+<p>Notice that the model block is nearly identical to the mathematical model specified above.</p>
+<p><em>Construct Summary Functions</em></p>
+<p>The next step is to construct any relevant summary functions. Since the distribution of posterior PSS and JND values are needed for the summary statistics, it will be convenient to have a function that can take in the posterior samples for <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> and return the PSS and JND values. We define <span class="math inline">\(Q\)</span> as a more general function that takes in the two parameters and a target probability, <span class="math inline">\(\pi\)</span>, and returns the distribution of SOA values at <span class="math inline">\(\pi\)</span>.</p>
+<p><span class="math display" id="eq:summfun1">\[\begin{equation}
+  Q(\pi; \alpha, \beta) = \frac{\mathrm{logit(\pi)}}{\beta} + \alpha
+  \tag{4.8}
+\end{equation}\]</span></p>
+<p>The function can be defined in <code>R</code> as</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="application.html#cb12-1" tabindex="-1"></a>Q <span class="ot">&lt;-</span> <span class="cf">function</span>(p, a, b) <span class="fu">qlogis</span>(p) <span class="sc">/</span> b <span class="sc">+</span> a</span></code></pre></div>
+<p>With <span class="math inline">\(Q\)</span>, the PSS and JND can be calculated as</p>
+<p><span class="math display">\[\begin{align*}
+  pss &amp;= Q(0.5) \\
+  jnd &amp;= Q(0.84) - Q(0.5)
+\end{align*}\]</span>
+</p>
+<p><em>Simulate Bayesian Ensemble</em></p>
+<p>During this step, we simulate the Bayesian model and later feed the prior values into the summary functions in order to verify that there are no inconsistencies with domain knowledge. Since the model is fairly simple, we simulate directly in <code>R</code>.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="application.html#cb13-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">124</span>)</span>
+<span id="cb13-2"><a href="application.html#cb13-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb13-3"><a href="application.html#cb13-3" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="application.html#cb13-4" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="fl">0.06</span>)</span>
+<span id="cb13-5"><a href="application.html#cb13-5" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(n, <span class="fl">3.0</span>, <span class="dv">1</span>)</span>
+<span id="cb13-6"><a href="application.html#cb13-6" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="application.html#cb13-7" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">with</span>(av_dat, <span class="fu">list</span>(<span class="at">N =</span> N, <span class="at">x =</span> x, <span class="at">n =</span> n)) </span>
+<span id="cb13-8"><a href="application.html#cb13-8" tabindex="-1"></a>n_obs <span class="ot">&lt;-</span> <span class="fu">length</span>(dat<span class="sc">$</span>x)</span>
+<span id="cb13-9"><a href="application.html#cb13-9" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="application.html#cb13-10" tabindex="-1"></a>idx <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>n, n_obs, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-11"><a href="application.html#cb13-11" tabindex="-1"></a>probs <span class="ot">&lt;-</span> <span class="fu">logistic</span>(b[idx] <span class="sc">*</span> (dat<span class="sc">$</span>x <span class="sc">-</span> a[idx]))</span>
+<span id="cb13-12"><a href="application.html#cb13-12" tabindex="-1"></a>sim_k <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n_obs, dat<span class="sc">$</span>n, probs)</span></code></pre></div>
+<p><em>Prior Checks</em></p>
+<p>This step pertains to ensuring that prior estimates are consistent with domain expertise. We already did that in the model construction step by sampling values for the just noticeable difference. The first prior chosen was not producing JND estimates that were consistent with domain knowledge, so we adjusted accordingly.</p>
+<p>Figure <a href="application.html#fig:ch041-prior-pf-plot">4.2</a> shows the distribution of prior psychometric functions derived from the simulated ensemble. There are a few very steep and very shallow curves, but the majority fall within a range that appears likely.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch041-prior-pf-plot"></span>
+<img src="040-application_files/figure-html/ch041-prior-pf-plot-1.png" alt="Prior distribution of psychometric functions using the priors for alpha and beta." width="85%" />
+<p class="caption">
+Figure 4.2: Prior distribution of psychometric functions using the priors for alpha and beta.
+</p>
+</div>
+<p>Additionally most of the PSS values are within <span class="math inline">\(\pm 0.1\)</span> with room to allow for some larger values. Let’s check the prior distribution of PSS and JND values.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch041-prior-pss-plot"></span>
+<img src="040-application_files/figure-html/ch041-prior-pss-plot-1.png" alt="PSS prior distribution." width="85%" />
+<p class="caption">
+Figure 4.3: PSS prior distribution.
+</p>
+</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch041-prior-jnd-plot"></span>
+<img src="040-application_files/figure-html/ch041-prior-jnd-plot-1.png" alt="JND prior distribution." width="85%" />
+<p class="caption">
+Figure 4.4: JND prior distribution.
+</p>
+</div>
+<p>We are satisfied with the prior coverage of the PSS and JND values, and there are only a few samples that go beyond the extremes that were specified in the summary statistics step.</p>
+<p><em>Configure Algorithm</em></p>
+<p>There are a few parameters that can be set for <code>Stan</code>. On the user side, the main parameters are the number of iterations, the number of warm-up iterations, the target acceptance rate, and the number of chains to run. By default, <code>Stan</code> will use half the number of iterations for warm-up and the other half for actual sampling. For now we use the default algorithm parameters in <code>Stan</code>, and will tweak them later if and when issues arise.</p>
+<p><em>Fit Simulated Ensemble</em></p>
+<p>We now fit the model to the simulated data.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="application.html#cb14-1" tabindex="-1"></a>sim_dat <span class="ot">&lt;-</span> <span class="fu">with</span>(av_dat, <span class="fu">list</span>(<span class="at">N =</span> N, <span class="at">x =</span> x, <span class="at">n =</span> n, <span class="at">k =</span> sim_k)) </span>
+<span id="cb14-2"><a href="application.html#cb14-2" tabindex="-1"></a>m041 <span class="ot">&lt;-</span> rstan<span class="sc">::</span><span class="fu">sampling</span>(m041_stan, <span class="at">data =</span> sim_dat, </span>
+<span id="cb14-3"><a href="application.html#cb14-3" tabindex="-1"></a>                        <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">refresh =</span> <span class="dv">0</span>)</span></code></pre></div>
+<p><em>Algorithmic Calibration</em></p>
+<p>To check the basic diagnostics of the model, we run the following code.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="application.html#cb15-1" tabindex="-1"></a><span class="fu">check_hmc_diagnostics</span>(m041)</span>
+<span id="cb15-2"><a href="application.html#cb15-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-3"><a href="application.html#cb15-3" tabindex="-1"></a><span class="co">#&gt; Divergences:</span></span>
+<span id="cb15-4"><a href="application.html#cb15-4" tabindex="-1"></a><span class="co">#&gt; 0 of 4000 iterations ended with a divergence.</span></span>
+<span id="cb15-5"><a href="application.html#cb15-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-6"><a href="application.html#cb15-6" tabindex="-1"></a><span class="co">#&gt; Tree depth:</span></span>
+<span id="cb15-7"><a href="application.html#cb15-7" tabindex="-1"></a><span class="co">#&gt; 0 of 4000 iterations saturated the maximum tree depth of 10.</span></span>
+<span id="cb15-8"><a href="application.html#cb15-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-9"><a href="application.html#cb15-9" tabindex="-1"></a><span class="co">#&gt; Energy:</span></span>
+<span id="cb15-10"><a href="application.html#cb15-10" tabindex="-1"></a><span class="co">#&gt; E-BFMI indicated no pathological behavior.</span></span></code></pre></div>
+<p>There is no undesirable behavior from this model, so next we check the summary statistics of the estimated parameters.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:ch041-Cloudy-Toupee">Table 4.1: </span><span id="tab:ch041-Cloudy-Toupee">Table 4.2: </span>Summary statistics of the fitted Bayesian ensemble.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+parameter
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+se_mean
+</th>
+<th style="text-align:right;">
+sd
+</th>
+<th style="text-align:right;">
+2.5%
+</th>
+<th style="text-align:right;">
+97.5%
+</th>
+<th style="text-align:right;">
+n_eff
+</th>
+<th style="text-align:right;">
+Rhat
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+alpha
+</td>
+<td style="text-align:right;">
+0.0061
+</td>
+<td style="text-align:right;">
+0.0001
+</td>
+<td style="text-align:right;">
+0.0036
+</td>
+<td style="text-align:right;">
+-0.0009
+</td>
+<td style="text-align:right;">
+0.0132
+</td>
+<td style="text-align:right;">
+3962
+</td>
+<td style="text-align:right;">
+0.9997
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+beta
+</td>
+<td style="text-align:right;">
+10.7718
+</td>
+<td style="text-align:right;">
+0.0055
+</td>
+<td style="text-align:right;">
+0.2423
+</td>
+<td style="text-align:right;">
+10.2930
+</td>
+<td style="text-align:right;">
+11.2585
+</td>
+<td style="text-align:right;">
+1915
+</td>
+<td style="text-align:right;">
+1.0005
+</td>
+</tr>
+</tbody>
+</table>
+<p>Both the <span class="math inline">\(\hat{R}\)</span> and <span class="math inline">\(N_{\mathrm{eff}}\)</span> look fine for both <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>, though it is slightly concerning that <span class="math inline">\(\alpha\)</span> is centered relatively far from zero. This could just be due to sampling variance, so we will continue on to the next step.</p>
+<p><strong>Post-Model, Post-Data</strong></p>
+<p><em>Fit Observed Data</em></p>
+<p>All of the work up until now has been done without peaking at the observed data. We go ahead and run the data through the model.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="application.html#cb16-1" tabindex="-1"></a>m041 <span class="ot">&lt;-</span> <span class="fu">sampling</span>(m041_stan, <span class="at">data =</span> obs_dat, </span>
+<span id="cb16-2"><a href="application.html#cb16-2" tabindex="-1"></a>                 <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">refresh =</span> <span class="dv">200</span>)</span></code></pre></div>
+<p><em>Diagnose Posterior Fit</em></p>
+<p>Here we repeat the diagnostic checks that were used after fitting the simulated data.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="application.html#cb17-1" tabindex="-1"></a><span class="fu">check_hmc_diagnostics</span>(m041)</span>
+<span id="cb17-2"><a href="application.html#cb17-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-3"><a href="application.html#cb17-3" tabindex="-1"></a><span class="co">#&gt; Divergences:</span></span>
+<span id="cb17-4"><a href="application.html#cb17-4" tabindex="-1"></a><span class="co">#&gt; 0 of 4000 iterations ended with a divergence.</span></span>
+<span id="cb17-5"><a href="application.html#cb17-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-6"><a href="application.html#cb17-6" tabindex="-1"></a><span class="co">#&gt; Tree depth:</span></span>
+<span id="cb17-7"><a href="application.html#cb17-7" tabindex="-1"></a><span class="co">#&gt; 0 of 4000 iterations saturated the maximum tree depth of 10.</span></span>
+<span id="cb17-8"><a href="application.html#cb17-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-9"><a href="application.html#cb17-9" tabindex="-1"></a><span class="co">#&gt; Energy:</span></span>
+<span id="cb17-10"><a href="application.html#cb17-10" tabindex="-1"></a><span class="co">#&gt; E-BFMI indicated no pathological behavior.</span></span></code></pre></div>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:ch041-Maroon-Oyster">Table 4.3: </span><span id="tab:ch041-Maroon-Oyster">Table 4.4: </span>Summary statistics of the fitted Bayesian ensemble.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+parameter
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+se_mean
+</th>
+<th style="text-align:right;">
+sd
+</th>
+<th style="text-align:right;">
+2.5%
+</th>
+<th style="text-align:right;">
+97.5%
+</th>
+<th style="text-align:right;">
+n_eff
+</th>
+<th style="text-align:right;">
+Rhat
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+alpha
+</td>
+<td style="text-align:right;">
+0.0374
+</td>
+<td style="text-align:right;">
+0.0001
+</td>
+<td style="text-align:right;">
+0.0042
+</td>
+<td style="text-align:right;">
+0.0291
+</td>
+<td style="text-align:right;">
+0.0456
+</td>
+<td style="text-align:right;">
+3932
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+beta
+</td>
+<td style="text-align:right;">
+8.4199
+</td>
+<td style="text-align:right;">
+0.0035
+</td>
+<td style="text-align:right;">
+0.1808
+</td>
+<td style="text-align:right;">
+8.0766
+</td>
+<td style="text-align:right;">
+8.7761
+</td>
+<td style="text-align:right;">
+2700
+</td>
+<td style="text-align:right;">
+1.001
+</td>
+</tr>
+</tbody>
+</table>
+<p>There are no indications of an ill-behaved posterior fit. Let’s also check the posterior distribution of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> against the prior density (<a href="application.html#fig:ch041-m041-posterior-alpha-beta">4.5</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch041-m041-posterior-alpha-beta"></span>
+<img src="040-application_files/figure-html/ch041-m041-posterior-alpha-beta-1.png" alt="Comparison of posterior distributions for alpha and beta to their respective prior distributions." width="85%" />
+<p class="caption">
+Figure 4.5: Comparison of posterior distributions for alpha and beta to their respective prior distributions.
+</p>
+</div>
+<p>The posterior distributions for <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are well within the range determined by domain knowledge, and highly concentrated due to both the large amount of data and the fact that this is a completely pooled model – all subject data is used to estimate the parameters. As expected, the prior for the JND could have been tighter with more weight below half a second compared to the one second limit used, but this is not prior information, so it is not prudent to change the prior in this manner after having seen the posterior. As a rule of thumb, priors should only be updated as motivated by domain expertise and not by the posterior distribution.</p>
+<p><em>Posterior Retrodictive Checks</em></p>
+<p>It is time to run the posterior samples through the summary functions and then perform retrodictive checks. A retrodiction is using the posterior model to predict and compare to the observed data. This is simply done by drawing samples from the posterior and feeding in the observational data. This may be repeated to gain posterior predictive samples.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="application.html#cb18-1" tabindex="-1"></a>posterior_pss <span class="ot">&lt;-</span> <span class="fu">Q</span>(<span class="fl">0.5</span>, p041<span class="sc">$</span>alpha, p041<span class="sc">$</span>beta)</span>
+<span id="cb18-2"><a href="application.html#cb18-2" tabindex="-1"></a>posterior_jnd <span class="ot">&lt;-</span> <span class="fu">Q</span>(<span class="fl">0.84</span>, p041<span class="sc">$</span>alpha, p041<span class="sc">$</span>beta) <span class="sc">-</span> posterior_pss</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch041-posterior-pss-jnd-plot"></span>
+<img src="040-application_files/figure-html/ch041-posterior-pss-jnd-plot-1.png" alt="Posterior distribution of the PSS and JND." width="85%" />
+<p class="caption">
+Figure 4.6: Posterior distribution of the PSS and JND.
+</p>
+</div>
+<p>Neither of the posterior estimates for the PSS or JND exceed the extreme cutoffs set in the earlier steps, so we can be confident that the model is consistent with domain expertise. Note how simple it is to visualize and summarize the distribution of values for these measures. Using classical techniques like MLE might require using bootstrap methods to estimate the distribution of parameter values, or one might approximate the parameter distributions using the mean and standard error of the mean to simulate new values.</p>
+<p>Next is to create the posterior predictive samples. We do this in two steps to better show how the distribution of posterior psychometric functions relates to the observed data, and then compare the observed data to the retrodictions. Figure <a href="application.html#fig:ch041-posterior-pf-plot">4.7</a> shows the result of the first step.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch041-posterior-pf-plot"></span>
+<img src="040-application_files/figure-html/ch041-posterior-pf-plot-1.png" alt="Posterior distribution of psychometric functions using pooled observations." width="85%" />
+<p class="caption">
+Figure 4.7: Posterior distribution of psychometric functions using pooled observations.
+</p>
+</div>
+<p>Next we sample parameter values from the posterior distribution and use them to simulate a new data set. In the next iteration we show how to get <code>Stan</code> to automatically produce posterior predictive samples from the model fitting step. The results of the posterior predictions are shown in figure <a href="application.html#fig:ch041-obs-vs-retro-plot">4.8</a>.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="application.html#cb19-1" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fu">sample</span>(p041<span class="sc">$</span>alpha, n_obs, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-2"><a href="application.html#cb19-2" tabindex="-1"></a>beta  <span class="ot">&lt;-</span> <span class="fu">sample</span>(p041<span class="sc">$</span>beta, n_obs, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-3"><a href="application.html#cb19-3" tabindex="-1"></a>logodds <span class="ot">&lt;-</span> beta <span class="sc">*</span> (av_dat<span class="sc">$</span>x <span class="sc">-</span> alpha)</span>
+<span id="cb19-4"><a href="application.html#cb19-4" tabindex="-1"></a>probs <span class="ot">&lt;-</span> <span class="fu">logistic</span>(logodds)</span>
+<span id="cb19-5"><a href="application.html#cb19-5" tabindex="-1"></a>sim_k <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n_obs, av_dat<span class="sc">$</span>n, probs)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch041-obs-vs-retro-plot"></span>
+<img src="040-application_files/figure-html/ch041-obs-vs-retro-plot-1.png" alt="Observed data compared to the posterior retrodictions. The data is post-stratified by block for easier visualization." width="85%" />
+<p class="caption">
+Figure 4.8: Observed data compared to the posterior retrodictions. The data is post-stratified by block for easier visualization.
+</p>
+</div>
+<p>Let’s be clear what the first iteration of this model describes. It is the average distribution of underlying psychometric functions across all subjects and blocks. It cannot tell us what the differences between pre- and post-adaptation blocks are, or what the variation between subjects is. It is useful in determining if the average value for the PSS is different from 0 or if the average JND is different from some other predetermined level. This model is still useful given the right question, but it cannot answer questions about group-level effects.</p>
+<p>Figure <a href="application.html#fig:ch041-obs-vs-retro-plot">4.8</a> shows that the model captures the broad structure of the observed data, but is perhaps a bit under-dispersed in the tail ends of the SOA values. Besides this one issue, we are satisfied with the first iteration of this model and are ready to proceed to the next iteration.</p>
+</div>
+<div id="iter2" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Iteration 2: adding age and block<a href="application.html#iter2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this iteration we add the treatment and age groups into the model. There are no changes with the conceptual understanding of the experiment, and nothing to change with the observational space. As such we skip the first three steps and go to the model development step. As we build the model, the number of changes from one iteration to the next should go to zero as the model expands to become only as complex as necessary to answer the research questions.</p>
+<p><strong>Post-Model, Pre-Data</strong></p>
+<p><em>Develop Model</em></p>
+<p>To start, let’s add in the treatment indicator and put off consideration of adding in the age group levels. In classical statistics, it is added as an indicator variable – a zero or one – for both the slope and intercept (varying slopes, varying intercepts model). Let <span class="math inline">\(trt\)</span> be <span class="math inline">\(0\)</span> if it is the pre-adaptation block and <span class="math inline">\(1\)</span> if the observation comes from the post-adaptation block.</p>
+<p><span class="math display">\[\theta = \alpha + \alpha_{trt} \times trt + \beta \times x + \beta_{trt}\times trt \times x\]</span>
+</p>
+<p>Now when an observation comes from the pre-adaptation block (<span class="math inline">\(trt=0\)</span>) the linear predictor is given by</p>
+<p><span class="math display">\[\theta_{pre} = \alpha + \beta \times x\]</span>
+</p>
+<p>and when an observation comes from the post-adaptation block (<span class="math inline">\(trt=1\)</span>) the linear predictor is</p>
+<p><span class="math display">\[\theta_{post} = (\alpha + \alpha_{trt}) + (\beta + \beta_{trt}) \times x\]</span>
+</p>
+<p>This may seem like a natural way to introduce an indicator variable, but it comes with serious implications. This model implies that there is more uncertainty about the post-adaptation block compared to the baseline block, and this is not necessarily true.</p>
+<p><span class="math display">\[\begin{align*}
+\mathrm{Var}(\theta_{post}) &amp;= \mathrm{Var}((\alpha + \alpha_{trt}) + (\beta + \beta_{trt}) \times x) \\
+&amp;= \mathrm{Var}(\alpha) + \mathrm{Var}(\alpha_{trt}) + x^2 \mathrm{Var}(\beta) + x^2\mathrm{Var}(\beta_{trt})
+\end{align*}\]</span>
+</p>
+<p>On the other hand, the variance of <span class="math inline">\(\theta_{pre}\)</span> is:</p>
+<p><span class="math display">\[
+\mathrm{Var}(\theta_{pre}) = \mathrm{Var}(\alpha) + x^2 \mathrm{Var}(\beta) \le \mathrm{Var}(\theta_{post})
+\]</span>
+</p>
+<p>Furthermore, the intercept, <span class="math inline">\(\alpha\)</span>, is no longer the average response probability at <span class="math inline">\(x=0\)</span> for the entire data set, but is instead exclusively the average for the pre-adaptation block. This may not matter in certain analyses, but one nice property of multilevel models is the separation of population level estimates (fixed effects) and group level estimates (mixed effects).</p>
+<p>Instead the treatment variable is introduced into the linear model as a factor variable. This means that each level in the treatment gets its own parameter, and this makes it easier to set priors when there are many levels in a group (such as for the subject level). The linear model, using equation <a href="application.html#eq:linearform2">(4.4)</a>, with the treatment is written as:</p>
+<p><span class="math display" id="eq:linearmodel2">\[\begin{equation}
+  \theta = (\beta + \beta_{trt[i]}) \left[x_i - (\alpha + \alpha_{trt[i]})\right]
+  \tag{4.9}
+\end{equation}\]</span>
+</p>
+<p>As more predictors and groups are added in, equation <a href="application.html#eq:linearmodel2">(4.9)</a> becomes more difficult to read. What we do is break up the slope and intercept parameters and write the linear model as:</p>
+<p><span class="math display">\[\begin{align*}
+\mu_\alpha &amp;= \alpha + \alpha_{trt[i]} \\
+\mu_\beta &amp;= \beta + \beta_{trt[i]} \\
+\theta &amp;= \mu_\beta (x - \mu_\alpha)
+\end{align*}\]</span>
+</p>
+<p>In this way the combined parameters can be considered separately from the linear parameterization. Now we consider the priors for <span class="math inline">\(\alpha_{trt}\)</span>. Equation <a href="application.html#eq:alpha-three-forms">(4.10)</a> shows three ways of adding in the block variable for <span class="math inline">\(\alpha\)</span>. The left equation is a standard single-level predictor, the center equation is the centered parameterization for a multilevel predictor, and the right equation is the non-centered parameterization for a multilevel predictor.</p>
+<p><span class="math display" id="eq:alpha-three-forms">\[\begin{equation}
+  \begin{split}
+    \mu_\alpha &amp;= \alpha_{trt[i]} \\
+    \alpha_{trt} &amp;\sim \mathcal{N}(0, 0.06^2)
+  \end{split}
+\qquad
+  \begin{split}
+    \mu_\alpha &amp;= \alpha_{trt[i]} \\
+    \alpha &amp;\sim \mathcal{N}(0, 0.06^2) \\
+    \alpha_{trt} &amp;\sim \mathcal{N}(\alpha, \sigma_{trt}^2) \\
+    \sigma_{trt} &amp;\sim \pi_{\sigma}
+  \end{split}
+\qquad
+  \begin{split}
+    \mu_\alpha &amp;= \alpha + \alpha_{trt[i]} \\
+    \alpha &amp;\sim \mathcal{N}(0, 0.06^2) \\
+    \alpha_{trt} &amp;\sim \mathcal{N}(0, \sigma_{trt}^2) \\
+    \sigma_{trt} &amp;\sim \pi_{\sigma}
+  \end{split}
+\tag{4.10}
+\end{equation}\]</span>
+</p>
+<p>In the center and right models of equation <a href="application.html#eq:alpha-three-forms">(4.10)</a>, <span class="math inline">\(\alpha\)</span> gets a fixed prior (the same as in the first iteration), and <span class="math inline">\(\alpha_{trt}\)</span> gets a Gaussian prior with an adaptive variance term that is allowed to be learned from the data. This notation is compact, but <span class="math inline">\(\alpha_{trt}\)</span> is two parameters - one each for the blocks. They both share the same variance term <span class="math inline">\(\sigma_{trt}\)</span>.</p>
+<p>We will discuss selecting a prior for the variance term shortly. Instead of modeling <span class="math inline">\(\beta\)</span> with a log-normal prior, we can sample from a normal distribution and take the exponential of it to produce a log-normal distribution:</p>
+<p><span class="math display">\[\begin{align*}
+X &amp;\sim \mathcal{N}(3, 1^2) \\
+Y &amp;= \exp\left(X\right) \Longleftrightarrow Y \sim \mathrm{Lognormal(3, 1^2)}
+\end{align*}\]</span>
+</p>
+<p>This is the non-centered parameterization of the log-normal distribution, and the motivation behind this parameterization is that it is now easier to include new slope variables as an additive affect. If both <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\beta_{trt}\)</span> are specified with Gaussian priors, then the exponential of the sum will be a log-normal distribution. The model now becomes:</p>
+<p><span class="math display" id="eq:iter2-partial-model">\[\begin{equation}
+\begin{split}
+k_i &amp;\sim \mathrm{Binomial}(n_i, p_i) \\
+\mathrm{logit}(p_i) &amp;= \exp(\mu_\beta) (x_i - \mu_\alpha) \\
+\mu_\alpha &amp;= \alpha + \alpha_{trt[i]} \\
+\mu_\beta &amp;= \beta + \beta_{trt[i]} \\
+\alpha &amp;\sim \mathcal{N}(0, 0.06^2) \\
+\alpha_{trt} &amp;\sim \mathcal{N}(0, \sigma_{trt}^2) \\
+\beta &amp;\sim \mathcal{N}(3, 1^2) \\
+\beta_{trt} &amp;\sim \mathcal{N}(0, \gamma_{trt}^2) \\
+\sigma_{trt} &amp;\sim \pi_{\sigma} \\
+\gamma_{trt} &amp;\sim \pi_{\gamma}
+\end{split}
+\tag{4.11}
+\end{equation}\]</span>
+</p>
+<p>Deciding on priors for the variance term requires some careful consideration. In one sense, the variance term is the within-group variance. <span class="citation">Gelman et al. (<a href="#ref-gelman2006prior">2006</a>)</span> recommends that for multilevel models with groups with less than say 5 levels to use a half-Cauchy prior. This weakly informative prior still has a regularizing affect and dissuades larger variance estimates. Even though the treatment group only has two levels, there is still value in specifying an adaptive prior for them, and there is enough data for each treatment so that partial pooling won’t have as extreme of a regularizing effect.</p>
+<p><span class="math display">\[\begin{align*}
+\sigma_{trt} &amp;\sim \mathrm{HalfCauchy}(0, 1) \\
+\gamma_{trt} &amp;\sim \mathrm{HalfCauchy}(0, 1)
+\end{align*}\]</span>
+</p>
+<p>We add in the age group level effects to <a href="application.html#eq:iter2-partial-model">(4.11)</a> and specify their variance terms:</p>
+<p><span class="math display" id="eq:iter2-model">\[\begin{equation}
+\begin{split}
+k_i &amp;\sim \mathrm{Binomial}(n_i, p_i) \\
+\mathrm{logit}(p_i) &amp;= \exp(\mu_\beta) (x_i - \mu_\alpha) \\
+\mu_\alpha &amp;= \alpha + \alpha_{trt[i]} + \alpha_{G[i]} \\
+\mu_\beta &amp;= \beta + \beta_{trt[i]} + \beta_{G[i]} \\
+\alpha &amp;\sim \mathcal{N}(0, 0.06^2) \\
+\alpha_{trt} &amp;\sim \mathcal{N}(0, \sigma_{trt}^2) \\
+\alpha_{G} &amp;\sim \mathcal{N}(0, \tau_{trt}^2) \\
+\beta &amp;\sim \mathcal{N}(3, 1^2) \\
+\beta_{trt} &amp;\sim \mathcal{N}(0, \gamma_{trt}^2) \\
+\beta_{G} &amp;\sim \mathcal{N}(0, \nu_{G}^2) \\
+\sigma_{trt}, \gamma_{trt} &amp;\sim \mathrm{HalfCauchy}(0, 1) \\
+\tau_{G}, \nu_{G}  &amp;\sim \mathrm{HalfCauchy}(0, 2)
+\end{split}
+\tag{4.12}
+\end{equation}\]</span>
+</p>
+<p>The <code>Stan</code> code corresponding to model <a href="application.html#eq:iter2-model">(4.12)</a> is becoming quite long, so we omit it from here on out. The final <code>Stan</code> model code may be found in the <a href="code.html#code">supplementary code</a> section of the appendix.</p>
+<p><strong>Post-Model, Post-Data</strong></p>
+<p><em>Fit Observed Data</em></p>
+<p>We skip the prior checks and use the observed data to configure the algorithm and diagnose the posterior fit.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="application.html#cb20-1" tabindex="-1"></a>m042 <span class="ot">&lt;-</span> <span class="fu">sampling</span>(m042_stan, <span class="at">data =</span> obs_dat, <span class="at">seed =</span> <span class="dv">124</span>,</span>
+<span id="cb20-2"><a href="application.html#cb20-2" tabindex="-1"></a>                 <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">refresh =</span> <span class="dv">100</span>)</span></code></pre></div>
+<p><em>Diagnose Posterior Fit</em></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="application.html#cb21-1" tabindex="-1"></a><span class="fu">check_hmc_diagnostics</span>(m042)</span>
+<span id="cb21-2"><a href="application.html#cb21-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-3"><a href="application.html#cb21-3" tabindex="-1"></a><span class="co">#&gt; Divergences:</span></span>
+<span id="cb21-4"><a href="application.html#cb21-4" tabindex="-1"></a><span class="co">#&gt; 3 of 4000 iterations ended with a divergence (0.075%).</span></span>
+<span id="cb21-5"><a href="application.html#cb21-5" tabindex="-1"></a><span class="co">#&gt; Try increasing &#39;adapt_delta&#39; to remove the divergences.</span></span>
+<span id="cb21-6"><a href="application.html#cb21-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-7"><a href="application.html#cb21-7" tabindex="-1"></a><span class="co">#&gt; Tree depth:</span></span>
+<span id="cb21-8"><a href="application.html#cb21-8" tabindex="-1"></a><span class="co">#&gt; 0 of 4000 iterations saturated the maximum tree depth of 10.</span></span>
+<span id="cb21-9"><a href="application.html#cb21-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-10"><a href="application.html#cb21-10" tabindex="-1"></a><span class="co">#&gt; Energy:</span></span>
+<span id="cb21-11"><a href="application.html#cb21-11" tabindex="-1"></a><span class="co">#&gt; E-BFMI indicated no pathological behavior.</span></span></code></pre></div>
+<p>As well as the 4 divergent transitions, there is also a message about the effective sample size (ESS) being too low. The recommended prescription for low ESS is to run the chains for more iterations. The posterior summary shows that <span class="math inline">\(N_{\mathrm{eff}}\)</span> is low for the age group level parameters (table <a href="application.html#tab:ch042-Liquid-Strawberry-Eagle">4.5</a>).</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:ch042-Liquid-Strawberry-Eagle">Table 4.5: </span><span id="tab:ch042-Liquid-Strawberry-Eagle">Table 4.6: </span>Summary statistics of the second iteration.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+parameter
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+se_mean
+</th>
+<th style="text-align:right;">
+sd
+</th>
+<th style="text-align:right;">
+2.5%
+</th>
+<th style="text-align:right;">
+97.5%
+</th>
+<th style="text-align:right;">
+n_eff
+</th>
+<th style="text-align:right;">
+Rhat
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+a
+</td>
+<td style="text-align:right;">
+0.0203
+</td>
+<td style="text-align:right;">
+0.0013
+</td>
+<td style="text-align:right;">
+0.0400
+</td>
+<td style="text-align:right;">
+-0.0731
+</td>
+<td style="text-align:right;">
+0.0951
+</td>
+<td style="text-align:right;">
+973.0
+</td>
+<td style="text-align:right;">
+1.005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+aG[1]
+</td>
+<td style="text-align:right;">
+-0.0039
+</td>
+<td style="text-align:right;">
+0.0009
+</td>
+<td style="text-align:right;">
+0.0272
+</td>
+<td style="text-align:right;">
+-0.0600
+</td>
+<td style="text-align:right;">
+0.0557
+</td>
+<td style="text-align:right;">
+912.6
+</td>
+<td style="text-align:right;">
+1.003
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+aG[2]
+</td>
+<td style="text-align:right;">
+0.0249
+</td>
+<td style="text-align:right;">
+0.0009
+</td>
+<td style="text-align:right;">
+0.0274
+</td>
+<td style="text-align:right;">
+-0.0307
+</td>
+<td style="text-align:right;">
+0.0850
+</td>
+<td style="text-align:right;">
+934.0
+</td>
+<td style="text-align:right;">
+1.003
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+aG[3]
+</td>
+<td style="text-align:right;">
+-0.0102
+</td>
+<td style="text-align:right;">
+0.0009
+</td>
+<td style="text-align:right;">
+0.0271
+</td>
+<td style="text-align:right;">
+-0.0678
+</td>
+<td style="text-align:right;">
+0.0481
+</td>
+<td style="text-align:right;">
+928.9
+</td>
+<td style="text-align:right;">
+1.003
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+b
+</td>
+<td style="text-align:right;">
+2.3620
+</td>
+<td style="text-align:right;">
+0.0200
+</td>
+<td style="text-align:right;">
+0.5342
+</td>
+<td style="text-align:right;">
+1.4300
+</td>
+<td style="text-align:right;">
+3.6154
+</td>
+<td style="text-align:right;">
+710.9
+</td>
+<td style="text-align:right;">
+1.002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bG[1]
+</td>
+<td style="text-align:right;">
+0.0196
+</td>
+<td style="text-align:right;">
+0.0114
+</td>
+<td style="text-align:right;">
+0.2762
+</td>
+<td style="text-align:right;">
+-0.6464
+</td>
+<td style="text-align:right;">
+0.5474
+</td>
+<td style="text-align:right;">
+582.6
+</td>
+<td style="text-align:right;">
+1.008
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bG[2]
+</td>
+<td style="text-align:right;">
+0.0699
+</td>
+<td style="text-align:right;">
+0.0115
+</td>
+<td style="text-align:right;">
+0.2757
+</td>
+<td style="text-align:right;">
+-0.5776
+</td>
+<td style="text-align:right;">
+0.5926
+</td>
+<td style="text-align:right;">
+574.9
+</td>
+<td style="text-align:right;">
+1.008
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bG[3]
+</td>
+<td style="text-align:right;">
+-0.2062
+</td>
+<td style="text-align:right;">
+0.0119
+</td>
+<td style="text-align:right;">
+0.2771
+</td>
+<td style="text-align:right;">
+-0.8710
+</td>
+<td style="text-align:right;">
+0.3242
+</td>
+<td style="text-align:right;">
+538.7
+</td>
+<td style="text-align:right;">
+1.009
+</td>
+</tr>
+</tbody>
+</table>
+<p>We can return to the algorithm configuration step and increase the number of iterations and warm-up iterations, as well as increase the adapt delta parameter to reduce the number of divergent transitions (which really isn’t a problem right now).</p>
+<p>Another technique we can employ is non-centered parameterization. Model <a href="application.html#eq:iter2-model">(4.12)</a> uses non-centered parameterization for <span class="math inline">\(\mu_\alpha\)</span> and <span class="math inline">\(\mu_\beta\)</span>. Other parameters, especially the variance terms, can also benefit from non-centered parameterization. Model <a href="application.html#eq:iter2-model-nc">(4.13)</a> shows the results of reparameterizing:</p>
+<p><span class="math display" id="eq:iter2-model-nc">\[\begin{equation}
+\begin{split}
+k_i &amp;\sim \mathrm{Binomial}(n_i, p_i) \\
+\mathrm{logit}(p_i) &amp;= \exp(\mu_\beta) (x_i - \mu_\alpha) \\
+\mu_\alpha &amp;= \alpha + \alpha_{trt[i]} + \alpha_{G[i]} \\
+\mu_\beta &amp;= \beta + \beta_{trt[i]} + \beta_{G[i]} \\
+\hat{\alpha}, \hat{\alpha}_{trt}, \hat{\alpha}_{G} &amp;\sim \mathcal{N}(0, 1^2) \\
+\hat{\beta}, \hat{\beta}_{trt}, \hat{\beta}_{G} &amp;\sim \mathcal{N}(0, 1^2) \\
+\hat{\sigma}_{trt}, \hat{\gamma}_{trt}, \hat{\tau}_{G}, \hat{\nu}_{G} &amp;\sim \mathcal{U}(0, \pi/2) \\
+\alpha &amp;= 0.06 \cdot \hat{\alpha} \\
+\alpha_{trt} &amp;= \sigma_{trt} \cdot \hat{\alpha}_{trt} \\
+\alpha_{G} &amp;= \gamma_{G} \cdot \hat{\alpha}_{G} \\
+\sigma_{trt} &amp;= \tan(\hat{\sigma}_{trt}) \\
+\gamma_{G} &amp;= \tan(\hat{\gamma}_{G}) \\
+\beta &amp;= 3 + 1 \cdot \hat{\beta} \\
+\beta_{trt} &amp;= \tau_{trt} \cdot \hat{\beta}_{trt} \\
+\beta_{G} &amp;= \nu_{G} \cdot \hat{\beta}_{G} \\
+\tau_{trt} &amp;= \tan(\hat{\tau}_{trt}) \\
+\nu_{G} &amp;= \tan(\hat{\nu}_{G})
+\end{split}
+\tag{4.13}
+\end{equation}\]</span>
+</p>
+<p><em>Develop Model</em></p>
+<p>The model changes consist of using the non-centered parameterizations discussed in the previous step.</p>
+<p>As an aside, a multilevel model can be fit in <code>R</code> using <code>lme4::glmer</code>, <code>brms::brm</code>, or <code>rstanarm::stan_glmer</code>, and they all use the same notation to specify the model. The notation is very compact, but easy to unpack. Values not in a grouping term are fixed effects and values in a grouping term (e.g. <code>(1 + x | G)</code>) are mixed or random effects depending on which textbook you read.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="application.html#cb22-1" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">formula</span>(k<span class="sc">|</span>n <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> x <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> x <span class="sc">|</span> G) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> x <span class="sc">|</span> trt))</span>
+<span id="cb22-2"><a href="application.html#cb22-2" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="application.html#cb22-3" tabindex="-1"></a>lme4<span class="sc">::</span><span class="fu">glmer</span>(f, <span class="at">data =</span> data, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="st">&quot;logit&quot;</span>))</span>
+<span id="cb22-4"><a href="application.html#cb22-4" tabindex="-1"></a>rstanarm<span class="sc">::</span><span class="fu">stan_glmer</span>(f, <span class="at">data =</span> data, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="st">&quot;logit&quot;</span>))</span>
+<span id="cb22-5"><a href="application.html#cb22-5" tabindex="-1"></a>brms<span class="sc">::</span><span class="fu">brm</span>(f, <span class="at">data =</span> data, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="st">&quot;logit&quot;</span>))</span></code></pre></div>
+<p>The simpler notation and compactness of these methods are very attractive, and for certain analyses they may be more than sufficient. The goal here is to decide early on if these methods satisfy the model adequacy, and to use more flexible modeling tools like <code>Stan</code> if necessary.</p>
+<p><em>Fit Observed Data</em></p>
+<p>This time we fit the model with the non-centered parameterization. Since this model is sampling from intermediate parameters, we can choose to keep only the transformed parameters.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="application.html#cb23-1" tabindex="-1"></a>m042nc <span class="ot">&lt;-</span> <span class="fu">sampling</span>(m042nc_stan, <span class="at">data =</span> obs_dat, <span class="at">seed =</span> <span class="dv">143</span>,</span>
+<span id="cb23-2"><a href="application.html#cb23-2" tabindex="-1"></a>                   <span class="at">iter =</span> <span class="dv">4000</span>, <span class="at">warmup =</span> <span class="dv">2000</span>, <span class="at">pars =</span> keep_pars,</span>
+<span id="cb23-3"><a href="application.html#cb23-3" tabindex="-1"></a>                   <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> <span class="fl">0.95</span>), <span class="at">thin =</span> <span class="dv">2</span>,</span>
+<span id="cb23-4"><a href="application.html#cb23-4" tabindex="-1"></a>                   <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">refresh =</span> <span class="dv">100</span>)</span></code></pre></div>
+<p><em>Diagnose Posterior Fit</em></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="application.html#cb24-1" tabindex="-1"></a><span class="fu">check_hmc_diagnostics</span>(m042nc)</span>
+<span id="cb24-2"><a href="application.html#cb24-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb24-3"><a href="application.html#cb24-3" tabindex="-1"></a><span class="co">#&gt; Divergences:</span></span>
+<span id="cb24-4"><a href="application.html#cb24-4" tabindex="-1"></a><span class="co">#&gt; 32 of 4000 iterations ended with a divergence (0.8%).</span></span>
+<span id="cb24-5"><a href="application.html#cb24-5" tabindex="-1"></a><span class="co">#&gt; Try increasing &#39;adapt_delta&#39; to remove the divergences.</span></span>
+<span id="cb24-6"><a href="application.html#cb24-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb24-7"><a href="application.html#cb24-7" tabindex="-1"></a><span class="co">#&gt; Tree depth:</span></span>
+<span id="cb24-8"><a href="application.html#cb24-8" tabindex="-1"></a><span class="co">#&gt; 5 of 4000 iterations saturated the maximum tree depth of 10 (0.125%).</span></span>
+<span id="cb24-9"><a href="application.html#cb24-9" tabindex="-1"></a><span class="co">#&gt; Try increasing &#39;max_treedepth&#39; to avoid saturation.</span></span>
+<span id="cb24-10"><a href="application.html#cb24-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb24-11"><a href="application.html#cb24-11" tabindex="-1"></a><span class="co">#&gt; Energy:</span></span>
+<span id="cb24-12"><a href="application.html#cb24-12" tabindex="-1"></a><span class="co">#&gt; E-BFMI indicated no pathological behavior.</span></span></code></pre></div>
+<p>There are still a few divergent transitions (<span class="math inline">\(&lt;1\%\)</span>), but the effective sample size increased significantly (table <a href="application.html#tab:ch042-Bleeding-Tuna">4.7</a>).</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:ch042-Bleeding-Tuna">Table 4.7: </span><span id="tab:ch042-Bleeding-Tuna">Table 4.8: </span>Summary statistics of the second iteration with non-centered parameterization.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+parameter
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+se_mean
+</th>
+<th style="text-align:right;">
+sd
+</th>
+<th style="text-align:right;">
+2.5%
+</th>
+<th style="text-align:right;">
+97.5%
+</th>
+<th style="text-align:right;">
+n_eff
+</th>
+<th style="text-align:right;">
+Rhat
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+a
+</td>
+<td style="text-align:right;">
+0.0196
+</td>
+<td style="text-align:right;">
+0.0007
+</td>
+<td style="text-align:right;">
+0.0412
+</td>
+<td style="text-align:right;">
+-0.0716
+</td>
+<td style="text-align:right;">
+0.0972
+</td>
+<td style="text-align:right;">
+3262
+</td>
+<td style="text-align:right;">
+1.0001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+aG[1]
+</td>
+<td style="text-align:right;">
+-0.0018
+</td>
+<td style="text-align:right;">
+0.0005
+</td>
+<td style="text-align:right;">
+0.0316
+</td>
+<td style="text-align:right;">
+-0.0585
+</td>
+<td style="text-align:right;">
+0.0734
+</td>
+<td style="text-align:right;">
+3472
+</td>
+<td style="text-align:right;">
+0.9993
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+aG[2]
+</td>
+<td style="text-align:right;">
+0.0267
+</td>
+<td style="text-align:right;">
+0.0006
+</td>
+<td style="text-align:right;">
+0.0319
+</td>
+<td style="text-align:right;">
+-0.0270
+</td>
+<td style="text-align:right;">
+0.1039
+</td>
+<td style="text-align:right;">
+3366
+</td>
+<td style="text-align:right;">
+0.9997
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+aG[3]
+</td>
+<td style="text-align:right;">
+-0.0087
+</td>
+<td style="text-align:right;">
+0.0005
+</td>
+<td style="text-align:right;">
+0.0319
+</td>
+<td style="text-align:right;">
+-0.0663
+</td>
+<td style="text-align:right;">
+0.0646
+</td>
+<td style="text-align:right;">
+3478
+</td>
+<td style="text-align:right;">
+0.9995
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+aT[1]
+</td>
+<td style="text-align:right;">
+0.0176
+</td>
+<td style="text-align:right;">
+0.0008
+</td>
+<td style="text-align:right;">
+0.0405
+</td>
+<td style="text-align:right;">
+-0.0575
+</td>
+<td style="text-align:right;">
+0.1125
+</td>
+<td style="text-align:right;">
+2906
+</td>
+<td style="text-align:right;">
+0.9999
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+aT[2]
+</td>
+<td style="text-align:right;">
+0.0030
+</td>
+<td style="text-align:right;">
+0.0007
+</td>
+<td style="text-align:right;">
+0.0401
+</td>
+<td style="text-align:right;">
+-0.0743
+</td>
+<td style="text-align:right;">
+0.0956
+</td>
+<td style="text-align:right;">
+3118
+</td>
+<td style="text-align:right;">
+1.0000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+b
+</td>
+<td style="text-align:right;">
+2.4092
+</td>
+<td style="text-align:right;">
+0.0110
+</td>
+<td style="text-align:right;">
+0.5372
+</td>
+<td style="text-align:right;">
+1.5010
+</td>
+<td style="text-align:right;">
+3.7184
+</td>
+<td style="text-align:right;">
+2378
+</td>
+<td style="text-align:right;">
+1.0002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bG[1]
+</td>
+<td style="text-align:right;">
+0.0155
+</td>
+<td style="text-align:right;">
+0.0053
+</td>
+<td style="text-align:right;">
+0.2798
+</td>
+<td style="text-align:right;">
+-0.6274
+</td>
+<td style="text-align:right;">
+0.5154
+</td>
+<td style="text-align:right;">
+2814
+</td>
+<td style="text-align:right;">
+1.0000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bG[2]
+</td>
+<td style="text-align:right;">
+0.0665
+</td>
+<td style="text-align:right;">
+0.0053
+</td>
+<td style="text-align:right;">
+0.2797
+</td>
+<td style="text-align:right;">
+-0.5661
+</td>
+<td style="text-align:right;">
+0.5737
+</td>
+<td style="text-align:right;">
+2833
+</td>
+<td style="text-align:right;">
+1.0003
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bG[3]
+</td>
+<td style="text-align:right;">
+-0.2104
+</td>
+<td style="text-align:right;">
+0.0053
+</td>
+<td style="text-align:right;">
+0.2811
+</td>
+<td style="text-align:right;">
+-0.8508
+</td>
+<td style="text-align:right;">
+0.2763
+</td>
+<td style="text-align:right;">
+2830
+</td>
+<td style="text-align:right;">
+1.0000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bT[1]
+</td>
+<td style="text-align:right;">
+-0.2986
+</td>
+<td style="text-align:right;">
+0.0108
+</td>
+<td style="text-align:right;">
+0.4999
+</td>
+<td style="text-align:right;">
+-1.5735
+</td>
+<td style="text-align:right;">
+0.5249
+</td>
+<td style="text-align:right;">
+2126
+</td>
+<td style="text-align:right;">
+1.0003
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bT[2]
+</td>
+<td style="text-align:right;">
+-0.0734
+</td>
+<td style="text-align:right;">
+0.0109
+</td>
+<td style="text-align:right;">
+0.4976
+</td>
+<td style="text-align:right;">
+-1.3559
+</td>
+<td style="text-align:right;">
+0.7402
+</td>
+<td style="text-align:right;">
+2092
+</td>
+<td style="text-align:right;">
+1.0003
+</td>
+</tr>
+</tbody>
+</table>
+<p>A more direct way to compare the efficiency is through the ratio of <span class="math inline">\(N_{\mathrm{eff}} / N\)</span> (figure <a href="application.html#fig:ch042-Remote-Longitude">4.9</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch042-Remote-Longitude"></span>
+<img src="040-application_files/figure-html/ch042-Remote-Longitude-1.png" alt="Model efficiency as measured by the N\_eff/N ratio." width="85%" />
+<p class="caption">
+Figure 4.9: Model efficiency as measured by the N_eff/N ratio.
+</p>
+</div>
+<p>Figure <a href="application.html#fig:ch042-traceplot-m042nc">4.10</a> shows the trace plot for the slope and intercept parameters. Each chain looks like it is sampling around the same average value as the others with identical spreads (stationary and homoscedastic). This also helps to solidify the idea that the <span class="math inline">\(\hat{R}\)</span> statistic is the measure of between chain variance compared to cross chain variance.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch042-traceplot-m042nc"></span>
+<img src="040-application_files/figure-html/ch042-traceplot-m042nc-1.png" alt="Traceplot for the slope and intercept parameters." width="85%" />
+<p class="caption">
+Figure 4.10: Traceplot for the slope and intercept parameters.
+</p>
+</div>
+<p>The chains displayed in figure <a href="application.html#fig:ch042-traceplot-m042nc">4.10</a> are healthy, as well as for the other parameters not shown. Since there are no algorithmic issues, we proceed to the posterior retrodictive checks.</p>
+<p><em>Posterior Retrodictive Checks</em></p>
+<p>We now have estimates for the age groups and the treatment. The posterior estimates for the PSS and JND are shown in figure <a href="application.html#fig:ch042-posterior-pss-jnd-plot">4.11</a>. There are many ways to visualize and compare the distributions across age groups and conditions that depend on what question is being asked. If for example the question is “what is the qualitative difference between pre- and post-adaptation across age groups?”, then figure <a href="application.html#fig:ch042-posterior-pss-jnd-plot">4.11</a> could answer that because it juxtaposes the two blocks in the same panel. We will consider alternative ways of arranging the plots in <a href="results.html#results">chapter 5</a>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch042-posterior-pss-jnd-plot"></span>
+<img src="040-application_files/figure-html/ch042-posterior-pss-jnd-plot-1.png" alt="Posterior distribution of the PSS and JND." width="85%" />
+<p class="caption">
+Figure 4.11: Posterior distribution of the PSS and JND.
+</p>
+</div>
+<p>For the posterior retrodictions, we can do something similar to last time. We had <code>Stan</code> perform posterior predictive sampling during the fitting step. This was achieved by adding a <code>generated quantities</code> block to the code that takes the posterior samples for the parameters, and then randomly generates a value from a binomial distribution for each observation in the data. In effect, we now have <span class="math inline">\(4000\)</span> simulated data sets. We only need one data set to compare to the observed data, so it is selected randomly from the posterior.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch042-obs-vs-retro-plot"></span>
+<img src="040-application_files/figure-html/ch042-obs-vs-retro-plot-1.png" alt="Observed data compared to the posterior retrodictions." width="85%" />
+<p class="caption">
+Figure 4.12: Observed data compared to the posterior retrodictions.
+</p>
+</div>
+<p>The posterior retrodictions in figure <a href="application.html#fig:ch042-obs-vs-retro-plot">4.12</a> show no disagreement between the model and the observed data. This model is almost complete, but has one more problem: it measures the average difference in blocks, and the average difference in age groups, but does not consider any interaction between the two. Implicitly it assumes that temporal recalibration affects all age groups the same which may not be true, so we address this in the next iteration.</p>
+</div>
+<div id="iter3" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Iteration 3: adding age-block interaction<a href="application.html#iter3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There is no change in the pre-model analysis, so we will jump straight to the model development step, after which we will jump right to the posterior retrodictive checks. The changes to the model going forward are minor, and subsequent steps are mostly repetitions of the ones taken in the first two iterations.</p>
+<p><strong>Post-Model, Pre-Data</strong></p>
+<p><em>Develop Model</em></p>
+<p>We need to model an interaction between age group and treatment. In a simple model in <code>R</code>, interactions between factor variable <span class="math inline">\(A\)</span> and factor variable <span class="math inline">\(B\)</span> can be accomplished by taking the cross-product of all the factor levels. For example, if <span class="math inline">\(A\)</span> has levels <span class="math inline">\(a, b, c\)</span> and <span class="math inline">\(B\)</span> has levels <span class="math inline">\(x, y\)</span>, then the interaction variable <span class="math inline">\(C=A\times B\)</span> will have levels <span class="math inline">\(ax, ay, bx, by, cx, cy\)</span>. The concept is similar in <code>Stan</code>: create a new variable that is indexed by the cross of the two other factor variables.</p>
+<p><span class="math display" id="eq:cross-factor">\[\begin{equation}
+\beta_{G[i] \times trt[i]} \Longrightarrow bGT[G[i], trt[i]]
+\tag{4.14}
+\end{equation}\]</span></p>
+<p>In expression <a href="application.html#eq:cross-factor">(4.14)</a>, the interaction variable <span class="math inline">\(\beta_{G[i] \times trt[i]}\)</span> is between age group and treatment. The right hand side is the corresponding <code>Stan</code> parameter. Notice that it is an array-like object that is indexed by the age group at observation <span class="math inline">\(i\)</span> and the treatment at observation <span class="math inline">\(i\)</span>. For example, observation <span class="math inline">\(51\)</span> is for a middle age adult subject during the post-adaptation block, so <span class="math inline">\(bGT[G[51], trt[51]] = bGT[2, 2]\)</span>. An interaction term is added for both the slope and intercept in this iteration.</p>
+<p><strong>Post-Model, Post-Data</strong></p>
+<p><em>Diagnose Posterior Fit</em></p>
+<p>This model has no divergent transitions and no <span class="math inline">\(\hat{R}\)</span> values greater than <span class="math inline">\(1.1\)</span>. Furthermore the trace-rank plots show uniformity between chains indicating that the chains are all exploring the same regions.</p>
+<p><em>Posterior Retrodictive Checks</em></p>
+<p>Because the model now allows for the interaction of age group and block, there is no longer a fixed shift in the posterior distribution of the PSS and JND values. Figure <a href="application.html#fig:ch043-posterior-pss-jnd-plot">4.13</a> shows that temporal recalibration had no discernible affect on the PSS estimates for the middle age group.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch043-posterior-pss-jnd-plot"></span>
+<img src="040-application_files/figure-html/ch043-posterior-pss-jnd-plot-1.png" alt="Posterior distribution of the PSS and JND." width="85%" />
+<p class="caption">
+Figure 4.13: Posterior distribution of the PSS and JND.
+</p>
+</div>
+<p>The posterior retrodictions for this model are going to be similar to the last iteration. Instead, we want to see how this model performs when it comes to the posterior retrodictions of the visual TOJ data. There is something peculiar about that data that is readily apparent when we try to fit a GLM using classical MLE.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="application.html#cb25-1" tabindex="-1"></a>vis_mle <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="fu">cbind</span>(k, n<span class="sc">-</span>k) <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> sid <span class="sc">+</span> sid<span class="sc">:</span>soa,</span>
+<span id="cb25-2"><a href="application.html#cb25-2" tabindex="-1"></a>               <span class="at">data =</span> visual_binomial, </span>
+<span id="cb25-3"><a href="application.html#cb25-3" tabindex="-1"></a>               <span class="at">family =</span> <span class="fu">binomial</span>(<span class="st">&quot;logit&quot;</span>),</span>
+<span id="cb25-4"><a href="application.html#cb25-4" tabindex="-1"></a>               <span class="at">subset =</span> block <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;baseline&quot;</span>, <span class="st">&quot;adapt1&quot;</span>))</span></code></pre></div>
+<p>We get a message saying that the fitted probabilities are numerically 0 or 1. In <a href="methods.html#glms">2.1</a> we determined that this indicates a large estimate for the slope. This model estimates a slope and an intercept for each subject individually (no pooling), so we can look at the estimates for each subject. Table <a href="application.html#tab:ch043-Intensive-Oyster">4.9</a> shows the top 3 coefficients sorted by largest standard error of the estimate for both slope and intercept.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:ch043-Intensive-Oyster">Table 4.9: </span><span id="tab:ch043-Intensive-Oyster">Table 4.10: </span>Coefficients with the largest standard errors.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Subject
+</th>
+<th style="text-align:left;">
+Coefficient
+</th>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+Std. Error
+</th>
+<th style="text-align:right;">
+z value
+</th>
+<th style="text-align:right;">
+Pr(&gt;&amp;#124;z&amp;#124;)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Y-m-CB
+</td>
+<td style="text-align:left;">
+Slope
+</td>
+<td style="text-align:right;">
+0.6665
+</td>
+<td style="text-align:right;">
+25.193
+</td>
+<td style="text-align:right;">
+0.0265
+</td>
+<td style="text-align:right;">
+0.9789
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+M-m-BT
+</td>
+<td style="text-align:left;">
+Slope
+</td>
+<td style="text-align:right;">
+0.6707
+</td>
+<td style="text-align:right;">
+24.921
+</td>
+<td style="text-align:right;">
+0.0269
+</td>
+<td style="text-align:right;">
+0.9785
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+M-f-DB
+</td>
+<td style="text-align:left;">
+Slope
+</td>
+<td style="text-align:right;">
+0.6707
+</td>
+<td style="text-align:right;">
+24.919
+</td>
+<td style="text-align:right;">
+0.0269
+</td>
+<td style="text-align:right;">
+0.9785
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+O-f-MW
+</td>
+<td style="text-align:left;">
+Intercept
+</td>
+<td style="text-align:right;">
+-3.2427
+</td>
+<td style="text-align:right;">
+1.235
+</td>
+<td style="text-align:right;">
+-2.6261
+</td>
+<td style="text-align:right;">
+0.0086
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+M-f-CC
+</td>
+<td style="text-align:left;">
+Intercept
+</td>
+<td style="text-align:right;">
+-2.1336
+</td>
+<td style="text-align:right;">
+1.024
+</td>
+<td style="text-align:right;">
+-2.0829
+</td>
+<td style="text-align:right;">
+0.0373
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Y-f-CJ
+</td>
+<td style="text-align:left;">
+Intercept
+</td>
+<td style="text-align:right;">
+-2.1336
+</td>
+<td style="text-align:right;">
+1.024
+</td>
+<td style="text-align:right;">
+-2.0829
+</td>
+<td style="text-align:right;">
+0.0373
+</td>
+</tr>
+</tbody>
+</table>
+<p>The standard error of the slope estimate for subject <code>Y-m-CB</code> is incredibly large in comparison to its own estimate and in comparison to the slope with the next largest standard error. Figure <a href="application.html#fig:ch043-Y-m-CB-vis-response">4.14</a> shows that there is almost perfect separation in the data for this subject, and that is resulting in a larger slope estimate. In consequence, the estimated JND for this subject is just 3ms which is questionably low.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch043-Y-m-CB-vis-response"></span>
+<img src="040-application_files/figure-html/ch043-Y-m-CB-vis-response-1.png" alt="There is almost complete separation in the data." width="85%" />
+<p class="caption">
+Figure 4.14: There is almost complete separation in the data.
+</p>
+</div>
+<p>One remedy for this is to pool observations together as we have done for the model in this iteration. The data is pooled together at the age group level and variation in the subjects’ responses removes the separation. This isn’t always ideal, as sometimes researchers are interested in studying the individuals within the experiment. If accurate inferences about the individual cannot be obtained, then the results are not valid.</p>
+<p>Figure <a href="application.html#fig:ch043-Iron-Intensive">4.15</a> shows the posterior distribution of psychometric functions for the visual TOJ data. Notice that there is almost no difference between the pre- and post-adaptation blocks.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch043-Iron-Intensive"></span>
+<img src="figures/ch043-Iron-Intensive.png" alt="Posterior distribution of psychometric functions for the visual TOJ data. There is almost no visual difference between the pre- and post-adaptation blocks." width="85%" />
+<p class="caption">
+Figure 4.15: Posterior distribution of psychometric functions for the visual TOJ data. There is almost no visual difference between the pre- and post-adaptation blocks.
+</p>
+</div>
+<p>Furthermore, as shown by the posterior retrodictions (figure <a href="application.html#fig:ch043-obs-vs-retro-plot">4.16</a>), the model is not fully capturing the variation in the responses near the outer SOA values – the posterior predictive samples are tight around SOA values near zero.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch043-obs-vs-retro-plot"></span>
+<img src="040-application_files/figure-html/ch043-obs-vs-retro-plot-1.png" alt="Observed visual TOJ data compared to the posterior retrodictions. The retrodictions are not capturing the variation at the outer SOA values." width="85%" />
+<p class="caption">
+Figure 4.16: Observed visual TOJ data compared to the posterior retrodictions. The retrodictions are not capturing the variation at the outer SOA values.
+</p>
+</div>
+<p>Why is the model having difficulty expressing the data? There is one more concept pertaining to psychometric experiments that has been left out until now, and that is a lapse in judgment. Not a lapse in judgment on our part, but the act of a subject having a lapse in judgment while performing an experiment.</p>
+</div>
+<div id="iter4" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Iteration 4: adding a lapse rate<a href="application.html#iter4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Pre-Model, Pre-Data</strong></p>
+<p><em>Conceptual Analysis</em></p>
+<p>A lapse in judgment can happen for any reason, and is assumed to be random and independent of other lapses. They can come in the form of the subject accidentally blinking during the presentation of a visual stimulus, or unintentionally pressing the wrong button to respond. Whatever the case is, lapses can have a significant affect on the estimation of the psychometric function.</p>
+<p><strong>Post-Model, Pre-Data</strong></p>
+<p><em>Develop Model</em></p>
+<p>Lapses can be modeled as occurring independently at some fixed rate. This means that the underlying psychometric function, <span class="math inline">\(F\)</span>, is bounded by some lower and upper lapse rate. This manifests as a scaling and translation of <span class="math inline">\(F\)</span>. For a given lower and upper lapse rate <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\gamma\)</span>, the performance function <span class="math inline">\(\Psi\)</span> is</p>
+<p><span class="math display">\[
+\Psi(x; \alpha, \beta, \lambda, \gamma) = \lambda + (1 - \lambda - \gamma) F(x; \alpha, \beta)
+\]</span></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch044-plot-pf-with-lapse"></span>
+<img src="040-application_files/figure-html/ch044-plot-pf-with-lapse-1.png" alt="Psychometric function with lower and upper performance bounds." width="85%" />
+<p class="caption">
+Figure 4.17: Psychometric function with lower and upper performance bounds.
+</p>
+</div>
+<p>In certain psychometric experiments, <span class="math inline">\(\lambda\)</span> is interpreted as the lower performance bound, or the guessing rate. For example, in certain 2-AFC tasks, subjects are asked to respond which of two masses is heavier, and the correctness of their response is recorded. When the masses are the same, the subject can do no better than random guessing. In this task, the lower performance bound is assumed to be 50% as their guess is split between two choices. As the absolute difference in mass grows, the subject’s correctness rate increases, though lapses can still happen. In this scenario, <span class="math inline">\(\lambda\)</span> is fixed at <span class="math inline">\(0.5\)</span> and the lapse rate <span class="math inline">\(\gamma\)</span> is a parameter in the model.</p>
+<p>The model we are building for this data does not explicitly record correctness, so we do not give <span class="math inline">\(\lambda\)</span> the interpretation of a guessing rate. Since the data are recorded as proportion of positive responses, we instead treat <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\gamma\)</span> as lapse rates for negative and positive SOAs. But why should the upper and lower lapse rates be treated separately? A lapse in judgment can occur independently of the SOA, so <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\gamma\)</span> should be the same. With this assumption, we can throw away <span class="math inline">\(\gamma\)</span> and assume that the lower and upper performance bounds are restricted by the same amount. I.e.</p>
+<p><span class="math display" id="eq:Psi">\[\begin{equation}
+  \Psi(x; \alpha, \beta, \lambda) = \lambda + (1 - 2\lambda) F(x; \alpha, \beta)
+  \tag{4.15}
+\end{equation}\]</span></p>
+<p>While we are including a lapse rate, we will also ask the question of if different age groups have different lapse rates. To answer this (or rather have the model answer this), we include the new parameter <span class="math inline">\(\lambda_{G[i]}\)</span> into the model so that the lapse rate is estimated for each age group.</p>
+<p>It’s okay to assume that lapses in judgment are rare, and it’s also true that the rate (or probability) of a lapse is bounded in the interval <span class="math inline">\([0, 1]\)</span>. Because of this, we put a <span class="math inline">\(\mathrm{Beta(4, 96)}\)</span> prior on <span class="math inline">\(\lambda\)</span> which puts 99% of the weight below <span class="math inline">\(0.1\)</span> and an expected lapse rate of <span class="math inline">\(0.04\)</span>.</p>
+<p><em>Construct Summary Functions</em></p>
+<p>Since the fundamental structure of the linear model has changed, it is important to update the summary function that computes the distribution of SOA values for a given response probability. Given equation <a href="application.html#eq:Psi">(4.15)</a>, the summary function <span class="math inline">\(Q\)</span> is:</p>
+<p><span class="math display" id="eq:Psi-Q">\[\begin{equation}
+Q(\pi; \alpha, \beta, \lambda) = \frac{1}{\exp(\beta)} \cdot \mathrm{logit}\left(\frac{\pi - \lambda}{1-2\lambda}\right) + \alpha
+\tag{4.16}
+\end{equation}\]</span></p>
+<p><strong>Post-Model, Post-Data</strong></p>
+<p><em>Fit Observed Data</em></p>
+<p>Because it is the visual data that motivated this iteration, we continue using that data to fit the model and perform posterior retrodictive checks.</p>
+<p><em>Posterior Retrodictive Checks</em></p>
+<p>The plot for the distribution of psychometric functions is repeated in figure <a href="application.html#fig:ch044-Screaming-Proton">4.18</a>. There is now visual separation between the pre- and post-adaptation blocks, with the latter exhibiting a higher slope, which in turn implies a reduced just noticeable difference which is consistent with the audiovisual data in the previous model.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch044-Screaming-Proton"></span>
+<img src="figures/ch044-Screaming-Proton.png" alt="There is now a visual distinction between the two blocks unlike in the model without lapse rate. The lapse rate acts as a balance between steep slopes near the PSS and variation near the outer SOA values." width="85%" />
+<p class="caption">
+Figure 4.18: There is now a visual distinction between the two blocks unlike in the model without lapse rate. The lapse rate acts as a balance between steep slopes near the PSS and variation near the outer SOA values.
+</p>
+</div>
+<p>The model is now doing better to capture the variation in the outer SOAs. This can best be seen in the comparison of the younger adult pre-adaptation block of figure <a href="application.html#fig:ch044-Insane-Metaphor">4.19</a>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch044-Insane-Metaphor"></span>
+<img src="040-application_files/figure-html/ch044-Insane-Metaphor-1.png" alt="The lapse rate produces posterior retrodictions that are visually more similar to the observed data than in the previous model, suggesting that the model is now just complex enough to capture the relevant details of the data generating process." width="85%" />
+<p class="caption">
+Figure 4.19: The lapse rate produces posterior retrodictions that are visually more similar to the observed data than in the previous model, suggesting that the model is now just complex enough to capture the relevant details of the data generating process.
+</p>
+</div>
+<p>We can also reintroduce the package <code>loo</code> from the <a href="methods.html#methods">chapter 2</a> to evaluate the predicted predictive performance of the model with lapse rate to the model without the lapse rate as a way of justifying its inclusion. Subjectively the lapse rate model is already doing better, but it is necessary to have quantitative comparisons. Table <a href="application.html#tab:ch044-Straw-Epsilon">4.11</a> shows the comparison.</p>
+<p>When extracting the PSIS-LOO values, <code>loo</code> warns about some Pareto k diagnostic values that are slightly high:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="application.html#cb26-1" tabindex="-1"></a><span class="fu">pareto_k_table</span>(l044)</span>
+<span id="cb26-2"><a href="application.html#cb26-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb26-3"><a href="application.html#cb26-3" tabindex="-1"></a><span class="co">#&gt; All Pareto k estimates are good (k &lt; 0.7).</span></span></code></pre></div>
+<p>There is one observation in the data set that has a <span class="math inline">\(k\)</span> value between <span class="math inline">\(0.5\)</span> and <span class="math inline">\(0.7\)</span>. This means that the estimated Pareto distribution used for smoothing has infinite variance, but practically it is still usable for estimating predictive performance.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:ch044-Straw-Epsilon">Table 4.11: </span><span id="tab:ch044-Straw-Epsilon">Table 4.12: </span>Model without lapse rate compared to one with lapse rate.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Model
+</th>
+<th style="text-align:right;">
+elpd_diff
+</th>
+<th style="text-align:right;">
+se_diff
+</th>
+<th style="text-align:right;">
+elpd_loo
+</th>
+<th style="text-align:right;">
+p_loo
+</th>
+<th style="text-align:right;">
+se_p_loo
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Lapse
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+-1001
+</td>
+<td style="text-align:right;">
+19.27
+</td>
+<td style="text-align:right;">
+1.908
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No Lapse
+</td>
+<td style="text-align:right;">
+-258.9
+</td>
+<td style="text-align:right;">
+31.91
+</td>
+<td style="text-align:right;">
+-1260
+</td>
+<td style="text-align:right;">
+22.53
+</td>
+<td style="text-align:right;">
+2.228
+</td>
+</tr>
+</tbody>
+</table>
+<p>The model with the lapse rates has higher estimated predicted performance than the model without lapse rates as measured by the ELPD. We can now perform one last iteration of the model by including the subject level estimates. Even though we’re only interested in making inferences at the group level, including the subject level might improve predictive performance.</p>
+</div>
+<div id="iter5" class="section level2 hasAnchor" number="4.6">
+<h2><span class="header-section-number">4.6</span> Iteration 5: adding subjects<a href="application.html#iter5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The only change in this iteration is the addition of the subject level parameters for the slope and intercept. The model is:</p>
+<p><span class="math display" id="eq:iter5-model">\[\begin{equation}
+\begin{split}
+k_i &amp;\sim \mathrm{Binomial}(n_i, p_i) \\
+p_i &amp;= \lambda_{G[i]} + (1 - 2\lambda_{G[i]})\exp(\mu_\beta) (x_i - \mu_\alpha) \\
+\mu_\alpha &amp;= \alpha + \alpha_{G[i], trt[i]} + \alpha_{S[i]} \\
+\mu_\beta &amp;= \beta + \beta_{G[i], trt[i]} + \beta_{S[i]} \\
+\lambda_{G} &amp;\sim \mathrm{Beta}(4, 96) \\
+\hat{\alpha}, \hat{\alpha}_{G\times trt}, \hat{\alpha}_{S} &amp;\sim \mathcal{N}(0, 1^2) \\
+\hat{\beta}, \hat{\beta}_{G\times trt}, \hat{\beta}_{S} &amp;\sim \mathcal{N}(0, 1^2) \\
+\hat{\sigma}_{G\times trt}, \hat{\gamma}_{G\times trt}, \hat{\tau}_{S}, \hat{\nu}_{S} &amp;\sim \mathcal{U}(0, \pi/2) \\
+\alpha &amp;= 0.06 \cdot \hat{\alpha} \\
+\alpha_{G\times trt} &amp;= \sigma_{G\times trt} \cdot \hat{\alpha}_{trt} \\
+\alpha_{S} &amp;= \tau_{S} \cdot \hat{\alpha}_{S} \\
+\sigma_{G \times trt} &amp;= \tan(\hat{\sigma}_{G \times trt}) \\
+\tau_{S} &amp;= \tan(\hat{\tau}_{S}) \\
+\beta &amp;= 3 + 1 \cdot \hat{\beta} \\
+\beta_{G\times trt} &amp;= \gamma_{G\times trt} \cdot \hat{\beta}_{G\times trt} \\
+\beta_{S} &amp;= \nu_{S} \cdot \hat{\beta}_{S} \\
+\gamma_{G\times trt} &amp;= \tan(\hat{\gamma}_{G\times trt}) \\
+\nu_{S} &amp;= \tan(\hat{\nu}_{S})
+\end{split}
+\tag{4.17}
+\end{equation}\]</span>
+</p>
+<p><strong>Post-Model, Post-Data</strong></p>
+<p><em>Diagnose Posterior Fit</em></p>
+<p>There is only one divergent transition for this model indicating no issues with the algorithmic configuration. Checking the trace plot for the multilevel variance terms also indicates no problems with the sampling.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch045-Mysterious-Neptune"></span>
+<img src="040-application_files/figure-html/ch045-Mysterious-Neptune-1.png" alt="The multilevel model with lapse and subject-level terms fits efficiently with no issues." width="85%" />
+<p class="caption">
+Figure 4.20: The multilevel model with lapse and subject-level terms fits efficiently with no issues.
+</p>
+</div>
+<p>This model also utilizes thinning while fitting for data saving reasons. As such the autocorrelation between samples is reduced and the model achieves a high <span class="math inline">\(N_{\mathrm{eff}}/N\)</span> ratio (figure <a href="application.html#fig:ch045-Nocturnal-Temple">4.21</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch045-Nocturnal-Temple"></span>
+<img src="040-application_files/figure-html/ch045-Nocturnal-Temple-1.png" alt="The model with lapse rates and subject-level parameters achieves a sampling efficiency partially due to thinning." width="85%" />
+<p class="caption">
+Figure 4.21: The model with lapse rates and subject-level parameters achieves a sampling efficiency partially due to thinning.
+</p>
+</div>
+<p><em>Posterior Predictive Comparison</em></p>
+<p>In lieu of posterior retrodictions (which would appear similar to those of the last iteration), we compare the model with subject-level parameters to the one without. There are a handful of observations in the subject-level model that have a Pareto <span class="math inline">\(k\)</span> value higher than <span class="math inline">\(0.7\)</span> which indicates impractical convergence rates and unreliable Monte Carlo error estimates. For more accurate estimation of predictive performance, <span class="math inline">\(k\)</span>-fold CV or LOOCV is recommended.</p>
+<pre><code>#&gt; Pareto k diagnostic values:
+#&gt;                          Count Pct.    Min. ESS
+#&gt; (-Inf, 0.7]   (good)     2238  99.5%   90      
+#&gt;    (0.7, 1]   (bad)        12   0.5%   &lt;NA&gt;    
+#&gt;    (1, Inf)   (very bad)    0   0.0%   &lt;NA&gt;</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:ch045-Deserted-Fish">Table 4.13: </span><span id="tab:ch045-Deserted-Fish">Table 4.14: </span>Model without subjects compared to one with subjects.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Model
+</th>
+<th style="text-align:right;">
+elpd_diff
+</th>
+<th style="text-align:right;">
+se_diff
+</th>
+<th style="text-align:right;">
+elpd_loo
+</th>
+<th style="text-align:right;">
+p_loo
+</th>
+<th style="text-align:right;">
+se_p_loo
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+With Subjects
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+-924.9
+</td>
+<td style="text-align:right;">
+75.31
+</td>
+<td style="text-align:right;">
+5.418
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Without Subjects
+</td>
+<td style="text-align:right;">
+-76.23
+</td>
+<td style="text-align:right;">
+19.23
+</td>
+<td style="text-align:right;">
+-1001.1
+</td>
+<td style="text-align:right;">
+19.27
+</td>
+<td style="text-align:right;">
+1.908
+</td>
+</tr>
+</tbody>
+</table>
+<p>Including the subject-level information significantly improves the ELPD, and even though there are over 100 parameters in the model (slope and intercept for each of the 45 subjects), the effective number of parameters is much less. Since this new model is capable of making inferences at both the age group level and the subject level, we use it for drawing inferences in the results chapter.</p>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-R-rstanarm" class="csl-entry">
+Gabry, Jonah, and Ben Goodrich. 2024. <em>Rstanarm: Bayesian Applied Regression Modeling via Stan</em>. <a href="https://mc-stan.org/rstanarm/">https://mc-stan.org/rstanarm/</a>.
+</div>
+<div id="ref-gelman2006prior" class="csl-entry">
+Gelman, Andrew et al. 2006. <span>“Prior Distributions for Variance Parameters in Hierarchical Models (Comment on Article by Browne and Draper).”</span> <em>Bayesian Analysis</em> 1 (3): 515–34.
+</div>
+<div id="ref-R-arm" class="csl-entry">
+Gelman, Andrew, and Yu-Sung Su. 2024. <em>Arm: Data Analysis Using Regression and Multilevel/Hierarchical Models</em>. <a href="https://CRAN.R-project.org/package=arm">https://CRAN.R-project.org/package=arm</a>.
+</div>
+<div id="ref-vatakis2007influence" class="csl-entry">
+Vatakis, Argiro, Linda Bayliss, Massimiliano Zampini, and Charles Spence. 2007. <span>“The Influence of Synchronous Audiovisual Distractors on Audiovisual Temporal Order Judgments.”</span> <em>Perception &amp; Psychophysics</em> 69 (2): 298–309.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="results.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/adknudson/UNR-Masters-Thesis/blob/master/040-application.Rmd",
+"text": null
+},
+"download": ["adknudson-thesis.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"toc_depth": 3,
+"toolbar": {
+"position": "fixed"
+},
+"info": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

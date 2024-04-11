@@ -1,9 +1,9 @@
 book_filename: "adknudson-thesis"
 delete_merged_file: yes
-repo: https://github.com/adknudson/thesis/
+repo: https://github.com/adknudson/UNR-Masters-Thesis/
 before_chapter_script: [_common.R]
 after_chapter_script: [_outgoing.R]
-view: https://github.com/adknudson/thesis/blob/master/%s
+view: https://github.com/adknudson/UNR-Masters-Thesis/blob/master/%s
 rmd_files: [
   "index.Rmd",
   "030-methods.Rmd",
