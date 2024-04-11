@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>References | A Bayesian Multilevel Model for the Psychometric Function using R and Stan</title>
+  <meta name="description" content="References | A Bayesian Multilevel Model for the Psychometric Function using R and Stan" />
+  <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="References | A Bayesian Multilevel Model for the Psychometric Function using R and Stan" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta name="github-repo" content="adkudson/UNR-Masters-Thesis" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="References | A Bayesian Multilevel Model for the Psychometric Function using R and Stan" />
+  
+  
+  
+
+<meta name="author" content="Alexander D. Knudson" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="reproduce.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#conventional-classical-statistics"><i class="fa fa-check"></i><b>1.1</b> Conventional (classical) statistics</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#bayesian-statistics"><i class="fa fa-check"></i><b>1.2</b> Bayesian statistics</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#markov-chain-monte-carlo-enables-modern-bayesian-models"><i class="fa fa-check"></i><b>1.3</b> Markov Chain Monte Carlo enables modern Bayesian models</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#organization"><i class="fa fa-check"></i><b>1.4</b> Organization</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>2</b> Background</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="methods.html"><a href="methods.html#glms"><i class="fa fa-check"></i><b>2.1</b> Fitting the psychometric function using GLMs</a></li>
+<li class="chapter" data-level="2.2" data-path="methods.html"><a href="methods.html#multilevel-modeling"><i class="fa fa-check"></i><b>2.2</b> Multilevel modeling</a></li>
+<li class="chapter" data-level="2.3" data-path="methods.html"><a href="methods.html#hamiltonian-monte-carlo-and-nuts"><i class="fa fa-check"></i><b>2.3</b> Hamiltonian Monte Carlo and NUTS</a></li>
+<li class="chapter" data-level="2.4" data-path="methods.html"><a href="methods.html#non-centered-parameterization"><i class="fa fa-check"></i><b>2.4</b> Non-centered parameterization</a></li>
+<li class="chapter" data-level="2.5" data-path="methods.html"><a href="methods.html#model-checking"><i class="fa fa-check"></i><b>2.5</b> Methods for model checking</a></li>
+<li class="chapter" data-level="2.6" data-path="methods.html"><a href="methods.html#estimating-predictive-performance"><i class="fa fa-check"></i><b>2.6</b> Estimating predictive performance</a></li>
+<li class="chapter" data-level="2.7" data-path="methods.html"><a href="methods.html#a-modern-principled-bayesian-modeling-workflow"><i class="fa fa-check"></i><b>2.7</b> A modern principled bayesian modeling workflow</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>3</b> Motivating data</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#psycho-experiments"><i class="fa fa-check"></i><b>3.1</b> Psychometric experiments</a></li>
+<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#toj-task"><i class="fa fa-check"></i><b>3.2</b> Temporal order judgment tasks</a></li>
+<li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#data-visualization-and-quirks"><i class="fa fa-check"></i><b>3.3</b> Data visualization and quirks</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="application.html"><a href="application.html"><i class="fa fa-check"></i><b>4</b> Bayesian Multilevel Modeling of the Psychometric Function</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="application.html"><a href="application.html#psych-quant"><i class="fa fa-check"></i><b>4.1</b> Modeling psychometric quantities</a></li>
+<li class="chapter" data-level="4.2" data-path="application.html"><a href="application.html#iter1"><i class="fa fa-check"></i><b>4.2</b> Iteration 1: base model</a></li>
+<li class="chapter" data-level="4.3" data-path="application.html"><a href="application.html#iter2"><i class="fa fa-check"></i><b>4.3</b> Iteration 2: adding age and block</a></li>
+<li class="chapter" data-level="4.4" data-path="application.html"><a href="application.html#iter3"><i class="fa fa-check"></i><b>4.4</b> Iteration 3: adding age-block interaction</a></li>
+<li class="chapter" data-level="4.5" data-path="application.html"><a href="application.html#iter4"><i class="fa fa-check"></i><b>4.5</b> Iteration 4: adding a lapse rate</a></li>
+<li class="chapter" data-level="4.6" data-path="application.html"><a href="application.html#iter5"><i class="fa fa-check"></i><b>4.6</b> Iteration 5: adding subjects</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Psychometric Results</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#on-perceptual-synchrony"><i class="fa fa-check"></i><b>5.1</b> On Perceptual Synchrony</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#on-temporal-sensitivity"><i class="fa fa-check"></i><b>5.2</b> On Temporal Sensitivity</a></li>
+<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#lapse-rate-across-age-groups"><i class="fa fa-check"></i><b>5.3</b> Lapse Rate across Age Groups</a></li>
+<li class="chapter" data-level="5.4" data-path="results.html"><a href="results.html#subject-specific-inferences"><i class="fa fa-check"></i><b>5.4</b> Subject specific inferences</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Discussion and Conclusion</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="code.html"><a href="code.html"><i class="fa fa-check"></i><b>A</b> Supplementary Code</a></li>
+<li class="chapter" data-level="B" data-path="model-dev.html"><a href="model-dev.html"><i class="fa fa-check"></i><b>B</b> Developing a Model</a></li>
+<li class="chapter" data-level="C" data-path="reproduce.html"><a href="reproduce.html"><i class="fa fa-check"></i><b>C</b> Reproducible Results</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Bayesian Multilevel Model for the Psychometric Function using R and Stan</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="references" class="section level1 unnumbered hasAnchor">
+<h1>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div class="csl-entry">
+Betancourt, Michael. 2020. <span>“Towards a Principled Bayesian Workflow.”</span> <em>Betanalpha</em>. <a href="https://betanalpha.github.io/assets/case_studies/principled_bayesian_workflow.html">https://betanalpha.github.io/assets/case_studies/principled_bayesian_workflow.html</a>.
+</div>
+<div class="csl-entry">
+Boring, Edwin G. 1917. <span>“A Chart of the Psychometric Function.”</span> <em>The American Journal of Psychology</em> 28 (4): 465–70.
+</div>
+<div class="csl-entry">
+Box, George EP. 1976. <span>“Science and Statistics.”</span> <em>Journal of the American Statistical Association</em> 71 (356): 791–99.
+</div>
+<div class="csl-entry">
+Burnham, Kenneth P, and David R Anderson. 2002. <span>“A Practical Information-Theoretic Approach.”</span> <em>Model Selection and Multimodel Inference, 2nd Ed. Springer, New York</em> 2.
+</div>
+<div class="csl-entry">
+Chen, Ming-Hui, and Joseph G Ibrahim. 2003. <span>“Conjugate Priors for Generalized Linear Models.”</span> <em>Statistica Sinica</em>, 461–76.
+</div>
+<div class="csl-entry">
+Chib, Siddhartha, and Edward Greenberg. 1995. <span>“Understanding the Metropolis-Hastings Algorithm.”</span> <em>The American Statistician</em> 49 (4): 327–35.
+</div>
+<div class="csl-entry">
+Ekman, GÖSta. 1959. <span>“Weber’s Law and Related Functions.”</span> <em>The Journal of Psychology</em> 47 (2): 343–52.
+</div>
+<div class="csl-entry">
+Fisher, Ronald Aylmer et al. 1934. <span>“Statistical Methods for Research Workers.”</span> <em>Statistical Methods for Research Workers.</em>, no. 5th Ed.
+</div>
+<div class="csl-entry">
+Friedman, Jerome, Trevor Hastie, and Robert Tibshirani. 2001. <em>The Elements of Statistical Learning</em>. Vol. 1. 10. Springer series in statistics New York.
+</div>
+<div class="csl-entry">
+Fujisaki, Waka, Shinsuke Shimojo, Makio Kashino, and Shin’ya Nishida. 2004. <span>“Recalibration of Audiovisual Simultaneity.”</span> <em>Nature Neuroscience</em> 7 (7): 773–78.
+</div>
+<div class="csl-entry">
+Gabry, Jonah, and Ben Goodrich. 2024. <em>Rstanarm: Bayesian Applied Regression Modeling via Stan</em>. <a href="https://mc-stan.org/rstanarm/">https://mc-stan.org/rstanarm/</a>.
+</div>
+<div class="csl-entry">
+Gelman, Andrew et al. 2006. <span>“Prior Distributions for Variance Parameters in Hierarchical Models (Comment on Article by Browne and Draper).”</span> <em>Bayesian Analysis</em> 1 (3): 515–34.
+</div>
+<div class="csl-entry">
+Gelman, Andrew, John B Carlin, Hal S Stern, David B Dunson, Aki Vehtari, and Donald B Rubin. 2013. <em>Bayesian Data Analysis</em>. CRC press.
+</div>
+<div class="csl-entry">
+Gelman, Andrew, and Jennifer Hill. 2006. <em>Data Analysis Using Regression and Multilevel/Hierarchical Models</em>. Cambridge university press.
+</div>
+<div class="csl-entry">
+Gelman, Andrew, Donald B Rubin, et al. 1992. <span>“Inference from Iterative Simulation Using Multiple Sequences.”</span> <em>Statistical Science</em> 7 (4): 457–72.
+</div>
+<div class="csl-entry">
+Gelman, Andrew, and Yu-Sung Su. 2024. <em>Arm: Data Analysis Using Regression and Multilevel/Hierarchical Models</em>. <a href="https://CRAN.R-project.org/package=arm">https://CRAN.R-project.org/package=arm</a>.
+</div>
+<div class="csl-entry">
+Gilks, Walter R, and Pascal Wild. 1992. <span>“Adaptive Rejection Sampling for Gibbs Sampling.”</span> <em>Journal of the Royal Statistical Society: Series C (Applied Statistics)</em> 41 (2): 337–48.
+</div>
+<div class="csl-entry">
+Guo, Jiqiang, Jonah Gabry, Ben Goodrich, Andrew Johnson, Sebastian Weber, and Hamada S. Badr. 2024. <em>Rstan: R Interface to Stan</em>. <a href="https://mc-stan.org/rstan/">https://mc-stan.org/rstan/</a>.
+</div>
+<div class="csl-entry">
+Hoerl, Arthur E, and Robert W Kennard. 1970. <span>“Ridge Regression: Biased Estimation for Nonorthogonal Problems.”</span> <em>Technometrics</em> 12 (1): 55–67.
+</div>
+<div class="csl-entry">
+Hoffman, Matthew D, and Andrew Gelman. 2014. <span>“The No-u-Turn Sampler: Adaptively Setting Path Lengths in Hamiltonian Monte Carlo.”</span> <em>J. Mach. Learn. Res.</em> 15 (1): 1593–623.
+</div>
+<div class="csl-entry">
+Johnson, Richard Arnold, Dean W Wichern, et al. 2002. <em>Applied Multivariate Statistical Analysis</em>. Vol. 5. 8. Prentice hall Upper Saddle River, NJ.
+</div>
+<div class="csl-entry">
+Larsen, Richard J, and Morris L Marx. 2005. <em>An Introduction to Mathematical Statistics</em>. Prentice Hall.
+</div>
+<div class="csl-entry">
+Lee, Michael D, and Eric-Jan Wagenmakers. 2014. <em>Bayesian Cognitive Modeling: A Practical Course</em>. Cambridge university press.
+</div>
+<div class="csl-entry">
+Leimkuhler, Benedict, and Sebastian Reich. 2004. <em>Simulating Hamiltonian Dynamics</em>. Vol. 14. Cambridge university press.
+</div>
+<div class="csl-entry">
+Lindley, Dennis V. 2000. <span>“The Philosophy of Statistics.”</span> <em>Journal of the Royal Statistical Society: Series D (The Statistician)</em> 49 (3): 293–337.
+</div>
+<div class="csl-entry">
+McElreath, Richard. 2020. <em>Statistical Rethinking: A Bayesian Course with Examples in r and Stan</em>. CRC press.
+</div>
+<div class="csl-entry">
+Miyazaki, Makoto, Shinya Yamamoto, Sunao Uchida, and Shigeru Kitazawa. 2006. <span>“Bayesian Calibration of Simultaneity in Tactile Temporal Order Judgment.”</span> <em>Nature Neuroscience</em> 9 (7): 875–77.
+</div>
+<div class="csl-entry">
+Navidi, William. 2015. <em>Statistics for Engineers and Scientists</em>. McGraw-Hill Education.
+</div>
+<div class="csl-entry">
+Neal, Radford M. 2003. <span>“Slice Sampling.”</span> <em>Annals of Statistics</em>, 705–41.
+</div>
+<div class="csl-entry">
+Sato, Yoshiyuki, and Kazuyuki Aihara. 2011. <span>“A Bayesian Model of Sensory Adaptation.”</span> <em>PloS One</em> 6 (4): e19377.
+</div>
+<div class="csl-entry">
+Scurry, Alexandra N, Tiziana Vercillo, Alexis Nicholson, Michael Webster, and Fang Jiang. 2019. <span>“Aging Impairs Temporal Sensitivity, but Not Perceptual Synchrony, Across Modalities.”</span> <em>Multisensory Research</em> 32 (8): 671–92.
+</div>
+<div class="csl-entry">
+Sheather, Simon. 2009. <em>A Modern Approach to Regression with r</em>. Springer Science &amp; Business Media.
+</div>
+<div class="csl-entry">
+Stan Development Team. 2020. <em><span class="nocase">Stan Modeling Language Users Guide and Reference Manual</span></em>. <a href="https://mc-stan.org">https://mc-stan.org</a>.
+</div>
+<div class="csl-entry">
+Stocker, Alan A, and Eero Simoncelli. 2005. <span>“Sensory Adaptation Within a Bayesian Framework for Perception.”</span> <em>Advances in Neural Information Processing Systems</em> 18: 1289–96.
+</div>
+<div class="csl-entry">
+Stone, JV, NM Hunkin, J Porrill, R Wood, V Keeler, M Beanland, M Port, and NR Porter. 2001. <span>“When Is Now? Perception of Simultaneity.”</span> <em>Proceedings of the Royal Society of London. Series B: Biological Sciences</em> 268 (1462): 31–38.
+</div>
+<div class="csl-entry">
+Tibshirani, Robert. 1996. <span>“Regression Shrinkage and Selection via the Lasso.”</span> <em>Journal of the Royal Statistical Society: Series B (Methodological)</em> 58 (1): 267–88.
+</div>
+<div class="csl-entry">
+Vatakis, Argiro, Linda Bayliss, Massimiliano Zampini, and Charles Spence. 2007. <span>“The Influence of Synchronous Audiovisual Distractors on Audiovisual Temporal Order Judgments.”</span> <em>Perception &amp; Psychophysics</em> 69 (2): 298–309.
+</div>
+<div class="csl-entry">
+Vehtari, Aki, Jonah Gabry, Mans Magnusson, Yuling Yao, Paul-Christian Bürkner, Topi Paananen, and Andrew Gelman. 2024. <em>Loo: Efficient Leave-One-Out Cross-Validation and WAIC for Bayesian Models</em>. <a href="https://mc-stan.org/loo/">https://mc-stan.org/loo/</a>.
+</div>
+<div class="csl-entry">
+Vehtari, Aki, Andrew Gelman, and Jonah Gabry. 2017. <span>“Practical Bayesian Model Evaluation Using Leave-One-Out Cross-Validation and WAIC.”</span> <em>Statistics and Computing</em> 27 (5): 1413–32.
+</div>
+<div class="csl-entry">
+Vehtari, Aki, Andrew Gelman, Daniel Simpson, Bob Carpenter, Paul-Christian Bürkner, et al. 2020. <span>“Rank-Normalization, Folding, and Localization: An Improved r-Hat for Assessing Convergence of MCMC.”</span> <em>Bayesian Analysis</em>.
+</div>
+<div class="csl-entry">
+Vehtari, Aki, Daniel Simpson, Andrew Gelman, Yuling Yao, and Jonah Gabry. 2015. <span>“Pareto Smoothed Importance Sampling.”</span> <em>arXiv Preprint arXiv:1507.02646</em>.
+</div>
+<div class="csl-entry">
+Vroomen, Jean, Mirjam Keetels, Beatrice De Gelder, and Paul Bertelson. 2004. <span>“Recalibration of Temporal Order Perception by Exposure to Audio-Visual Asynchrony.”</span> <em>Cognitive Brain Research</em> 22 (1): 32–35.
+</div>
+<div class="csl-entry">
+Watanabe, Sumio. 2013. <span>“A Widely Applicable Bayesian Information Criterion.”</span> <em>Journal of Machine Learning Research</em> 14 (Mar): 867–97.
+</div>
+<div class="csl-entry">
+Wichmann, Felix A, and N Jeremy Hill. 2001a. <span>“The Psychometric Function: I. Fitting, Sampling, and Goodness of Fit.”</span> <em>Perception &amp; Psychophysics</em> 63 (8): 1293–313.
+</div>
+<div class="csl-entry">
+———. 2001b. <span>“The Psychometric Function: II. Bootstrap-Based Confidence Intervals and Sampling.”</span> <em>Perception &amp; Psychophysics</em> 63 (8): 1314–29.
+</div>
+<div class="csl-entry">
+Wickham, Hadley et al. 2014. <span>“Tidy Data.”</span> <em>Journal of Statistical Software</em> 59 (10): 1–23.
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="reproduce.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/adknudson/UNR-Masters-Thesis/blob/master/300-references.Rmd",
+"text": null
+},
+"download": ["adknudson-thesis.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"toc_depth": 3,
+"toolbar": {
+"position": "fixed"
+},
+"info": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
